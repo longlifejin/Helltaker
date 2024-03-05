@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Framework\Framework.cpp" />
+    <ClCompile Include="Framework\InputMgr.cpp" />
+    <ClCompile Include="Framework\Utils.cpp" />
+    <ClCompile Include="GameObject\GameObject.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Scenes\Scene.cpp" />
+    <ClCompile Include="Scenes\SceneDev1.cpp" />
+    <ClCompile Include="Framework\SceneMgr.cpp" />
+    <ClCompile Include="GameObject\SpriteGo.cpp" />
+    <ClCompile Include="GameObject\TextGo.cpp" />
+    <ClCompile Include="Framework\SoundMgr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Framework\Framework.h" />
+    <ClInclude Include="Framework\Defines.h" />
+    <ClInclude Include="Framework\InputMgr.h" />
+    <ClInclude Include="Framework\ResourceMgr.h" />
+    <ClInclude Include="Framework\Singleton.h" />
+    <ClInclude Include="Framework\Utils.h" />
+    <ClInclude Include="GameObject\GameObject.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Scenes\Scene.h" />
+    <ClInclude Include="Scenes\SceneDev1.h" />
+    <ClInclude Include="Framework\SceneMgr.h" />
+    <ClInclude Include="GameObject\SpriteGo.h" />
+    <ClInclude Include="GameObject\TextGo.h" />
+    <ClInclude Include="Framework\SoundMgr.h" />
+  </ItemGroup>
+</Project>
