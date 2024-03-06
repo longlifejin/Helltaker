@@ -30,53 +30,47 @@ void Chapter1::Init()
 	int row = 10;
 	float size = 100.f;
 
+	float offsetX = 10.f;
+	float offsetY = 40.f;
+
 	grid.clear();
 	grid.setPrimitiveType(sf::Lines);
 	grid.resize((col + 1 + row + 1) * 2);
 
-	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
-
-	sf::Vector2f startLine = { 0.f, 10.f };
+	sf::Vector2f startLine = { 0.f, 0.f };
 	sf::Vector2f endLine = startLine;
 	
 	int gridIndex = 0;
 
-	for (int i = 0; i < row + 1; ++i)
+	for (int i = 0; i < row + 1; ++i) //가로격자
 	{
-		startLine = { startLine.x, startLine.y + (i * size) };
-		endLine = { 1920.f, startLine.y };
-		
-		grid[gridIndex].color = sf::Color::Red;
-		grid[gridIndex].position = { startLine };
+		startLine = { offsetX ,offsetY + (i * size) };
+		endLine = { (float)FRAMEWORK.GetWindowSize().x - offsetX, startLine.y};
 
+		grid[gridIndex].color = sf::Color::Red;
+		grid[gridIndex].position = startLine;
 		grid[gridIndex + 1].color = sf::Color::Red;
-		grid[gridIndex + 1].position = { endLine };
+		grid[gridIndex + 1].position = endLine;
 
 		gridIndex += 2;
-
-		startLine = { 0.f, 10.f };
-		endLine = startLine;
 	}
 
-	startLine = { 20.f, 0.f };
+	startLine = { 0.f, 0.f};
 	endLine = startLine;
 
-	for (int i = 0; i < col + 1; ++i)
+	for (int i = 0; i < col + 1; ++i) //세로격자
 	{
-		startLine = { startLine.x + (i * size), startLine.y};
-		endLine = { startLine.x, 1080.f };
+		startLine = { offsetX + (i * size), offsetY };
+		endLine = { startLine.x, (float)FRAMEWORK.GetWindowSize().y - offsetY };
 
 		grid[gridIndex].color = sf::Color::Red;
-		grid[gridIndex].position = { startLine };
-
+		grid[gridIndex].position = startLine;
 		grid[gridIndex + 1].color = sf::Color::Red;
-		grid[gridIndex + 1].position = { endLine };
+		grid[gridIndex + 1].position = endLine;
 
 		gridIndex += 2;
-
-		startLine = { 20.f, 0.f };
-		endLine = startLine;
 	}
+
 	Scene::Init();
 }
 
