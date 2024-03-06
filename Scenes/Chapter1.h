@@ -24,8 +24,7 @@ protected:
 	Player* player;
 	Stone* box;
 
-	std::vector<sf::VertexArray> grid;
-	sf::VertexArray gridHorizontal;
+	sf::VertexArray grid;
 
 	std::vector<MapObject> map;
 

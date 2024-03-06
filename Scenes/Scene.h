@@ -25,7 +25,6 @@ protected:
 	std::list<GameObject*> removeGameObjects;
 
 
-
 	sf::View worldView;
 	sf::View uiView;
 

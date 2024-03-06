@@ -14,26 +14,70 @@ Chapter1::~Chapter1()
 
 void Chapter1::Init()
 {
-	Scene::Init();
 	background = new SpriteGo("Background");
 	background->SetTexture("PlusSprite/chapterBG0001.png");
+	background->SetOrigin(Origins::TL);
+	background->SetPosition({ 0.f, 0.f });
 	AddGo(background, Layers::World);
 
 	player = new Player("Player");
-	player->SetOrigin(Origins::TL);
+	player->SetOrigin(Origins::BL);
 	player->SetTexture("Sprite/assets100V20057.png");
-	player->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.6),(float)(FRAMEWORK.GetWindowSize().y * 0.2) }); //일단 하드코딩 ㅠ
+	player->SetPosition({ 0.f,0.f });
 	AddGo(player, Layers::World);
 
-	gridHorizontal.clear();
-	gridHorizontal.setPrimitiveType(sf::Lines);
-	gridHorizontal[0].position = sf::Vector2f(0.f, 100.f);
-	gridHorizontal[1].position = sf::Vector2f(1920.f, 100.f);
-	gridHorizontal[0].color = sf::Color::Red;
-	gridHorizontal[1].color = sf::Color::Red;
-	
-	
+	int col = 19;
+	int row = 10;
+	float size = 100.f;
 
+	grid.clear();
+	grid.setPrimitiveType(sf::Lines);
+	grid.resize((col + 1 + row + 1) * 2);
+
+	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
+
+	sf::Vector2f startLine = { 0.f, 10.f };
+	sf::Vector2f endLine = startLine;
+	
+	int gridIndex = 0;
+
+	for (int i = 0; i < row + 1; ++i)
+	{
+		startLine = { startLine.x, startLine.y + (i * size) };
+		endLine = { 1920.f, startLine.y };
+		
+		grid[gridIndex].color = sf::Color::Red;
+		grid[gridIndex].position = { startLine };
+
+		grid[gridIndex + 1].color = sf::Color::Red;
+		grid[gridIndex + 1].position = { endLine };
+
+		gridIndex += 2;
+
+		startLine = { 0.f, 10.f };
+		endLine = startLine;
+	}
+
+	startLine = { 20.f, 0.f };
+	endLine = startLine;
+
+	for (int i = 0; i < col + 1; ++i)
+	{
+		startLine = { startLine.x + (i * size), startLine.y};
+		endLine = { startLine.x, 1080.f };
+
+		grid[gridIndex].color = sf::Color::Red;
+		grid[gridIndex].position = { startLine };
+
+		grid[gridIndex + 1].color = sf::Color::Red;
+		grid[gridIndex + 1].position = { endLine };
+
+		gridIndex += 2;
+
+		startLine = { 20.f, 0.f };
+		endLine = startLine;
+	}
+	Scene::Init();
 }
 
 void Chapter1::Release()
@@ -43,10 +87,11 @@ void Chapter1::Release()
 
 void Chapter1::Enter()
 {
-	Scene::Enter();
 	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
 	worldView.setSize(windowSize);
-	worldView.setCenter({ (float)(windowSize.x * 0.5), (float)(windowSize.y * 0.5) });
+	worldView.setCenter(windowSize * 0.5f);
+
+	Scene::Enter();
 }
 
 void Chapter1::Exit()
@@ -62,6 +107,8 @@ void Chapter1::Update(float dt)
 void Chapter1::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
-	window.draw(gridHorizontal);
+
+	window.setView(worldView);
+	window.draw(grid);
 }
 
