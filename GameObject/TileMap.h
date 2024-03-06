@@ -7,11 +7,6 @@ public:
 
 
 protected:
-	int col;
-	int row;
-	sf::Vector2f cellCount = { 10.f, 10.f };
-	sf::Vector2f cellSize = { 100.f, 100.f };
-	std::vector<GameObject*> map;
 	
 
 public:
