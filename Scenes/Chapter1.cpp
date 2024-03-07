@@ -22,12 +22,14 @@ void Chapter1::Init()
 
 	player = new Player("Player");
 	player->SetTexture("Sprite/assets100V20057.png");
-	player->SetOrigin(Origins::MC);
-	player->SetPosition(GetGridPos(51));
-	currentIndex = 51;
+	player->SetOrigin(Origins::BC);
+	player->SetPosition(IndexToPos(49));
+	currentIndex = 49; //챕터1 시작 위치
 	AddGo(player, Layers::World);
 
-	SetGrid();
+	mapObj.resize(col * row, MapObject::empty); //모든 내용 비어있는 것으로 처리
+	//Update때 챕터에 따라 맵을 다시 세팅해주기 위해서 Init에서 빈 것으로 해줌
+
 
 	Scene::Init();
 }
@@ -92,20 +94,43 @@ void Chapter1::SetGrid()
 	}
 }
 
-sf::Vector2f Chapter1::GetGridPos(int index)
+bool Chapter1::checkCollision(int index)
 {
-	int rowIndex = index / (col + 1); // 인덱스로부터 행 위치 계산
-	int columnIndex = index % (col + 1); // 인덱스로부터 열 위치 계산
+	if (mapObj[index] != MapObject::stone && mapObj[index] != MapObject::wall)
+	{
+		return true;
+	}
+	else
+	{
+		currentIndex = prevIndex;
+		return false;
+	}
+}
 
-	// 격자 칸의 중앙 위치 계산
+int Chapter1::PosToIndex(sf::Vector2f pos)
+{
+	int rowIndex = (pos.y - offsetY - (size / 2)) / size;
+	int columnIndex = (pos.x - offsetX - (size / 2)) / size;
+
+	int index = rowIndex * col + columnIndex;
+	return index;
+}
+
+sf::Vector2f Chapter1::IndexToPos(int index)
+{
+	int rowIndex = index / col;
+	int columnIndex = index % col; 
+	
 	float x = offsetX + (columnIndex * size) + size / 2;
 	float y = offsetY + (rowIndex * size) + size / 2;
 
 	return sf::Vector2f(x, y);
 }
 
-void Chapter1::SetObject()
+void Chapter1::SetObject(int index, MapObject obj)
 {
+	mapObj[index] = obj;
+	//인덱스에 맞게 이미지도 세팅해주기
 
 }
 
@@ -113,11 +138,17 @@ void Chapter1::Update(float dt)
 {
 	Scene::Update(dt);
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::A))
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::F1))
 	{
-		currentIndex -= 1;
-		player->SetPosition(GetGridPos(currentIndex));
+		SetGrid();
 	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::F2))
+	{
+		grid.clear();
+	}
+
+	SetObject(50, MapObject::wall);
 }
 
 void Chapter1::Draw(sf::RenderWindow& window)

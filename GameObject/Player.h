@@ -1,6 +1,8 @@
 #pragma once
 #include "SpriteGo.h"
 
+class Chapter1;
+
 class Player : public SpriteGo
 {
 protected:
@@ -11,6 +13,8 @@ protected:
 public:
 	Player(const std::string& name = "");
 	~Player();
+
+	Chapter1* chapter;
 
 	void Init() override;
 	void Release() override;
