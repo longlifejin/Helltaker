@@ -304,7 +304,6 @@ void Scene::ResortGo(GameObject* obj)
 
 void Scene::RemoveGo(GameObject* obj)
 {
-	//obj->SetActive(false);
 	if (std::find(removeGameObjects.begin(), removeGameObjects.end(), obj) == removeGameObjects.end())
 	{
 		removeGameObjects.push_back(obj);

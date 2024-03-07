@@ -36,6 +36,10 @@ void Chapter1::Init()
 void Chapter1::Release()
 {
 	Scene::Release();
+	for (auto& skull : deadSkeletonList)
+	{
+		RemoveGo(skull);
+	}
 }
 
 void Chapter1::Enter()
@@ -161,17 +165,45 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 				{
 					skull->prevIndex = skull->currentIndex;
 					skull->currentIndex -= col;
+					if (mapObj[skull->currentIndex] == MapObject::wall)
+					{
+						skull->OnDie();
+						deadSkeletonList.push_back(skull);
+						return true;
+					}
+					else if (mapObj[skull->currentIndex] == MapObject::demon ||
+						mapObj[skull->currentIndex] == MapObject::box ||
+						mapObj[skull->currentIndex] == MapObject::key ||
+						mapObj[skull->currentIndex] == MapObject::lockbox ||
+						mapObj[skull->currentIndex] == MapObject::skeleton)
+					{
+						skull->currentIndex = skull->prevIndex;
+						return false;
+					}
 					skull->SetPosition(IndexToPos(skull->currentIndex));
 					mapObj[skull->prevIndex] = MapObject::player;
 					mapObj[skull->currentIndex] = MapObject::skeleton;
-					//skeleton이 벽에 충돌할 경우 죽는 내용 추가하기
-
 					return false;
 				}
 				else if (key == sf::Keyboard::S)
 				{
 					skull->prevIndex = skull->currentIndex;
-					skull->currentIndex += col;
+					skull->currentIndex += col; 
+					if (mapObj[skull->currentIndex] == MapObject::wall)
+					{
+						skull->OnDie();
+						deadSkeletonList.push_back(skull);
+						return true;
+					}
+					else if (mapObj[skull->currentIndex] == MapObject::demon ||
+						mapObj[skull->currentIndex] == MapObject::box ||
+						mapObj[skull->currentIndex] == MapObject::key ||
+						mapObj[skull->currentIndex] == MapObject::lockbox ||
+						mapObj[skull->currentIndex] == MapObject::skeleton)
+					{
+						skull->currentIndex = skull->prevIndex;
+						return false;
+					}
 					skull->SetPosition(IndexToPos(skull->currentIndex));
 					mapObj[skull->prevIndex] = MapObject::player;
 					mapObj[skull->currentIndex] = MapObject::skeleton;
@@ -181,6 +213,21 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 				{
 					skull->prevIndex = skull->currentIndex;
 					skull->currentIndex -= 1;
+					if (mapObj[skull->currentIndex] == MapObject::wall)
+					{
+						skull->OnDie();
+						deadSkeletonList.push_back(skull);
+						return true;
+					}
+					else if (mapObj[skull->currentIndex] == MapObject::demon ||
+						mapObj[skull->currentIndex] == MapObject::box ||
+						mapObj[skull->currentIndex] == MapObject::key ||
+						mapObj[skull->currentIndex] == MapObject::lockbox ||
+						mapObj[skull->currentIndex] == MapObject::skeleton)
+					{
+						skull->currentIndex = skull->prevIndex;
+						return false;
+					}
 					skull->SetPosition(IndexToPos(skull->currentIndex));
 					mapObj[skull->prevIndex] = MapObject::player;
 					mapObj[skull->currentIndex] = MapObject::skeleton;
@@ -190,6 +237,21 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 				{
 					skull->prevIndex = skull->currentIndex;
 					skull->currentIndex += 1;
+					if (mapObj[skull->currentIndex] == MapObject::wall)
+					{
+						skull->OnDie();
+						deadSkeletonList.push_back(skull);
+						return true;
+					}
+					else if (mapObj[skull->currentIndex] == MapObject::demon ||
+						mapObj[skull->currentIndex] == MapObject::box ||
+						mapObj[skull->currentIndex] == MapObject::key ||
+						mapObj[skull->currentIndex] == MapObject::lockbox ||
+						mapObj[skull->currentIndex] == MapObject::skeleton)
+					{
+						skull->currentIndex = skull->prevIndex;
+						return false;
+					}
 					skull->SetPosition(IndexToPos(skull->currentIndex));
 					mapObj[skull->prevIndex] = MapObject::player;
 					mapObj[skull->currentIndex] = MapObject::skeleton;

@@ -35,4 +35,6 @@ void Skeleton::Update(float dt)
 
 void Skeleton::OnDie()
 {
+	this->SetActive(false);
+
 }
