@@ -163,6 +163,10 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					skull->currentIndex -= col;
 					skull->SetPosition(IndexToPos(skull->currentIndex));
 					mapObj[skull->prevIndex] = MapObject::player;
+					mapObj[skull->currentIndex] = MapObject::skeleton;
+					//skeleton이 벽에 충돌할 경우 죽는 내용 추가하기
+
+					return false;
 				}
 				else if (key == sf::Keyboard::S)
 				{
@@ -170,6 +174,8 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					skull->currentIndex += col;
 					skull->SetPosition(IndexToPos(skull->currentIndex));
 					mapObj[skull->prevIndex] = MapObject::player;
+					mapObj[skull->currentIndex] = MapObject::skeleton;
+					return false;
 				}
 				else if (key == sf::Keyboard::A)
 				{
@@ -177,6 +183,8 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					skull->currentIndex -= 1;
 					skull->SetPosition(IndexToPos(skull->currentIndex));
 					mapObj[skull->prevIndex] = MapObject::player;
+					mapObj[skull->currentIndex] = MapObject::skeleton;
+					return false;
 				}
 				else if (key == sf::Keyboard::D)
 				{
@@ -184,6 +192,8 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					skull->currentIndex += 1;
 					skull->SetPosition(IndexToPos(skull->currentIndex));
 					mapObj[skull->prevIndex] = MapObject::player;
+					mapObj[skull->currentIndex] = MapObject::skeleton;
+					return false;
 				}
 			}
 		}
