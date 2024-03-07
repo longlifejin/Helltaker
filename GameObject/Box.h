@@ -14,6 +14,9 @@ protected:
 	Types type;
 
 public:
+	int currentIndex;
+	int prevIndex;
+
 	Box(const std::string& name = "");
 	~Box();
 

@@ -37,7 +37,7 @@ void Player::Update(float dt)
 	{
 		prevIndex = currentIndex;
 		currentIndex -= chapter->GetCurrentCol();
-		if (chapter->CheckInteraction(currentIndex))
+		if (chapter->CheckInteraction(currentIndex, sf::Keyboard::W))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 		}
@@ -50,7 +50,7 @@ void Player::Update(float dt)
 	{
 		prevIndex = currentIndex;
 		currentIndex += chapter->GetCurrentCol();
-		if(chapter->CheckInteraction(currentIndex))
+		if(chapter->CheckInteraction(currentIndex, sf::Keyboard::S))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 		}
@@ -64,7 +64,7 @@ void Player::Update(float dt)
 		prevIndex = currentIndex;
 		SetFlipX(true);
 		currentIndex -= 1;
-		if (chapter->CheckInteraction(currentIndex))
+		if (chapter->CheckInteraction(currentIndex, sf::Keyboard::A))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 		}
@@ -78,7 +78,7 @@ void Player::Update(float dt)
 		prevIndex = currentIndex;
 		SetFlipX(false);
 		currentIndex += 1;
-		if (chapter->CheckInteraction(currentIndex))
+		if (chapter->CheckInteraction(currentIndex, sf::Keyboard::D))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 		}

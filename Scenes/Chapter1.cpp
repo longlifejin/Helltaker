@@ -130,34 +130,68 @@ void Chapter1::SetMap()
 	}
 }
 
-bool Chapter1::CheckInteraction(int index)
+bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 {
-	if (mapObj[index] != MapObject::box && mapObj[index] != MapObject::wall)
-	{
-		mapObj[player->prevIndex] = MapObject::empty; //플레이어 지나가고 비어있으니까 내용 바꿔주기
-		return true;
-	}
-	else if(mapObj[index] == MapObject::wall)
+	if(mapObj[index] == MapObject::wall)
 	{
 		player->currentIndex = player->prevIndex;
 		return false;
 	}
 	else if(mapObj[index] == MapObject::box)
 	{
+		// TO-Do : skeleton한 것 처럼 수정하기
 		player->currentIndex = player->prevIndex;
 		return false;
 	}
-	else if(mapObj[index] == MapObject::demon) //왜 얘만 충돌처리가 안걸리지?
+	else if(mapObj[index] == MapObject::demon)
 	{
 		player->currentIndex = player->prevIndex;
+		//player animation 재생
+		std::cout << "Chapter Clear" << std::endl; //test용
 		return false;
 	}
 	else if (mapObj[index] == MapObject::skeleton)
 	{
+		//skeleton들을 순회하면서 해당 인덱스에 있는 skeleton만 상호작용할 수 있게 수정하기
+		for (auto& skull : skeletonList)
+		{
+			if (skull->GetCurrentIndex() == index)
+			{
+				if (key == sf::Keyboard::W) // TO-DO : 반복되는 내용 함수로 만들어서 쓰기
+				{
+					skull->prevIndex = skull->currentIndex;
+					skull->currentIndex -= col;
+					skull->SetPosition(IndexToPos(skull->currentIndex));
+					mapObj[skull->prevIndex] = MapObject::player;
+				}
+				else if (key == sf::Keyboard::S)
+				{
+					skull->prevIndex = skull->currentIndex;
+					skull->currentIndex += col;
+					skull->SetPosition(IndexToPos(skull->currentIndex));
+					mapObj[skull->prevIndex] = MapObject::player;
+				}
+				else if (key == sf::Keyboard::A)
+				{
+					skull->prevIndex = skull->currentIndex;
+					skull->currentIndex -= 1;
+					skull->SetPosition(IndexToPos(skull->currentIndex));
+					mapObj[skull->prevIndex] = MapObject::player;
+				}
+				else if (key == sf::Keyboard::D)
+				{
+					skull->prevIndex = skull->currentIndex;
+					skull->currentIndex += 1;
+					skull->SetPosition(IndexToPos(skull->currentIndex));
+					mapObj[skull->prevIndex] = MapObject::player;
+				}
+			}
+		}
 		player->currentIndex = player->prevIndex;
 		return false;
 	}
-
+	//empty인 경우
+	mapObj[player->prevIndex] = MapObject::empty;
 	return true;
 }
 
@@ -205,15 +239,19 @@ void Chapter1::SetObject(int index, MapObject obj)
 	case Chapter1::MapObject::skeleton:
 		skeleton = new Skeleton("Skeleton");
 		skeleton->SetTexture("Sprite/assets100V20235.png");
+		skeleton->currentIndex = skeleton->prevIndex = index;
 		skeleton->SetPosition(IndexToPos(index));
 		skeleton->SetOrigin(Origins::BC);
+		skeletonList.push_back(skeleton); //생성하면 list에 넣어주기
 		AddGo(skeleton, Layers::World);
 		break;
 	case Chapter1::MapObject::box:
 		box = new Box("Box");
 		box->SetTexture("Sprite/boxExport0001.png");
+		box->currentIndex = box->prevIndex = index;
 		box->SetPosition(IndexToPos(index));
 		box->SetOrigin(Origins::BC);
+		boxList.push_back(box);
 		AddGo(box, Layers::World);
 		break;
 	case Chapter1::MapObject::key:

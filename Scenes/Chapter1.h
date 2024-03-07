@@ -36,6 +36,9 @@ protected:
 	Skeleton* skeleton = nullptr;
 	Box* box = nullptr;
 
+	std::list<Skeleton*> skeletonList;
+	std::list<Box*> boxList;
+
 	sf::VertexArray grid;
 
 	std::vector<MapObject> mapObj;
@@ -67,7 +70,7 @@ public:
 
 	void SetMap();
 
-	bool CheckInteraction(int index); //인덱스 번호를 받아서 오브젝트 상호작용 작동
+	bool CheckInteraction(int index, sf::Keyboard::Key key); //인덱스 번호를 받아서 오브젝트 상호작용 작동
 	int GetCurrentCol() { return col; }
 	int GetCurrentRow() { return row; }
 

@@ -8,10 +8,15 @@ class Skeleton : public SpriteGo
 protected:
 
 public:
+	int currentIndex;
+	int prevIndex;
+
 	Skeleton(const std::string& name = "");
 	~Skeleton();
 
 	Chapter1* chapter;
+
+	int GetCurrentIndex() { return currentIndex; }
 
 	void Init() override;
 	void Release() override;
