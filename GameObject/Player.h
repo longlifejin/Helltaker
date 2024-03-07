@@ -12,7 +12,7 @@ public:
 	Player(const std::string& name = "");
 	~Player();
 
-	int currentIndex;
+	int currentIndex = 49;
 	int prevIndex;
 
 	Chapter1* chapter;

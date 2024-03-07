@@ -3,13 +3,13 @@
 
 class Chapter1;
 
-class Demon :  public SpriteGo
+class Skeleton : public SpriteGo
 {
 protected:
 
 public:
-	Demon(const std::string& name = "");
-	~Demon();
+	Skeleton(const std::string& name = "");
+	~Skeleton();
 
 	Chapter1* chapter;
 
@@ -20,6 +20,6 @@ public:
 
 	void Update(float dt) override;
 
-
+	void OnDie();
 };
 

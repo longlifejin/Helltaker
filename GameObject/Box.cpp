@@ -59,7 +59,8 @@ Box::~Box()
 void Box::Init()
 {
 	SpriteGo::Init();
-	SetTexture("PlusSprite/boxExport0001.png");
+	//SetTexture("PlusSprite/boxExport0001.png");
+	//SetOrigin(Origins::BC);
 }
 
 void Box::Release()

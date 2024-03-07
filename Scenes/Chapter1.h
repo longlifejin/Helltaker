@@ -4,6 +4,8 @@
 
 class Player;
 class Box;
+class Demon;
+class Skeleton;
 
 class Chapter1 : public Scene
 {
@@ -30,6 +32,8 @@ protected:
 
 	SpriteGo* background = nullptr;
 	Player* player = nullptr;
+	Demon* demon = nullptr;
+	Skeleton* skeleton = nullptr;
 	Box* box = nullptr;
 
 	sf::VertexArray grid;
@@ -63,7 +67,7 @@ public:
 
 	void SetMap();
 
-	bool checkInteraction(int index); //인덱스 번호를 받아서 오브젝트 상호작용 작동
+	bool CheckInteraction(int index); //인덱스 번호를 받아서 오브젝트 상호작용 작동
 	int GetCurrentCol() { return col; }
 	int GetCurrentRow() { return row; }
 

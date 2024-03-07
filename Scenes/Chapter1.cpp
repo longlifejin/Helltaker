@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Chapter1.h"
 #include "Player.h"
+#include "Demon.h"
+#include "Skeleton.h"
 #include "Box.h"
 
 Chapter1::Chapter1(SceneIds id)
@@ -21,15 +23,12 @@ void Chapter1::Init()
 	AddGo(background, Layers::World);
 
 	player = new Player("Player");
-	player->SetTexture("Sprite/assets100V20057.png");
-	player->SetOrigin(Origins::BC);
-	player->currentIndex = 49; //챕터1 시작 위치
-	player->SetPosition(IndexToPos(player->currentIndex));
 	AddGo(player, Layers::World);
-
 
 	mapObj.resize(col * row, MapObject::empty); //모든 내용 비어있는 것으로 처리
 	//Update때 챕터에 따라 맵을 다시 세팅해주기 위해서 Init에서 빈 것으로 해줌
+
+	SetMap();
 
 	Scene::Init();
 }
@@ -45,7 +44,6 @@ void Chapter1::Enter()
 	worldView.setSize(windowSize);
 	worldView.setCenter(windowSize * 0.5f);
 
-	SetMap();
 	Scene::Enter();
 }
 
@@ -132,7 +130,7 @@ void Chapter1::SetMap()
 	}
 }
 
-bool Chapter1::checkInteraction(int index)
+bool Chapter1::CheckInteraction(int index)
 {
 	if (mapObj[index] != MapObject::box && mapObj[index] != MapObject::wall)
 	{
@@ -144,11 +142,22 @@ bool Chapter1::checkInteraction(int index)
 		player->currentIndex = player->prevIndex;
 		return false;
 	}
-	else if (mapObj[index] == MapObject::demon) //TO-Do : demon 이동처리 추가하기
+	else if(mapObj[index] == MapObject::box)
 	{
 		player->currentIndex = player->prevIndex;
 		return false;
 	}
+	else if(mapObj[index] == MapObject::demon) //왜 얘만 충돌처리가 안걸리지?
+	{
+		player->currentIndex = player->prevIndex;
+		return false;
+	}
+	else if (mapObj[index] == MapObject::skeleton)
+	{
+		player->currentIndex = player->prevIndex;
+		return false;
+	}
+
 	return true;
 }
 
@@ -175,6 +184,45 @@ sf::Vector2f Chapter1::IndexToPos(int index)
 void Chapter1::SetObject(int index, MapObject obj)
 {
 	mapObj[index] = obj;
+	switch (obj)
+	{
+	case Chapter1::MapObject::empty:
+		break;
+	case Chapter1::MapObject::wall:
+		break;
+	case Chapter1::MapObject::player:
+		player->SetTexture("Sprite/assets100V20057.png");
+		player->SetOrigin(Origins::BC);
+		player->SetPosition(IndexToPos(index));
+		break;
+	case Chapter1::MapObject::demon:
+		demon = new Demon("Demon");
+		demon->SetTexture("Sprite/pandemonica_finalModel0010.png");
+		demon->SetPosition(IndexToPos(index));
+		demon->SetOrigin(Origins::BC);
+		AddGo(demon, Layers::World);
+		break;
+	case Chapter1::MapObject::skeleton:
+		skeleton = new Skeleton("Skeleton");
+		skeleton->SetTexture("Sprite/assets100V20235.png");
+		skeleton->SetPosition(IndexToPos(index));
+		skeleton->SetOrigin(Origins::BC);
+		AddGo(skeleton, Layers::World);
+		break;
+	case Chapter1::MapObject::box:
+		box = new Box("Box");
+		box->SetTexture("Sprite/boxExport0001.png");
+		box->SetPosition(IndexToPos(index));
+		box->SetOrigin(Origins::BC);
+		AddGo(box, Layers::World);
+		break;
+	case Chapter1::MapObject::key:
+		break;
+	case Chapter1::MapObject::lockbox:
+		break;
+	default:
+		break;
+	}
 }
 
 void Chapter1::Update(float dt)

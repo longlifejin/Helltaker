@@ -29,17 +29,3 @@ void Demon::Update(float dt)
 {
 	SpriteGo::Update(dt);
 }
-
-void Demon::FixedUpdate(float dt)
-{
-	SpriteGo::FixedUpdate(dt);
-}
-
-void Demon::LateUpdate(float dt)
-{
-	SpriteGo::LateUpdate(dt);
-}
-
-void Demon::OnDie()
-{
-}

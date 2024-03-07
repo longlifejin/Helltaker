@@ -14,6 +14,7 @@ Player::~Player()
 void Player::Init()
 {
 	SpriteGo::Init();
+	SetOrigin(Origins::BC);
 }
 
 void Player::Release()
@@ -36,7 +37,7 @@ void Player::Update(float dt)
 	{
 		prevIndex = currentIndex;
 		currentIndex -= chapter->GetCurrentCol();
-		if (chapter->checkInteraction(currentIndex))
+		if (chapter->CheckInteraction(currentIndex))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 		}
@@ -49,7 +50,7 @@ void Player::Update(float dt)
 	{
 		prevIndex = currentIndex;
 		currentIndex += chapter->GetCurrentCol();
-		if(chapter->checkInteraction(currentIndex))
+		if(chapter->CheckInteraction(currentIndex))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 		}
@@ -63,7 +64,7 @@ void Player::Update(float dt)
 		prevIndex = currentIndex;
 		SetFlipX(true);
 		currentIndex -= 1;
-		if (chapter->checkInteraction(currentIndex))
+		if (chapter->CheckInteraction(currentIndex))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 		}
@@ -77,7 +78,7 @@ void Player::Update(float dt)
 		prevIndex = currentIndex;
 		SetFlipX(false);
 		currentIndex += 1;
-		if (chapter->checkInteraction(currentIndex))
+		if (chapter->CheckInteraction(currentIndex))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 		}
