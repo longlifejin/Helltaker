@@ -39,6 +39,7 @@ protected:
 	std::list<Skeleton*> skeletonList;
 	std::list<Box*> boxList;
 	std::list<Skeleton*> deadSkeletonList;
+	std::list<Box*> destroyedBoxList;
 
 	sf::VertexArray grid;
 
@@ -74,6 +75,8 @@ public:
 	bool CheckInteraction(int index, sf::Keyboard::Key key); //인덱스 번호를 받아서 오브젝트 상호작용 작동
 	int GetCurrentCol() { return col; }
 	int GetCurrentRow() { return row; }
+
+	bool skullInteraction();
 
 	int PosToIndex(sf::Vector2f pos);
 	sf::Vector2f IndexToPos(int index);

@@ -20,6 +20,9 @@ public:
 	Box(const std::string& name = "");
 	~Box();
 
+	int GetCurrentIndex() { return currentIndex; }
+	void Destroy();
+
 	void Init() override;
 	void Release() override;
 	void Reset() override;

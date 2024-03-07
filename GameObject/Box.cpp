@@ -56,6 +56,11 @@ Box::~Box()
 {
 }
 
+void Box::Destroy()
+{
+	this->SetActive(false);
+}
+
 void Box::Init()
 {
 	SpriteGo::Init();

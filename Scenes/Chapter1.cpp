@@ -143,7 +143,112 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 	}
 	else if(mapObj[index] == MapObject::box)
 	{
-		// TO-Do : skeleton한 것 처럼 수정하기
+		for (auto& b : boxList)
+		{
+			if (b->GetCurrentIndex() == index)
+			{
+				if (key == sf::Keyboard::W) // TO-DO : 반복되는 내용 함수로 만들어서 쓰기
+				{
+					b->prevIndex = b->currentIndex;
+					b->currentIndex -= col;
+					if (mapObj[b->currentIndex] == MapObject::wall)
+					{
+						b->Destroy();
+						destroyedBoxList.push_back(b);
+						mapObj[b->prevIndex] = MapObject::empty;
+						return true;
+					}
+					else if (mapObj[b->currentIndex] == MapObject::demon ||
+						mapObj[b->currentIndex] == MapObject::box ||
+						mapObj[b->currentIndex] == MapObject::key ||
+						mapObj[b->currentIndex] == MapObject::lockbox ||
+						mapObj[b->currentIndex] == MapObject::skeleton)
+					{
+						b->currentIndex = b->prevIndex;
+						return false;
+					}
+					b->SetPosition(IndexToPos(b->currentIndex));
+					mapObj[b->prevIndex] = MapObject::player;
+					mapObj[b->currentIndex] = MapObject::box;
+					return false;
+				}
+				if (key == sf::Keyboard::S) // TO-DO : 반복되는 내용 함수로 만들어서 쓰기
+				{
+					b->prevIndex = b->currentIndex;
+					b->currentIndex += col;
+					if (mapObj[b->currentIndex] == MapObject::wall)
+					{
+						b->Destroy();
+						destroyedBoxList.push_back(b); 
+						mapObj[b->prevIndex] = MapObject::empty;
+						return true;
+					}
+					else if (mapObj[b->currentIndex] == MapObject::demon ||
+						mapObj[b->currentIndex] == MapObject::box ||
+						mapObj[b->currentIndex] == MapObject::key ||
+						mapObj[b->currentIndex] == MapObject::lockbox ||
+						mapObj[b->currentIndex] == MapObject::skeleton)
+					{
+						b->currentIndex = b->prevIndex;
+						return false;
+					}
+					b->SetPosition(IndexToPos(b->currentIndex));
+					mapObj[b->prevIndex] = MapObject::player;
+					mapObj[b->currentIndex] = MapObject::box;
+					return false;
+				}
+				if (key == sf::Keyboard::A) // TO-DO : 반복되는 내용 함수로 만들어서 쓰기
+				{
+					b->prevIndex = b->currentIndex;
+					b->currentIndex -= 1;
+					if (mapObj[b->currentIndex] == MapObject::wall)
+					{
+						b->Destroy();
+						destroyedBoxList.push_back(b);
+						mapObj[b->prevIndex] = MapObject::empty;
+						return true;
+					}
+					else if (mapObj[b->currentIndex] == MapObject::demon ||
+						mapObj[b->currentIndex] == MapObject::box ||
+						mapObj[b->currentIndex] == MapObject::key ||
+						mapObj[b->currentIndex] == MapObject::lockbox ||
+						mapObj[b->currentIndex] == MapObject::skeleton)
+					{
+						b->currentIndex = b->prevIndex;
+						return false;
+					}
+					b->SetPosition(IndexToPos(b->currentIndex));
+					mapObj[b->prevIndex] = MapObject::player;
+					mapObj[b->currentIndex] = MapObject::box;
+					return false;
+				}
+				if (key == sf::Keyboard::D) // TO-DO : 반복되는 내용 함수로 만들어서 쓰기
+				{
+					b->prevIndex = b->currentIndex;
+					b->currentIndex += 1;
+					if (mapObj[b->currentIndex] == MapObject::wall)
+					{
+						b->Destroy();
+						destroyedBoxList.push_back(b);
+						mapObj[b->prevIndex] = MapObject::empty;
+						return true;
+					}
+					else if (mapObj[b->currentIndex] == MapObject::demon ||
+						mapObj[b->currentIndex] == MapObject::box ||
+						mapObj[b->currentIndex] == MapObject::key ||
+						mapObj[b->currentIndex] == MapObject::lockbox ||
+						mapObj[b->currentIndex] == MapObject::skeleton)
+					{
+						b->currentIndex = b->prevIndex;
+						return false;
+					}
+					b->SetPosition(IndexToPos(b->currentIndex));
+					mapObj[b->prevIndex] = MapObject::player;
+					mapObj[b->currentIndex] = MapObject::box;
+					return false;
+				}
+			}
+		}
 		player->currentIndex = player->prevIndex;
 		return false;
 	}
@@ -169,6 +274,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					{
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
+						mapObj[skull->prevIndex] = MapObject::empty;
 						return true;
 					}
 					else if (mapObj[skull->currentIndex] == MapObject::demon ||
@@ -193,6 +299,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					{
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
+						mapObj[skull->prevIndex] = MapObject::empty;
 						return true;
 					}
 					else if (mapObj[skull->currentIndex] == MapObject::demon ||
@@ -217,6 +324,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					{
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
+						mapObj[skull->prevIndex] = MapObject::empty;
 						return true;
 					}
 					else if (mapObj[skull->currentIndex] == MapObject::demon ||
@@ -241,6 +349,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					{
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
+						mapObj[skull->prevIndex] = MapObject::empty;
 						return true;
 					}
 					else if (mapObj[skull->currentIndex] == MapObject::demon ||
@@ -264,6 +373,11 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 	}
 	//empty인 경우
 	mapObj[player->prevIndex] = MapObject::empty;
+	return true;
+}
+
+bool Chapter1::skullInteraction()
+{
 	return true;
 }
 
