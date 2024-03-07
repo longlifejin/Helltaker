@@ -34,56 +34,56 @@ void Player::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::W)) //╩С
 	{
-		chapter->prevIndex = chapter->currentIndex;
-		chapter->currentIndex -= chapter->GetCurrentCol();
-		if (chapter->checkCollision(chapter->currentIndex))
+		prevIndex = currentIndex;
+		currentIndex -= chapter->GetCurrentCol();
+		if (chapter->checkInteraction(currentIndex))
 		{
-			SetPosition(chapter->IndexToPos(chapter->currentIndex));
+			SetPosition(chapter->IndexToPos(currentIndex));
 		}
 		else
 		{
-			chapter->currentIndex = chapter->prevIndex;
+			currentIndex = prevIndex;
 		}
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::S)) //го
 	{
-		chapter->prevIndex = chapter->currentIndex;
-		chapter->currentIndex += chapter->GetCurrentCol();
-		if(chapter->checkCollision(chapter->currentIndex))
+		prevIndex = currentIndex;
+		currentIndex += chapter->GetCurrentCol();
+		if(chapter->checkInteraction(currentIndex))
 		{
-			SetPosition(chapter->IndexToPos(chapter->currentIndex));
+			SetPosition(chapter->IndexToPos(currentIndex));
 		}
 		else
 		{
-			chapter->currentIndex = chapter->prevIndex;
+			currentIndex = prevIndex;
 		}
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::A)) //аб
 	{
-		chapter->prevIndex = chapter->currentIndex;
+		prevIndex = currentIndex;
 		SetFlipX(true);
-		chapter->currentIndex -= 1;
-		if (chapter->checkCollision(chapter->currentIndex))
+		currentIndex -= 1;
+		if (chapter->checkInteraction(currentIndex))
 		{
-			SetPosition(chapter->IndexToPos(chapter->currentIndex));
+			SetPosition(chapter->IndexToPos(currentIndex));
 		}
 		else
 		{
-			chapter->currentIndex = chapter->prevIndex;
+			currentIndex = prevIndex;
 		}
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::D)) //©Л
 	{
-		chapter->prevIndex = chapter->currentIndex;
+		prevIndex = currentIndex;
 		SetFlipX(false);
-		chapter->currentIndex += 1;
-		if (chapter->checkCollision(chapter->currentIndex))
+		currentIndex += 1;
+		if (chapter->checkInteraction(currentIndex))
 		{
-			SetPosition(chapter->IndexToPos(chapter->currentIndex));
+			SetPosition(chapter->IndexToPos(currentIndex));
 		}
 		else
 		{
-			chapter->currentIndex = chapter->prevIndex;
+			currentIndex = prevIndex;
 		}
 	}
 

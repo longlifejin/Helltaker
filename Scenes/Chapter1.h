@@ -3,7 +3,7 @@
 #include "SpriteGo.h"
 
 class Player;
-class Stone;
+class Box;
 
 class Chapter1 : public Scene
 {
@@ -15,7 +15,7 @@ public:
 		player,
 		demon,
 		skeleton,
-		stone,
+		box,
 		key,
 		lockbox,
 	};
@@ -28,18 +28,28 @@ protected:
 	float offsetX = 10.f;
 	float offsetY = 40.f;
 
-	SpriteGo* background;
-	Player* player;
-	Stone* stone;
+	SpriteGo* background = nullptr;
+	Player* player = nullptr;
+	Box* box = nullptr;
 
 	sf::VertexArray grid;
 
 	std::vector<MapObject> mapObj;
+	std::vector<std::string> mapLayout =
+	{
+		"WWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWEPWWWWWWW",
+		"WWWWWWWEESEEWWWWWWW",
+		"WWWWWWWESESWWWWWWWW",
+		"WWWWWWEEWWWWWWWWWWW",
+		"WWWWWWEBEEBEWWWWWWW",
+		"WWWWWWEBEBEEDWWWWWW",
+		"WWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWW",
+	};
 
 public:
-	int currentIndex;
-	int prevIndex;
-
 	Chapter1(SceneIds id);
 	virtual ~Chapter1();
 
@@ -50,14 +60,15 @@ public:
 	void Exit() override;
 
 	void SetGrid(); 
-	bool checkCollision(int index); //인덱스 번호를 받아서 충돌체크
-	int GetCurrentIndex() { return currentIndex; }
+
+	void SetMap();
+
+	bool checkInteraction(int index); //인덱스 번호를 받아서 오브젝트 상호작용 작동
 	int GetCurrentCol() { return col; }
 	int GetCurrentRow() { return row; }
 
 	int PosToIndex(sf::Vector2f pos);
 	sf::Vector2f IndexToPos(int index);
-
 
 	void SetObject(int index, MapObject obj);
 

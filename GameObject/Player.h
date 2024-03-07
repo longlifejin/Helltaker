@@ -6,13 +6,14 @@ class Chapter1;
 class Player : public SpriteGo
 {
 protected:
-	float speed = 300.f;
-	sf::Vector2f direction = { 0.f, 0.f };
 	int moveCount = 23; //√©≈Õ∏∂¥Ÿ πŸ≤„¡÷±‚
 
 public:
 	Player(const std::string& name = "");
 	~Player();
+
+	int currentIndex;
+	int prevIndex;
 
 	Chapter1* chapter;
 

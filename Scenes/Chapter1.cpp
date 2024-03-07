@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Chapter1.h"
 #include "Player.h"
-#include "Stone.h"
+#include "Box.h"
 
 Chapter1::Chapter1(SceneIds id)
 	:Scene(id)
@@ -23,13 +23,13 @@ void Chapter1::Init()
 	player = new Player("Player");
 	player->SetTexture("Sprite/assets100V20057.png");
 	player->SetOrigin(Origins::BC);
-	player->SetPosition(IndexToPos(49));
-	currentIndex = 49; //챕터1 시작 위치
+	player->currentIndex = 49; //챕터1 시작 위치
+	player->SetPosition(IndexToPos(player->currentIndex));
 	AddGo(player, Layers::World);
+
 
 	mapObj.resize(col * row, MapObject::empty); //모든 내용 비어있는 것으로 처리
 	//Update때 챕터에 따라 맵을 다시 세팅해주기 위해서 Init에서 빈 것으로 해줌
-
 
 	Scene::Init();
 }
@@ -45,6 +45,7 @@ void Chapter1::Enter()
 	worldView.setSize(windowSize);
 	worldView.setCenter(windowSize * 0.5f);
 
+	SetMap();
 	Scene::Enter();
 }
 
@@ -94,17 +95,61 @@ void Chapter1::SetGrid()
 	}
 }
 
-bool Chapter1::checkCollision(int index)
+void Chapter1::SetMap()
 {
-	if (mapObj[index] != MapObject::stone && mapObj[index] != MapObject::wall)
+	for (int i = 0; i < mapLayout.size(); ++i) //10번 반복
 	{
+		for (int j = 0; j < mapLayout[i].length(); ++j) //20번 반복
+		{
+			char mapObjChar = mapLayout[i][j];
+
+			MapObject mapObj;
+
+			switch (mapObjChar)
+			{
+			case'E': mapObj = MapObject::empty;
+				break;
+			case'W': mapObj = MapObject::wall;
+				break;
+			case'P': mapObj = MapObject::player;
+				break;
+			case'D': mapObj = MapObject::demon;
+				break;
+			case'S': mapObj = MapObject::skeleton;
+				break;
+			case'B': mapObj = MapObject::box;
+				break;
+			case'K': mapObj = MapObject::key;
+				break;
+			case'L': mapObj = MapObject::lockbox;
+				break;
+			default: mapObj = MapObject::empty;
+				break;
+			}
+			int index = i * col + j;
+			SetObject(index, mapObj);
+		}
+	}
+}
+
+bool Chapter1::checkInteraction(int index)
+{
+	if (mapObj[index] != MapObject::box && mapObj[index] != MapObject::wall)
+	{
+		mapObj[player->prevIndex] = MapObject::empty; //플레이어 지나가고 비어있으니까 내용 바꿔주기
 		return true;
 	}
-	else
+	else if(mapObj[index] == MapObject::wall)
 	{
-		currentIndex = prevIndex;
+		player->currentIndex = player->prevIndex;
 		return false;
 	}
+	else if (mapObj[index] == MapObject::demon) //TO-Do : demon 이동처리 추가하기
+	{
+		player->currentIndex = player->prevIndex;
+		return false;
+	}
+	return true;
 }
 
 int Chapter1::PosToIndex(sf::Vector2f pos)
@@ -130,8 +175,6 @@ sf::Vector2f Chapter1::IndexToPos(int index)
 void Chapter1::SetObject(int index, MapObject obj)
 {
 	mapObj[index] = obj;
-	//인덱스에 맞게 이미지도 세팅해주기
-
 }
 
 void Chapter1::Update(float dt)
@@ -147,8 +190,6 @@ void Chapter1::Update(float dt)
 	{
 		grid.clear();
 	}
-
-	SetObject(50, MapObject::wall);
 }
 
 void Chapter1::Draw(sf::RenderWindow& window)

@@ -1,6 +1,6 @@
 #pragma once
 #include "SpriteGo.h"
-class Stone : public SpriteGo
+class Box : public SpriteGo
 {
 public:
 	enum class Types
@@ -8,14 +8,14 @@ public:
 		Box1, Box2,	Box3, Box4, Box5, Box6, Box7, Box8, Box9, Box10, Box11,
 	};
 
-	static Stone* SetStone(Types stoneType);
+	static Box* SetBox(Types stoneType);
 
 protected:
 	Types type;
 
 public:
-	Stone(const std::string& name = "");
-	~Stone();
+	Box(const std::string& name = "");
+	~Box();
 
 	void Init() override;
 	void Release() override;
