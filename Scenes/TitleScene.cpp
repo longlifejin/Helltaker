@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "TitleScene.h"
 
 TitleScene::TitleScene(SceneIds id)
@@ -12,11 +12,11 @@ TitleScene::~TitleScene()
 
 void TitleScene::Init()
 {
-	//TO-DO : ¹è°æ ¿òÁ÷ÀÌµµ·Ï ¼öÁ¤ÇÏ±â
+	//TO-DO : ë°°ê²½ ì›€ì§ì´ë„ë¡ ìˆ˜ì •í•˜ê¸°
 	background = new SpriteGo("Background");
 	background->SetTexture("Sprite/dialogueBG_abyss.png");
 	background->SetOrigin(Origins::TC);
-	background->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.5), 170.f }); //À§Ä¡ Àâ´Â ºÎºĞ ÀÌ·¸°Ô ¾ÈÇÏ´Â ¹æ¹ıÀÌ ÀÖÀ»±î?
+	background->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.5), 170.f }); //ìœ„ì¹˜ ì¡ëŠ” ë¶€ë¶„ ì´ë ‡ê²Œ ì•ˆí•˜ëŠ” ë°©ë²•ì´ ìˆì„ê¹Œ?
 	AddGo(background, Layers::Ui);
 
 	beelzebub = new SpriteGo("Beelzebub");
@@ -25,8 +25,9 @@ void TitleScene::Init()
 	beelzebub->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.5), 0.f });
 	AddGo(beelzebub, Layers::Ui);
 
+
 	theGreatFly = new TextGo("TheGreatFly");
-	theGreatFly->Set(fontResMgr.Get("Font/CrimsonPro-ExtraBold.ttf"), "Beelzebub, The Great Fly", 40, sf::Color(219, 72, 77));
+	theGreatFly->Set(fontResMgr.Get("Font/NanumSquareEB.otf"), fly, 40, sf::Color(219, 72, 77));
 
 	theGreatFly->SetOrigin(Origins::MC);
 	theGreatFly->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.5), (float)(FRAMEWORK.GetWindowSize().y * 0.5) + 200.f });
@@ -56,22 +57,22 @@ void TitleScene::Init()
 	exitButton->SetColor(82, 46, 61);
 	AddGo(exitButton, Layers::Ui);
 
-	float textOffset = 15.f;
+	float textOffset = 9.f;
 
 	newGameText = new TextGo("NewGameText");
-	newGameText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "NEW GAME", 30, sf::Color::White);
+	newGameText->Set(fontResMgr.Get("Font/NanumSquareR.otf"), newGame, 30, sf::Color::White);
 	newGameText->SetOrigin(Origins::MC);
 	newGameText->SetPosition({ newGameButton->GetPosition().x, newGameButton->GetPosition().y -textOffset });
 	AddGo(newGameText, Layers::Ui);
 
 	chapterSelectText = new TextGo("ChapterSelectText");
-	chapterSelectText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "CHAPTER SELECT", 30, sf::Color::White);
+	chapterSelectText->Set(fontResMgr.Get("Font/NanumSquareR.otf"), chaterSelect, 30, sf::Color::White);
 	chapterSelectText->SetOrigin(Origins::MC);
 	chapterSelectText->SetPosition({ newGameText->GetPosition().x, newGameText->GetPosition().y + buttonOffset });
 	AddGo(chapterSelectText, Layers::Ui);
 
 	exitText = new TextGo("ExitText");
-	exitText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "EXIT", 30, sf::Color::White);
+	exitText->Set(fontResMgr.Get("Font/NanumSquareR.otf"), exit, 30, sf::Color::White);
 	exitText->SetOrigin(Origins::MC);
 	exitText->SetPosition({ chapterSelectText->GetPosition().x, chapterSelectText->GetPosition().y + buttonOffset });
 	AddGo(exitText, Layers::Ui);
@@ -221,10 +222,10 @@ void TitleScene::Update(float dt)
 			SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
 			break;
 		case Button::CHAPTERSELECT:
-			//chapter select È­¸éÀ¸·Î ÀÌµ¿
+			//chapter select í™”ë©´ìœ¼ë¡œ ì´ë™
 			break;
 		case Button::EXIT:
-			//°ÔÀÓ Á¾·á È­¸é
+			//ê²Œì„ ì¢…ë£Œ í™”ë©´
 			break;
 		default:
 			break;
