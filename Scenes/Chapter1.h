@@ -42,6 +42,9 @@ protected:
 	TextGo* moveCount = nullptr;
 	SpriteGo* currentStage = nullptr;
 
+	TextGo* advice = nullptr;
+	TextGo* restart = nullptr;
+
 	Player* player = nullptr;
 	Demon* demon = nullptr;
 	Skeleton* skeleton = nullptr;

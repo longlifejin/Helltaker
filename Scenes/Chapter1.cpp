@@ -62,6 +62,18 @@ void Chapter1::Init()
 	currentStage->SetPosition({ IndexToPos(149).x + size/2.f, IndexToPos(149).y + size/2.5f}); //더 효율적인 방법 없을까
 	AddGo(currentStage, Layers::Ui);
 
+	advice = new TextGo("Advice");
+	advice->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "LIFE ADVICE [L or LB]", 30, sf::Color::White);
+	advice->SetOrigin(Origins::MC);
+	advice->SetPosition({ IndexToPos(178).x - size / 2.f, IndexToPos(178).y });
+	AddGo(advice, Layers::Ui);
+
+	restart = new TextGo("Restart");
+	restart->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "LIFE ADVICE [L or LB]", 30, sf::Color::White);
+	restart->SetOrigin(Origins::MC);
+	restart->SetPosition({ IndexToPos(183).x - size / 2.f, IndexToPos(183).y });
+	AddGo(restart, Layers::Ui);
+
 	player = new Player("Player");
 	AddGo(player, Layers::World);
 
