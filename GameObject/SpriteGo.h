@@ -14,6 +14,7 @@ public:
 
 
 	void SetTexture(const std::string& textureId);
+	void SetColor(int r, int g, int b);
 
 	void SetPosition(const sf::Vector2f& pos) override;
 	void Translate(const sf::Vector2f& delta) override;

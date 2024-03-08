@@ -41,12 +41,10 @@ void Player::Update(float dt)
 		if (chapter->CheckInteraction(currentIndex, sf::Keyboard::W))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
-			moveCount -= 1;
 		}
 		else
 		{
 			currentIndex = prevIndex;
-			moveCount -= 1;
 		}
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::S)) //го
@@ -56,12 +54,10 @@ void Player::Update(float dt)
 		if(chapter->CheckInteraction(currentIndex, sf::Keyboard::S))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
-			moveCount -= 1;
 		}
 		else
 		{
 			currentIndex = prevIndex;
-			moveCount -= 1;
 		}
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::A)) //аб
@@ -72,12 +68,10 @@ void Player::Update(float dt)
 		if (chapter->CheckInteraction(currentIndex, sf::Keyboard::A))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
-			moveCount -= 1;
 		}
 		else
 		{
 			currentIndex = prevIndex;
-			moveCount -= 1;
 		}
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::D)) //©Л
@@ -88,12 +82,10 @@ void Player::Update(float dt)
 		if (chapter->CheckInteraction(currentIndex, sf::Keyboard::D))
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
-			moveCount -= 1;
 		}
 		else
 		{
 			currentIndex = prevIndex;
-			moveCount -= 1;
 		}
 	}
 
