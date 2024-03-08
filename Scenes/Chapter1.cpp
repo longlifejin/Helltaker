@@ -63,13 +63,13 @@ void Chapter1::Init()
 	AddGo(currentStage, Layers::Ui);
 
 	advice = new TextGo("Advice");
-	advice->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "LIFE ADVICE [L or LB]", 30, sf::Color::White);
+	advice->Set(fontResMgr.Get("Font/CrimsonPro-ExtraBold.ttf"), "LIFE ADVICE [L]", 30, sf::Color::White);
 	advice->SetOrigin(Origins::MC);
 	advice->SetPosition({ IndexToPos(178).x - size / 2.f, IndexToPos(178).y });
 	AddGo(advice, Layers::Ui);
 
 	restart = new TextGo("Restart");
-	restart->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "LIFE ADVICE [L or LB]", 30, sf::Color::White);
+	restart->Set(fontResMgr.Get("Font/CrimsonPro-ExtraBold.ttf"), "RESTART [R]", 30, sf::Color::White);
 	restart->SetOrigin(Origins::MC);
 	restart->SetPosition({ IndexToPos(183).x - size / 2.f, IndexToPos(183).y });
 	AddGo(restart, Layers::Ui);
@@ -106,11 +106,13 @@ void Chapter1::Exit()
 	{
 		RemoveGo(skull);
 	}
+		deadSkeletonList.clear();
+
 	for (auto& b : destroyedBoxList)
 	{
 		RemoveGo(b);
 	}
-
+		destroyedBoxList.clear();
 }
 
 void Chapter1::SetGrid()
@@ -527,7 +529,6 @@ void Chapter1::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
 		Init();
 	}
-
 }
 
 void Chapter1::Draw(sf::RenderWindow& window)

@@ -24,6 +24,8 @@ public:
 	SpriteGo* beelzebub;
 	TextGo* theGreatFly;
 
+	SpriteGo* whiteCircle;
+
 	SpriteGo* newGameButton;
 	TextGo* newGameText;
 
@@ -39,6 +41,7 @@ public:
 	void Enter() override;
 	void Exit() override;
 
+	Button prevSelection = Button::NEWGAME;
 	Button currentSelection = Button::NEWGAME;
 
 	void Update(float dt) override;
