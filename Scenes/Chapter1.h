@@ -31,6 +31,13 @@ protected:
 	float offsetY = 40.f;
 
 	SpriteGo* background = nullptr;
+
+	SpriteGo* uiRoseLeft = nullptr;
+	SpriteGo* uiRoseRight = nullptr;
+
+	SpriteGo* moveCount = nullptr;
+	SpriteGo* currentStage = nullptr;
+
 	Player* player = nullptr;
 	Demon* demon = nullptr;
 	Skeleton* skeleton = nullptr;

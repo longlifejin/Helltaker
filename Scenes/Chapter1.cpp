@@ -22,6 +22,32 @@ void Chapter1::Init()
 	background->SetPosition({ 0.f, 0.f });
 	AddGo(background, Layers::World);
 
+	uiRoseLeft = new SpriteGo("UiRoseLeft");
+	uiRoseLeft->SetTexture("Texture2D/mainUIexport_bUI2.png");
+	uiRoseLeft->SetOrigin(Origins::TL);
+	uiRoseLeft->SetPosition({ 0.f,0.f });
+	AddGo(uiRoseLeft, Layers::Ui);
+
+	uiRoseRight = new SpriteGo("UiRoseRight");
+	uiRoseRight->SetTexture("Texture2D/mainUIexport_bUI2.png");
+	uiRoseRight->SetOrigin(Origins::TL);
+	uiRoseRight->SetPosition({ (float)FRAMEWORK.GetWindowSize().x, 0.f });
+	uiRoseRight->SetFlipX(true);
+	AddGo(uiRoseRight, Layers::Ui);
+
+	moveCount = new SpriteGo("MoveCount");
+	moveCount->SetTexture("Texture2D/mainUIexport_fUI0001.png");
+	moveCount->SetOrigin(Origins::BL);
+	moveCount->SetPosition({ 0.f, (float)FRAMEWORK.GetWindowSize().y });
+	AddGo(moveCount, Layers::Ui);
+
+	currentStage = new SpriteGo("CurrentStage");
+	currentStage->SetTexture("Texture2D/mainUIexport_fUI0001.png");
+	currentStage->SetOrigin(Origins::BL);
+	currentStage->SetPosition({ (float)FRAMEWORK.GetWindowSize().x, (float)FRAMEWORK.GetWindowSize().y });
+	currentStage->SetFlipX(true); //피봇점도 같이 뒤집히는건가?
+	AddGo(currentStage, Layers::Ui);
+
 	player = new Player("Player");
 	AddGo(player, Layers::World);
 
@@ -47,6 +73,8 @@ void Chapter1::Enter()
 	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
 	worldView.setSize(windowSize);
 	worldView.setCenter(windowSize * 0.5f);
+	uiView.setSize(windowSize);
+	uiView.setCenter(windowSize * 0.5f);
 
 	Scene::Enter();
 }
@@ -255,7 +283,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 	else if(mapObj[index] == MapObject::demon)
 	{
 		player->currentIndex = player->prevIndex;
-		//player animation 재생
+		//player clear animation 재생
 		std::cout << "Chapter Clear" << std::endl; //test용
 		return false;
 	}
