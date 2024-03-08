@@ -5,6 +5,13 @@
 
 class TitleScene : public Scene
 {
+	enum class Button
+	{
+		NEWGAME,
+		CHAPTERSELECT,
+		EXIT,
+	};
+
 protected:
 
 
@@ -17,21 +24,22 @@ public:
 	SpriteGo* beelzebub;
 	TextGo* theGreatFly;
 
-
 	SpriteGo* newGameButton;
-	TextGo* newGame;
+	TextGo* newGameText;
 
 	SpriteGo* chapterSelectButton;
-	TextGo* chapterSelect;
+	TextGo* chapterSelectText;
 
 	SpriteGo* exitButton;
-	TextGo* exit;
+	TextGo* exitText;
 
 	void Init() override;
 	void Release() override;
 
 	void Enter() override;
 	void Exit() override;
+
+	Button currentSelection = Button::NEWGAME;
 
 	void Update(float dt) override;
 

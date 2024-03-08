@@ -31,9 +31,45 @@ void TitleScene::Init()
 	theGreatFly->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.5), (float)(FRAMEWORK.GetWindowSize().y * 0.5) + 200.f });
 	AddGo(theGreatFly, Layers::Ui);
 
+	float buttonOffset = 90.f;
 
+	newGameButton = new SpriteGo("NewGameButton");
+	newGameButton->SetTexture("Texture2D/button0004.png");
+	newGameButton->SetOrigin(Origins::MC);
+	newGameButton->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.5), (float)(FRAMEWORK.GetWindowSize().y * 0.5) + 300.f });
+	AddGo(newGameButton, Layers::Ui);
 
+	chapterSelectButton = new SpriteGo("ChapterSelectButton");
+	chapterSelectButton->SetTexture("Texture2D/button0004.png");
+	chapterSelectButton->SetOrigin(Origins::MC);
+	chapterSelectButton->SetPosition( {newGameButton->GetPosition().x, newGameButton->GetPosition().y + buttonOffset});
+	AddGo(chapterSelectButton, Layers::Ui);
 
+	exitButton = new SpriteGo("ExitButton");
+	exitButton->SetTexture("Texture2D/button0004.png");
+	exitButton->SetOrigin(Origins::MC);
+	exitButton->SetPosition({chapterSelectButton->GetPosition().x, chapterSelectButton->GetPosition().y + buttonOffset});
+	AddGo(exitButton, Layers::Ui);
+
+	float textOffset = 15.f;
+
+	newGameText = new TextGo("NewGameText");
+	newGameText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "NEW GAME", 30, sf::Color::Red);
+	newGameText->SetOrigin(Origins::MC);
+	newGameText->SetPosition({ newGameButton->GetPosition().x, newGameButton->GetPosition().y -textOffset });
+	AddGo(newGameText, Layers::Ui);
+
+	chapterSelectText = new TextGo("ChapterSelectText");
+	chapterSelectText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "CHAPTER SELECT", 30, sf::Color::Red);
+	chapterSelectText->SetOrigin(Origins::MC);
+	chapterSelectText->SetPosition({ newGameText->GetPosition().x, newGameText->GetPosition().y + buttonOffset });
+	AddGo(chapterSelectText, Layers::Ui);
+
+	exitText = new TextGo("ExitText");
+	exitText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "EXIT", 30, sf::Color::Red);
+	exitText->SetOrigin(Origins::MC);
+	exitText->SetPosition({ chapterSelectText->GetPosition().x, chapterSelectText->GetPosition().y + buttonOffset });
+	AddGo(exitText, Layers::Ui);
 
 	Scene::Init();
 }
@@ -63,11 +99,18 @@ void TitleScene::Update(float dt)
 {
 	Scene::Update(dt);
 
+	if (InputMgr::GetKeyDown(sf::Keyboard::Down))
+	{
+		//currentSelection 
+	}
+
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
-		//TO-DO : 애니메이션 재생하는 내용 넣기
-
-
-		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+		if (currentSelection == Button::NEWGAME)
+		{
+			//TO-DO : 애니메이션 재생하는 내용 넣기
+			SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+		}
 	}
 }

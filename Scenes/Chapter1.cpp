@@ -74,9 +74,6 @@ void Chapter1::Init()
 	restart->SetPosition({ IndexToPos(183).x - size / 2.f, IndexToPos(183).y });
 	AddGo(restart, Layers::Ui);
 
-	player = new Player("Player");
-	AddGo(player, Layers::World);
-
 	mapObj.resize(col * row, MapObject::empty); //모든 내용 비어있는 것으로 처리
 	//Update때 챕터에 따라 맵을 다시 세팅해주기 위해서 Init에서 빈 것으로 해줌
 
@@ -88,10 +85,6 @@ void Chapter1::Init()
 void Chapter1::Release()
 {
 	Scene::Release();
-	for (auto& skull : deadSkeletonList)
-	{
-		RemoveGo(skull);
-	}
 }
 
 void Chapter1::Enter()
@@ -108,6 +101,16 @@ void Chapter1::Enter()
 void Chapter1::Exit()
 {
 	Scene::Exit();
+
+	for (auto& skull : deadSkeletonList)
+	{
+		RemoveGo(skull);
+	}
+	for (auto& b : destroyedBoxList)
+	{
+		RemoveGo(b);
+	}
+
 }
 
 void Chapter1::SetGrid()
@@ -465,9 +468,11 @@ void Chapter1::SetObject(int index, MapObject obj)
 	case Chapter1::MapObject::wall:
 		break;
 	case Chapter1::MapObject::player:
+		player = new Player("Player");
 		player->SetTexture("Sprite/assets100V20057.png");
 		player->SetOrigin(Origins::BC);
 		player->SetPosition(IndexToPos(index));
+		AddGo(player, Layers::World);
 		break;
 	case Chapter1::MapObject::demon:
 		demon = new Demon("Demon");
@@ -507,6 +512,7 @@ void Chapter1::Update(float dt)
 {
 	Scene::Update(dt);
 
+	moveCount->SetString(std::to_string(player->moveCount));
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::F1))
 	{
@@ -516,8 +522,12 @@ void Chapter1::Update(float dt)
 	{
 		grid.clear();
 	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::R))
+	{
+		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+		Init();
+	}
 
-	moveCount->SetString(std::to_string(player->moveCount));
 }
 
 void Chapter1::Draw(sf::RenderWindow& window)
