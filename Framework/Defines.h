@@ -15,6 +15,6 @@ enum class Sides
 
 enum class SceneIds
 {
-	NONE = -1, CHAPTER1, SCENEDVE1, COUNT,
+	NONE = -1, TITLESCENE, CHAPTER1, SCENEDVE1, COUNT,
 
 };
