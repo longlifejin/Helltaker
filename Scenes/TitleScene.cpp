@@ -16,7 +16,7 @@ void TitleScene::Init()
 	background = new SpriteGo("Background");
 	background->SetTexture("Sprite/dialogueBG_abyss.png");
 	background->SetOrigin(Origins::TC);
-	background->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.5), 180.f }); //위치 잡는 부분 이렇게 안하는 방법이 있을까?
+	background->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.5), 170.f }); //위치 잡는 부분 이렇게 안하는 방법이 있을까?
 	AddGo(background, Layers::Ui);
 
 	beelzebub = new SpriteGo("Beelzebub");
@@ -32,17 +32,6 @@ void TitleScene::Init()
 	theGreatFly->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.5), (float)(FRAMEWORK.GetWindowSize().y * 0.5) + 200.f });
 	AddGo(theGreatFly, Layers::Ui);
 
-	float circleOffset = 40.f;
-
-	/*whiteCircle = new SpriteGo("WhiteCircle");
-	whiteCircle->SetScale({ 0.1f,0.1f });
-	whiteCircle->SetOrigin(Origins::MC);
-	whiteCircle->SetPosition({ theGreatFly->GetGlobalBounds().left - circleOffset, 
-		(theGreatFly->GetGlobalBounds().top + theGreatFly->GetGlobalBounds().height)});
-	whiteCircle->SetTexture("Texture2D/whiteCircle.png");
-	AddGo(whiteCircle, Layers::Ui);*/
-
-
 	float buttonOffset = 90.f;
 
 	newGameButton = new SpriteGo("NewGameButton");
@@ -57,32 +46,32 @@ void TitleScene::Init()
 	chapterSelectButton->SetTexture("Texture2D/button0004.png");
 	chapterSelectButton->SetOrigin(Origins::MC);
 	chapterSelectButton->SetPosition( {newGameButton->GetPosition().x, newGameButton->GetPosition().y + buttonOffset});
-	chapterSelectButton->SetColor(154, 52, 62);
+	chapterSelectButton->SetColor(82, 46, 61);
 	AddGo(chapterSelectButton, Layers::Ui);
 
 	exitButton = new SpriteGo("ExitButton");
 	exitButton->SetTexture("Texture2D/button0004.png");
 	exitButton->SetOrigin(Origins::MC);
 	exitButton->SetPosition({chapterSelectButton->GetPosition().x, chapterSelectButton->GetPosition().y + buttonOffset});
-	exitButton->SetColor(154, 52, 62);
+	exitButton->SetColor(82, 46, 61);
 	AddGo(exitButton, Layers::Ui);
 
 	float textOffset = 15.f;
 
 	newGameText = new TextGo("NewGameText");
-	newGameText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "NEW GAME", 30, sf::Color::Red);
+	newGameText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "NEW GAME", 30, sf::Color::White);
 	newGameText->SetOrigin(Origins::MC);
 	newGameText->SetPosition({ newGameButton->GetPosition().x, newGameButton->GetPosition().y -textOffset });
 	AddGo(newGameText, Layers::Ui);
 
 	chapterSelectText = new TextGo("ChapterSelectText");
-	chapterSelectText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "CHAPTER SELECT", 30, sf::Color::Red);
+	chapterSelectText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "CHAPTER SELECT", 30, sf::Color::White);
 	chapterSelectText->SetOrigin(Origins::MC);
 	chapterSelectText->SetPosition({ newGameText->GetPosition().x, newGameText->GetPosition().y + buttonOffset });
 	AddGo(chapterSelectText, Layers::Ui);
 
 	exitText = new TextGo("ExitText");
-	exitText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "EXIT", 30, sf::Color::Red);
+	exitText->Set(fontResMgr.Get("Font/CrimsonPro-Medium.ttf"), "EXIT", 30, sf::Color::White);
 	exitText->SetOrigin(Origins::MC);
 	exitText->SetPosition({ chapterSelectText->GetPosition().x, chapterSelectText->GetPosition().y + buttonOffset });
 	AddGo(exitText, Layers::Ui);
@@ -124,7 +113,7 @@ void TitleScene::Update(float dt)
 			currentSelection = Button::CHAPTERSELECT;
 
 			newGameButton->SetTexture("Texture2D/button0004.png");
-			newGameButton->SetColor(154, 52, 62);
+			newGameButton->SetColor(82, 46, 61);
 			newGameButton->SetScale({ 1.f,1.f });
 
 			chapterSelectButton->SetTexture("Texture2D/button0003.png");
@@ -132,18 +121,18 @@ void TitleScene::Update(float dt)
 			chapterSelectButton->SetScale({ 1.1f,1.1f });
 
 			exitButton->SetTexture("Texture2D/button0004.png");
-			exitButton->SetColor(154, 52, 62);
+			exitButton->SetColor(82, 46, 61);
 			exitButton->SetScale({ 1.f,1.f });
 			break;
 		case TitleScene::Button::CHAPTERSELECT:
 			currentSelection = Button::EXIT;
 
 			newGameButton->SetTexture("Texture2D/button0004.png");
-			newGameButton->SetColor(154, 52, 62);
+			newGameButton->SetColor(82, 46, 61);
 			newGameButton->SetScale({ 1.f,1.f });
 
 			chapterSelectButton->SetTexture("Texture2D/button0004.png");
-			chapterSelectButton->SetColor(154, 52, 62);
+			chapterSelectButton->SetColor(82, 46, 61);
 			chapterSelectButton->SetScale({ 1.f,1.f });
 
 			exitButton->SetTexture("Texture2D/button0003.png");
@@ -158,11 +147,11 @@ void TitleScene::Update(float dt)
 			newGameButton->SetScale({ 1.1f,1.1f });
 
 			chapterSelectButton->SetTexture("Texture2D/button0004.png");
-			chapterSelectButton->SetColor(154, 52, 62);
+			chapterSelectButton->SetColor(82, 46, 61);
 			chapterSelectButton->SetScale({ 1.f,1.f });
 
 			exitButton->SetTexture("Texture2D/button0004.png");
-			exitButton->SetColor(154, 52, 62);
+			exitButton->SetColor(82, 46, 61);
 			exitButton->SetScale({ 1.f,1.f });
 			break;
 		default:
@@ -178,11 +167,11 @@ void TitleScene::Update(float dt)
 			currentSelection = Button::EXIT;
 
 			newGameButton->SetTexture("Texture2D/button0004.png");
-			newGameButton->SetColor(154, 52, 62);
+			newGameButton->SetColor(82, 46, 61);
 			newGameButton->SetScale({ 1.f,1.f });
 
 			chapterSelectButton->SetTexture("Texture2D/button0004.png");
-			chapterSelectButton->SetColor(154, 52, 62);
+			chapterSelectButton->SetColor(82, 46, 61);
 			chapterSelectButton->SetScale({ 1.f,1.f });
 
 			exitButton->SetTexture("Texture2D/button0003.png");
@@ -197,18 +186,18 @@ void TitleScene::Update(float dt)
 			newGameButton->SetScale({ 1.1f,1.1f });
 
 			chapterSelectButton->SetTexture("Texture2D/button0003.png");
-			chapterSelectButton->SetColor(154, 52, 62);
+			chapterSelectButton->SetColor(82, 46, 61);
 			chapterSelectButton->SetScale({ 1.f,1.f });
 
 			exitButton->SetTexture("Texture2D/button0004.png");
-			exitButton->SetColor(154, 52, 62);
+			exitButton->SetColor(82, 46, 61);
 			exitButton->SetScale({ 1.f,1.f });
 			break;
 		case Button::EXIT:
 			currentSelection = Button::CHAPTERSELECT;
 
 			newGameButton->SetTexture("Texture2D/button0004.png");
-			newGameButton->SetColor(154, 52, 62);
+			newGameButton->SetColor(82, 46, 61);
 			newGameButton->SetScale({ 1.f,1.f });
 
 			chapterSelectButton->SetTexture("Texture2D/button0003.png");
@@ -216,7 +205,7 @@ void TitleScene::Update(float dt)
 			chapterSelectButton->SetScale({ 1.1f,1.1f });
 
 			exitButton->SetTexture("Texture2D/button0004.png");
-			exitButton->SetColor(154, 52, 62);
+			exitButton->SetColor(82, 46, 61);
 			exitButton->SetScale({ 1.f,1.f });
 			break;
 		default:
