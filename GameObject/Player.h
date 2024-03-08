@@ -6,12 +6,12 @@ class Chapter1;
 class Player : public SpriteGo
 {
 protected:
-	int moveCount = 23; //√©≈Õ∏∂¥Ÿ πŸ≤„¡÷±‚
 
 public:
 	Player(const std::string& name = "");
 	~Player();
 
+	int moveCount = 23; //√©≈Õ∏∂¥Ÿ πŸ≤„¡÷±‚
 	int currentIndex = 49;
 	int prevIndex;
 

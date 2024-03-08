@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "SpriteGo.h"
+#include "TextGo.h"
 
 class Player;
 class Box;
@@ -35,7 +36,10 @@ protected:
 	SpriteGo* uiRoseLeft = nullptr;
 	SpriteGo* uiRoseRight = nullptr;
 
-	SpriteGo* moveCount = nullptr;
+	SpriteGo* uiDemonLeft = nullptr;
+	SpriteGo* uiDemonRight = nullptr;
+
+	TextGo* moveCount = nullptr;
 	SpriteGo* currentStage = nullptr;
 
 	Player* player = nullptr;

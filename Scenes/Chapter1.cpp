@@ -4,6 +4,7 @@
 #include "Demon.h"
 #include "Skeleton.h"
 #include "Box.h"
+#include "TextGo.h"
 
 Chapter1::Chapter1(SceneIds id)
 	:Scene(id)
@@ -35,17 +36,30 @@ void Chapter1::Init()
 	uiRoseRight->SetFlipX(true);
 	AddGo(uiRoseRight, Layers::Ui);
 
-	moveCount = new SpriteGo("MoveCount");
-	moveCount->SetTexture("Texture2D/mainUIexport_fUI0001.png");
-	moveCount->SetOrigin(Origins::BL);
-	moveCount->SetPosition({ 0.f, (float)FRAMEWORK.GetWindowSize().y });
+	uiDemonLeft = new SpriteGo("uiDemonLeft");
+	uiDemonLeft->SetTexture("Texture2D/mainUIexport_fUI0001.png");
+	uiDemonLeft->SetOrigin(Origins::BL);
+	uiDemonLeft->SetPosition({ 0.f, (float)FRAMEWORK.GetWindowSize().y });
+	AddGo(uiDemonLeft, Layers::Ui);
+
+	uiDemonRight = new SpriteGo("uiDemonRight");
+	uiDemonRight->SetTexture("Texture2D/mainUIexport_fUI0001.png");
+	uiDemonRight->SetOrigin(Origins::BL);
+	uiDemonRight->SetPosition({ (float)FRAMEWORK.GetWindowSize().x, (float)FRAMEWORK.GetWindowSize().y });
+	uiDemonRight->SetFlipX(true); //피봇점도 같이 뒤집히는건가?
+	AddGo(uiDemonRight, Layers::Ui);
+
+	moveCount = new TextGo("MoveCount");
+	moveCount->Set(fontResMgr.Get("Font/Amiri-Regular.ttf"), "0", 100, sf::Color::White);
+	moveCount->SetOrigin(Origins::ML);
+	moveCount->SetPosition(IndexToPos(134));
 	AddGo(moveCount, Layers::Ui);
 
 	currentStage = new SpriteGo("CurrentStage");
-	currentStage->SetTexture("Texture2D/mainUIexport_fUI0001.png");
-	currentStage->SetOrigin(Origins::BL);
-	currentStage->SetPosition({ (float)FRAMEWORK.GetWindowSize().x, (float)FRAMEWORK.GetWindowSize().y });
-	currentStage->SetFlipX(true); //피봇점도 같이 뒤집히는건가?
+	currentStage->SetTexture("PlusSprite/01.png");
+	currentStage->SetOrigin(Origins::MC);
+	currentStage->SetScale({ 2.f, 2.f });
+	currentStage->SetPosition({ IndexToPos(149).x + size/2.f, IndexToPos(149).y + size/2.5f}); //더 효율적인 방법 없을까
 	AddGo(currentStage, Layers::Ui);
 
 	player = new Player("Player");
@@ -490,6 +504,8 @@ void Chapter1::Update(float dt)
 	{
 		grid.clear();
 	}
+
+	moveCount->SetString(std::to_string(player->moveCount));
 }
 
 void Chapter1::Draw(sf::RenderWindow& window)
