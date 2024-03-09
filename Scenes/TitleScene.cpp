@@ -12,7 +12,6 @@ TitleScene::~TitleScene()
 
 void TitleScene::Init()
 {
-	//TO-DO : 배경 움직이도록 수정하기
 	background1 = new SpriteGo("Background1");
 	background1->SetTexture("Texture2D/titleBG.png");
 	background1->SetOrigin(Origins::TL);

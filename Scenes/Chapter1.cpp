@@ -356,8 +356,9 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 	else if(mapObj[index] == MapObject::demon)
 	{
 		player->currentIndex = player->prevIndex;
-		//player clear animation 재생
-		std::cout << "Chapter Clear" << std::endl; //test용
+		player->moveCount = 0;
+		//TO-DO창 이동할때 에러남. 수정필요
+		SCENE_MGR.ChangeScene(SceneIds::COLLECT);
 		return false;
 	}
 	else if (mapObj[index] == MapObject::skeleton)

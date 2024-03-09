@@ -89,7 +89,7 @@ void Player::Update(float dt)
 		}
 	}
 
-	if (moveCount == 0)
+	if (moveCount == -1)
 	{
 		OnDie();
 	}

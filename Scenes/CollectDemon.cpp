@@ -48,22 +48,32 @@ void CollectDemon::Init()
 
 	float buttonOffset = 90.f;
 
-	select1 = new SpriteGo("NewGameButton");
-	select1->SetTexture("Texture2D/button0003.png");
-	select1->SetOrigin(Origins::MC);
-	select1->SetPosition({ demonLine2->GetPosition().x, demonLine2->GetPosition().y + 100.f});
-	select1->SetScale({ 1.1f, 1.1f });
-	select1->SetColor(219, 72, 77);
-	select1->SetActive(false);
-	AddGo(select1, Layers::Ui);
+	wrongButton = new SpriteGo("WrongButton");
+	wrongButton->SetTexture("Texture2D/button0003.png");
+	wrongButton->SetOrigin(Origins::MC);
+	wrongButton->SetPosition({ demonLine2->GetPosition().x, demonLine2->GetPosition().y + 100.f});
+	wrongButton->SetScale({ 1.1f, 1.1f });
+	wrongButton->SetColor(219, 72, 77);
+	AddGo(wrongButton, Layers::Ui);
 
-	select2 = new SpriteGo("ChapterSelectButton");
-	select2->SetTexture("Texture2D/button0004.png");
-	select2->SetOrigin(Origins::MC);
-	select2->SetPosition({ select1->GetPosition().x, select1->GetPosition().y + buttonOffset });
-	select2->SetColor(82, 46, 61);
-	select1->SetActive(true);
-	AddGo(select2, Layers::Ui);
+	correctButton = new SpriteGo("CorrectButton");
+	correctButton->SetTexture("Texture2D/button0004.png");
+	correctButton->SetOrigin(Origins::MC);
+	correctButton->SetPosition({ wrongButton->GetPosition().x, wrongButton->GetPosition().y + buttonOffset });
+	correctButton->SetColor(82, 46, 61);
+	AddGo(correctButton, Layers::Ui);
+
+	wrongText = new TextGo("WrongText");
+	wrongText->Set(fontResMgr.Get("Font/NanumSquareR.otf"), wrongLine, 25, sf::Color::White);
+	wrongText->SetOrigin(Origins::MC);
+	wrongText->SetPosition({ wrongButton->GetPosition().x, wrongButton->GetPosition().y -10.f });
+	AddGo(wrongText, Layers::Ui);
+
+	correctText = new TextGo("CorrectText");
+	correctText->Set(fontResMgr.Get("Font/NanumSquareR.otf"), correctLine, 25, sf::Color::White);
+	correctText->SetOrigin(Origins::MC);
+	correctText->SetPosition({ correctButton->GetPosition().x, correctButton->GetPosition().y - 10.f });
+	AddGo(correctText, Layers::Ui);
 
 	booper = new SpriteGo("Booper");
 	booper->SetTexture("Texture2D/booper0023.png");
@@ -71,6 +81,12 @@ void CollectDemon::Init()
 	booper->SetPosition({ (float)FRAMEWORK.GetWindowSize().x * 0.5f, (float)FRAMEWORK.GetWindowSize().y * 0.95f });
 	booper->SetColor(219, 72, 77);
 	AddGo(booper, Layers::Ui);
+
+	/*wrongButton->SetActive(false);
+	wrongText->SetActive(false);
+	correctText->SetActive(false);
+	correctButton->SetActive(false);*/
+	booper->SetActive(true);
 
 	Scene::Init();
 }
@@ -100,21 +116,70 @@ void CollectDemon::Update(float dt)
 {
 	Scene::Update(dt);
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space));
+	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
-		switch (currentSelect)
-		{
-		case CollectDemon::SelectLine::Correct:
-			//success출력
-			break;
-		case CollectDemon::SelectLine::Wrong:
-			//game over출력
-			break;
-		default:
-			break;
-		}
+		wrongButton->SetActive(true);
+		wrongText->SetActive(true);
+		correctButton->SetActive(true);
+		correctText->SetActive(true);
+		booper->SetActive(false);
+
+		isSelectTime = true;
 	}
 
+	if(isSelectTime)
+	{
+		if (InputMgr::GetKeyDown(sf::Keyboard::W) || InputMgr::GetKeyDown(sf::Keyboard::S))
+		{
+			Select();
+		}
+
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			switch (currentSelect)
+			{
+			case CollectDemon::SelectLine::Correct:
+				//success 화면
+				isSelectTime = false;
+				break;
+			case CollectDemon::SelectLine::Wrong:
+				//wrong 화면
+				isSelectTime = false;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}
+
+void CollectDemon::Select()
+{
+	switch (currentSelect)
+	{
+	case CollectDemon::SelectLine::Wrong:
+		currentSelect = SelectLine::Correct;
+		correctButton->SetTexture("Texture2D/button0003.png");
+		correctButton->SetColor(219, 72, 77);
+		correctButton->SetScale({ 1.1f,1.1f });
+
+		wrongButton->SetTexture("Texture2D/button0004.png");
+		wrongButton->SetColor(82, 46, 61);
+		wrongButton->SetScale({ 1.f,1.f });
+		break;
+	case CollectDemon::SelectLine::Correct:
+		currentSelect = SelectLine::Wrong;
+		correctButton->SetTexture("Texture2D/button0004.png");
+		correctButton->SetColor(82, 46, 61);
+		correctButton->SetScale({ 1.f,1.f });
+
+		wrongButton->SetTexture("Texture2D/button0003.png");
+		wrongButton->SetColor(219, 72, 77);
+		wrongButton->SetScale({ 1.1f,1.1f });
+		break;
+	default:
+		break;
+	}
 }
 
 void CollectDemon::Draw(sf::RenderWindow& window)
