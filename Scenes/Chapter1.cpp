@@ -62,14 +62,15 @@ void Chapter1::Init()
 	currentStage->SetPosition({ IndexToPos(149).x + size/2.f, IndexToPos(149).y + size/2.5f}); //더 효율적인 방법 없을까
 	AddGo(currentStage, Layers::Ui);
 
+
 	advice = new TextGo("Advice");
-	advice->Set(fontResMgr.Get("Font/CrimsonPro-ExtraBold.ttf"), "LIFE ADVICE [L]", 30, sf::Color::White);
+	advice->Set(fontResMgr.Get("Font/NanumSquareEB.otf"), adviceText, 30, sf::Color::White);
 	advice->SetOrigin(Origins::MC);
 	advice->SetPosition({ IndexToPos(178).x - size / 2.f, IndexToPos(178).y });
 	AddGo(advice, Layers::Ui);
 
 	restart = new TextGo("Restart");
-	restart->Set(fontResMgr.Get("Font/CrimsonPro-ExtraBold.ttf"), "RESTART [R]", 30, sf::Color::White);
+	restart->Set(fontResMgr.Get("Font/NanumSquareEB.otf"), restartText, 30, sf::Color::White);
 	restart->SetOrigin(Origins::MC);
 	restart->SetPosition({ IndexToPos(183).x - size / 2.f, IndexToPos(183).y });
 	AddGo(restart, Layers::Ui);
@@ -102,17 +103,46 @@ void Chapter1::Exit()
 {
 	Scene::Exit();
 
+	if (player != nullptr)
+	{
+		delete player;
+		player = nullptr;
+	}
+
+	if (demon != nullptr)
+	{
+		delete demon;
+		demon = nullptr;
+	}
+
 	for (auto& skull : deadSkeletonList)
 	{
-		RemoveGo(skull);
+		if(skull != nullptr)
+			RemoveGo(skull);
 	}
 		deadSkeletonList.clear();
 
 	for (auto& b : destroyedBoxList)
 	{
-		RemoveGo(b);
+		if(b != nullptr)
+			RemoveGo(b);
 	}
 		destroyedBoxList.clear();
+
+	for (auto& skull : skeletonList)
+	{
+		if(skull != nullptr)
+			RemoveGo(skull);
+	}
+		skeletonList.clear();
+
+	for (auto& b : boxList)
+	{
+		if(b!= nullptr)
+			RemoveGo(b);
+	}
+		boxList.clear();
+
 }
 
 void Chapter1::SetGrid()
@@ -345,6 +375,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
 						mapObj[skull->prevIndex] = MapObject::empty;
+						skeletonList.remove(skull);
 						player->moveCount -= 1;
 						return false;
 					}
@@ -362,6 +393,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
 						mapObj[skull->prevIndex] = MapObject::empty;
+						skeletonList.remove(skull);
 						player->moveCount -= 1;
 						return false;
 					}
@@ -380,6 +412,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
 						mapObj[skull->prevIndex] = MapObject::empty;
+						skeletonList.remove(skull);
 						player->moveCount -= 1;
 						return false;
 					}
@@ -397,6 +430,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
 						mapObj[skull->prevIndex] = MapObject::empty;
+						skeletonList.remove(skull);
 						player->moveCount -= 1;
 						return false;
 					}
@@ -415,6 +449,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
 						mapObj[skull->prevIndex] = MapObject::empty;
+						skeletonList.remove(skull);
 						player->moveCount -= 1;
 						return false;
 					}
@@ -432,6 +467,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
 						mapObj[skull->prevIndex] = MapObject::empty;
+						skeletonList.remove(skull);
 						player->moveCount -= 1;
 						return false;
 					}
@@ -450,6 +486,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
 						mapObj[skull->prevIndex] = MapObject::empty;
+						skeletonList.remove(skull);
 						player->moveCount -= 1;
 						return false;
 					}
@@ -467,6 +504,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 						skull->OnDie();
 						deadSkeletonList.push_back(skull);
 						mapObj[skull->prevIndex] = MapObject::empty;
+						skeletonList.remove(skull);
 						player->moveCount -= 1;
 						return false;
 					}
@@ -579,7 +617,6 @@ void Chapter1::Update(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::R))
 	{
 		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
-		Init();
 	}
 }
 

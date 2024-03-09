@@ -19,6 +19,7 @@
     <ClCompile Include="GameObject\Demon.cpp" />
     <ClCompile Include="GameObject\Skeleton.cpp" />
     <ClCompile Include="Scenes\TitleScene.cpp" />
+    <ClCompile Include="Scenes\CollectDemon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Framework.h" />
@@ -41,5 +42,6 @@
     <ClInclude Include="GameObject\Demon.h" />
     <ClInclude Include="GameObject\Skeleton.h" />
     <ClInclude Include="Scenes\TitleScene.h" />
+    <ClInclude Include="Scenes\CollectDemon.h" />
   </ItemGroup>
 </Project>

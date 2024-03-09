@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scenes\CollectDemon.cpp" />
     <ClCompile Include="GameObject\Demon.cpp" />
     <ClCompile Include="GameObject\Box.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Scenes\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scenes\CollectDemon.h" />
     <ClInclude Include="GameObject\Demon.h" />
     <ClInclude Include="GameObject\Box.h" />
     <ClInclude Include="GameObject\Player.h" />

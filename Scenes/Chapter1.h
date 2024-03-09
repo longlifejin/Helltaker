@@ -50,6 +50,10 @@ protected:
 	Skeleton* skeleton = nullptr;
 	Box* box = nullptr;
 
+
+	std::wstring adviceText = L"● 인생 조언 [L] ●";
+	std::wstring restartText = L"● 재시작 [R] ●";
+
 	std::list<Skeleton*> skeletonList;
 	std::list<Box*> boxList;
 	std::list<Skeleton*> deadSkeletonList;

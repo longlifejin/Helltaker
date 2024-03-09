@@ -60,12 +60,14 @@ void Scene::Enter()
 {
 	for (auto obj : gameObjects)
 	{
-		obj->Reset();
+		if(obj != nullptr)
+			obj->Reset();
 	}
 
 	for (auto obj : uiGameObjects)
 	{
-		obj->Reset();
+		if(obj != nullptr)
+			obj->Reset();
 	}
 }
 

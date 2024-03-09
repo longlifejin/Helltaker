@@ -2,8 +2,6 @@
 
 class GameObject;
 
-
-
 class Scene
 {
 public:
