@@ -22,7 +22,8 @@ public:
 	TitleScene(SceneIds id);
 	virtual ~TitleScene();
 
-	SpriteGo* background;
+	SpriteGo* background1;
+	SpriteGo* background2;
 
 	SpriteGo* beelzebub;
 	TextGo* theGreatFly;

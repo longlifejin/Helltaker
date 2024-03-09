@@ -13,18 +13,23 @@ TitleScene::~TitleScene()
 void TitleScene::Init()
 {
 	//TO-DO : 배경 움직이도록 수정하기
-	background = new SpriteGo("Background");
-	background->SetTexture("Sprite/dialogueBG_abyss.png");
-	background->SetOrigin(Origins::TC);
-	background->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.5), 170.f }); //위치 잡는 부분 이렇게 안하는 방법이 있을까?
-	AddGo(background, Layers::Ui);
+	background1 = new SpriteGo("Background1");
+	background1->SetTexture("Texture2D/titleBG.png");
+	background1->SetOrigin(Origins::TL);
+	background1->SetPosition({ 0.f, 200.f }); //위치 잡는 부분 이렇게 안하는 방법이 있을까?
+	AddGo(background1, Layers::Ui);
+
+	background2 = new SpriteGo("Background2");
+	background2->SetTexture("Texture2D/titleBG.png");
+	background2->SetOrigin(Origins::TL);
+	background2->SetPosition({ -(float)(FRAMEWORK.GetWindowSize().x), background1->GetPosition().y });
+	AddGo(background2, Layers::Ui);
 
 	beelzebub = new SpriteGo("Beelzebub");
 	beelzebub->SetTexture("Sprite/beel_fly.png");
 	beelzebub->SetOrigin(Origins::TC);
 	beelzebub->SetPosition({ (float)(FRAMEWORK.GetWindowSize().x * 0.5), 0.f });
 	AddGo(beelzebub, Layers::Ui);
-
 
 	theGreatFly = new TextGo("TheGreatFly");
 	theGreatFly->Set(fontResMgr.Get("Font/NanumSquareEB.otf"), fly, 40, sf::Color(219, 72, 77));
@@ -104,6 +109,26 @@ void TitleScene::Exit()
 void TitleScene::Update(float dt)
 {
 	Scene::Update(dt);
+
+	float backgroundSpeed = 50.f;
+
+	sf::Vector2f newBGPos1 = background1->GetPosition();
+	newBGPos1.x += backgroundSpeed * dt;
+	background1->SetPosition(newBGPos1);
+
+	sf::Vector2f newBGPos2 = background2->GetPosition();
+	newBGPos2.x += backgroundSpeed * dt;
+	background2->SetPosition(newBGPos2);
+
+	if (newBGPos1.x > (float)FRAMEWORK.GetWindowSize().x)
+	{
+		background1->SetPosition({ -(float)FRAMEWORK.GetWindowSize().x, newBGPos1.y});
+	}
+	if (newBGPos2.x > (float)FRAMEWORK.GetWindowSize().x)
+	{
+		background2->SetPosition({ -(float)FRAMEWORK.GetWindowSize().x, newBGPos2.y });
+	}
+
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::S))
 	{
