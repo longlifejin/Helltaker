@@ -34,16 +34,16 @@ void CollectDemon::Init()
 	demonName->SetPosition({ demon->GetPosition().x, demon->GetPosition().y + 20.f});
 	AddGo(demonName, Layers::Ui);
 
-	demonLine1 = new TextGo("DemonLine");
-	demonLine1->Set(fontResMgr.Get("Font/NanumSquareR.otf"), pandLine1, 30, sf::Color::White);
-	demonLine1->SetOrigin(Origins::TC);
-	demonLine1->SetPosition({ demonName->GetPosition().x, demonName->GetPosition().y + Offset });
-	AddGo(demonLine1, Layers::Ui);
+	demonLine = new TextGo("DemonLine");
+	demonLine->Set(fontResMgr.Get("Font/NanumSquareR.otf"), L"", 30, sf::Color::White);
+	demonLine->SetOrigin(Origins::TC);
+	demonLine->SetPosition({ demonName->GetPosition().x, demonName->GetPosition().y + Offset });
+	AddGo(demonLine, Layers::Ui);
 
 	demonLine2 = new TextGo("DemonLine");
 	demonLine2->Set(fontResMgr.Get("Font/NanumSquareR.otf"), pandLine2, 30, sf::Color::White);
 	demonLine2->SetOrigin(Origins::TC);
-	demonLine2->SetPosition({ demonLine1->GetPosition().x, demonLine1->GetPosition().y + 30.f });
+	demonLine2->SetPosition({ demonLine->GetPosition().x, demonLine->GetPosition().y + 30.f });
 	AddGo(demonLine2, Layers::Ui);
 
 	float buttonOffset = 90.f;
@@ -150,7 +150,7 @@ void CollectDemon::Update(float dt)
 				isSuccess = true;
 				break;
 			case CollectDemon::SelectLine::Wrong:
-				demonLine1->SetString(L"지옥을 살아서 나갈 생각을 한거야? 망상도 심하셔라.");
+				demonLine->SetString(L"지옥을 살아서 나갈 생각을 한거야? 망상도 심하셔라.");
 				demonLine2->SetActive(false);
 				isSelectTime = false;
 				isBadEnd = true;
@@ -162,13 +162,13 @@ void CollectDemon::Update(float dt)
 		}
 	}
 
-	if (isBadEnd)
+	if (!isSelectTime && isBadEnd)
 	{
 		//space누르면 bad end장면 출력
 		isBadEnd = false;
 	}
 
-	if (isSuccess)
+	if (!isSelectTime && isSuccess)
 	{
 		//space누르면 success장면 출력
 		isSuccess = false;

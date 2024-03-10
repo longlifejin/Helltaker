@@ -50,9 +50,9 @@ void Chapter1::Init()
 	AddGo(uiDemonRight, Layers::Ui);
 
 	moveCount = new TextGo("MoveCount");
-	moveCount->Set(fontResMgr.Get("Font/Amiri-Regular.ttf"), "0", 100, sf::Color::White);
-	moveCount->SetOrigin(Origins::ML);
-	moveCount->SetPosition(IndexToPos(134));
+	moveCount->Set(fontResMgr.Get("Font/Amiri-Regular.ttf"), "23", 100, sf::Color::White);
+	moveCount->SetOrigin(Origins::MC);
+	moveCount->SetPosition({IndexToPos(134).x + size / 2.f, IndexToPos(134).y - size / 20.f }); //위치 이상한거 왜 이러는지 파악하기
 	AddGo(moveCount, Layers::Ui);
 
 	currentStage = new SpriteGo("CurrentStage");
