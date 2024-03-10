@@ -357,8 +357,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 	{
 		player->currentIndex = player->prevIndex;
 		player->moveCount = 0;
-		//TO-DO창 이동할때 에러남. 수정필요
-		SCENE_MGR.ChangeScene(SceneIds::COLLECT);
+		isDemonGet = true;
 		return false;
 	}
 	else if (mapObj[index] == MapObject::skeleton)
@@ -526,11 +525,6 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 	return true;
 }
 
-bool Chapter1::skullInteraction()
-{
-	return true;
-}
-
 int Chapter1::PosToIndex(sf::Vector2f pos)
 {
 	int rowIndex = (pos.y - offsetY - (size / 2)) / size;
@@ -618,6 +612,11 @@ void Chapter1::Update(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::R))
 	{
 		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+	}
+
+	if (isDemonGet)
+	{
+		SCENE_MGR.ChangeScene(SceneIds::COLLECT);
 	}
 }
 

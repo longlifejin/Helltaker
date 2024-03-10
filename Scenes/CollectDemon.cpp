@@ -82,10 +82,10 @@ void CollectDemon::Init()
 	booper->SetColor(219, 72, 77);
 	AddGo(booper, Layers::Ui);
 
-	/*wrongButton->SetActive(false);
+	wrongButton->SetActive(false);
 	wrongText->SetActive(false);
 	correctText->SetActive(false);
-	correctButton->SetActive(false);*/
+	correctButton->SetActive(false);
 	booper->SetActive(true);
 
 	Scene::Init();

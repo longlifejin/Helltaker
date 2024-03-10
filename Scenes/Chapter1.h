@@ -80,6 +80,8 @@ public:
 	Chapter1(SceneIds id);
 	virtual ~Chapter1();
 
+	bool isDemonGet = false;
+
 	void Init() override;
 	void Release() override;
 
