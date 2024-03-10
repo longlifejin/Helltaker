@@ -116,7 +116,7 @@ void CollectDemon::Update(float dt)
 {
 	Scene::Update(dt);
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	if (!isSelectTime && InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
 		wrongButton->SetActive(true);
 		wrongText->SetActive(true);
@@ -136,20 +136,42 @@ void CollectDemon::Update(float dt)
 
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			wrongButton->SetActive(false);
+			wrongText->SetActive(false);
+			correctButton->SetActive(false);
+			correctText->SetActive(false);
+			booper->SetActive(true);
+
 			switch (currentSelect)
 			{
 			case CollectDemon::SelectLine::Correct:
-				//success 화면
 				isSelectTime = false;
+				isBadEnd = false;
+				isSuccess = true;
 				break;
 			case CollectDemon::SelectLine::Wrong:
-				//wrong 화면
+				demonLine1->SetString(L"지옥을 살아서 나갈 생각을 한거야? 망상도 심하셔라.");
+				demonLine2->SetActive(false);
 				isSelectTime = false;
+				isBadEnd = true;
+				isSuccess = false;
 				break;
 			default:
 				break;
 			}
 		}
+	}
+
+	if (isBadEnd)
+	{
+		//space누르면 bad end장면 출력
+		isBadEnd = false;
+	}
+
+	if (isSuccess)
+	{
+		//space누르면 success장면 출력
+		isSuccess = false;
 	}
 }
 

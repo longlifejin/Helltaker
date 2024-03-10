@@ -22,6 +22,12 @@ void TextGo::SetString(const std::string& str)
 	SetOrigin(originPreset);
 }
 
+void TextGo::SetString(const std::wstring& str)
+{
+	text.setString(str);
+	SetOrigin(originPreset);
+}
+
 void TextGo::Set(const sf::Font& texture,
 	const std::string& str,
 	int size,

@@ -9,7 +9,7 @@ class SceneMgr : public Singleton<SceneMgr>
 protected:
 	std::vector<Scene*> scenes;
 
-	SceneIds startScene = SceneIds::TITLESCENE;
+	SceneIds startScene = SceneIds::COLLECT;
 	SceneIds currentScene = startScene;
 
 	SceneMgr() = default;
@@ -19,7 +19,6 @@ public:
 
 	void Init();
 	void Release();
-	//내가 원하는 타이밍에 할당과 해제를 하려고 만들어준다.
 
 	void ChangeScene(SceneIds id);
 

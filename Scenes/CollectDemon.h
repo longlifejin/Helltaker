@@ -39,6 +39,8 @@ protected:
 	SelectLine currentSelect = SelectLine::Wrong;
 
 	bool isSelectTime = false;
+	bool isBadEnd = false;
+	bool isSuccess = false;
 
 public:
 	CollectDemon(SceneIds id);

@@ -104,6 +104,8 @@ void Player::OnDamage()
 void Player::OnDie()
 {
 	std::cout << "Game Over" << std::endl;
+	
+	moveCount = 0;
 	//죽는 애니메이션 재생 후 자동 재시작
 }
 

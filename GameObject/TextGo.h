@@ -14,6 +14,7 @@ public:
 
 
 	void SetString(const std::string& str);
+	void SetString(const std::wstring& str);
 	void Set(const sf::Font& texture, const std::string& str, int size, const sf::Color& color);
 	void Set(const sf::Font& texture, const std::wstring& str, int size, const sf::Color& color);
 
