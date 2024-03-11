@@ -63,7 +63,6 @@ void Chapter1::Init()
 	currentStage->SetPosition({ IndexToPos(149).x + size/2.f, IndexToPos(149).y + size/2.5f}); //더 효율적인 방법 없을까
 	AddGo(currentStage, Layers::Ui);
 
-
 	advice = new TextGo("Advice");
 	advice->Set(fontResMgr.Get("Font/NanumSquareEB.otf"), adviceText, 30, sf::Color::White);
 	advice->SetOrigin(Origins::MC);
@@ -78,7 +77,6 @@ void Chapter1::Init()
 
 	mapObj.resize(col * row, MapObject::empty); //모든 내용 비어있는 것으로 처리
 	//Update때 챕터에 따라 맵을 다시 세팅해주기 위해서 Init에서 빈 것으로 해줌
-
 
 	collectDemon = new CollectDemon("Collect");
 	collectDemon->sortLayer = 1;
@@ -113,7 +111,6 @@ void Chapter1::Exit()
 	if (player != nullptr)
 	{
 		RemoveGo(player);
-
 	}
 
 	if (demon != nullptr)
@@ -141,7 +138,6 @@ void Chapter1::Exit()
 			RemoveGo(b);
 	}
 	boxList.clear();
-
 
 	Scene::Exit();
 }
@@ -624,7 +620,7 @@ void Chapter1::Update(float dt)
 	if (collectDemon->GetAnswerSelect())
 	{
 		//획득 애니메이션 재생 후 다음 챕터로 넘어가기
-		std::cout << "다음 챕터로 가자" << std::endl;
+		//std::cout << "다음 챕터로 가자" << std::endl;
 	}
 }
 

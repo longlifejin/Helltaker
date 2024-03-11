@@ -13,6 +13,8 @@ CollectDemon::~CollectDemon()
 
 void CollectDemon::Init()
 {
+	step = 0;
+
 	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
 
 	backColor.setFillColor(sf::Color(2, 2, 27));
@@ -68,12 +70,24 @@ void CollectDemon::Init()
 	booper.SetPosition({ (float)FRAMEWORK.GetWindowSize().x * 0.5f, (float)FRAMEWORK.GetWindowSize().y * 0.95f });
 	booper.SetColor(219, 72, 77);
 
+	badEnd.SetTexture("Texture2D/dialogueDeathExport0009.png");
+	badEnd.SetOrigin(Origins::BC);
+	badEnd.SetPosition(demon.GetPosition());
+
+	success.SetTexture("Texture2D/success0007.png");
+	success.SetOrigin(Origins::MC);
+	success.SetPosition({ demonLine2.GetPosition().x, demonLine2.GetPosition().y + 120.f });
+	success.SetScale({ 0.7f,0.7f });
+
 	wrongButton.SetActive(false);
+	correctButton.SetActive(false);
 	wrongText.SetActive(false);
 	correctText.SetActive(false);
-	correctButton.SetActive(false);
 	booper.SetActive(true);
+	badEnd.SetActive(false);
+	success.SetActive(false);
 
+	currentSelect = SelectLine::Wrong;
 	isAnswerSelect = false;
 
 	GameObject::Init();
@@ -87,6 +101,13 @@ void CollectDemon::Release()
 void CollectDemon::Update(float dt)
 {
 	GameObject::Update(dt);
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::R))
+	{
+		this->SetActive(false);
+		this->Init();
+		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+	}
 
 	switch (step)
 	{
@@ -124,10 +145,7 @@ void CollectDemon::Update(float dt)
 			demonLine2.SetString(L"피곤해서 정신을 못 차리겠어요.");
 			demon.SetTexture("Texture2D/pand_flust.png");
 			booper.SetActive(false);
-			success.SetTexture("Texture2D/success0007.png");
-			success.SetOrigin(Origins::MC);
-			success.SetPosition({demonLine2.GetPosition().x, demonLine2.GetPosition().y + 120.f});
-			success.SetScale({ 0.7f,0.7f });
+			success.SetActive(true);
 
 			if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 			{ ++step; }
@@ -149,12 +167,11 @@ void CollectDemon::Update(float dt)
 		case CollectDemon::SelectLine::Correct:
 			isAnswerSelect = true;
 			this->SetActive(false);
-			Init();
+			this->Release();
+			this->Init();
 			break;
 		case CollectDemon::SelectLine::Wrong:
-			badEnd.SetTexture("Texture2D/dialogueDeathExport0009.png");
-			badEnd.SetOrigin(Origins::BC);
-			badEnd.SetPosition(demon.GetPosition());
+			badEnd.SetActive(true);
 
 			demon.SetActive(false);
 			background.SetActive(false);
@@ -171,7 +188,8 @@ void CollectDemon::Update(float dt)
 	case 5:
 		//게임 재시작
 		this->SetActive(false);
-		Init();
+		this->Release();
+		this->Init();
 		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
 		break;
 	default:
