@@ -70,7 +70,7 @@ protected:
 	int selectedOption = -1;
 
 
-	
+	int step = 0;
 
 public:
 	CollectDemon(SceneIds id);

@@ -116,8 +116,17 @@ void CollectDemon::Update(float dt)
 {
 	Scene::Update(dt);
 
-	if (!isSelectTime && InputMgr::GetKeyDown(sf::Keyboard::Space))
+
+
+	switch (step)
 	{
+	case 0:
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			++step;
+		}
+		break;
+	case 1:
 		wrongButton->SetActive(true);
 		wrongText->SetActive(true);
 		correctButton->SetActive(true);
@@ -125,10 +134,9 @@ void CollectDemon::Update(float dt)
 		booper->SetActive(false);
 
 		isSelectTime = true;
-	}
-
-	if(isSelectTime)
-	{
+		++step;
+		break;
+	case 2:
 		if (InputMgr::GetKeyDown(sf::Keyboard::W) || InputMgr::GetKeyDown(sf::Keyboard::S))
 		{
 			Select();
@@ -142,39 +150,31 @@ void CollectDemon::Update(float dt)
 			correctText->SetActive(false);
 			booper->SetActive(true);
 
-			switch (currentSelect)
-			{
-			case CollectDemon::SelectLine::Correct:
-				demonLine->SetString(L"참 달콤한 제안이에요. 커피를 마시고 싶네요.");
-				demonLine2->SetString(L"피곤해서 정신을 못 차리겠어요.");
-				demon->SetTexture("Texture2D/pand_flust.png");
-				isSelectTime = false;
-				isBadEnd = false;
-				isSuccess = true;
-				break;
-			case CollectDemon::SelectLine::Wrong:
-				demonLine->SetString(L"지옥을 살아서 나갈 생각을 한거야? 망상도 심하셔라.");
-				demonLine2->SetActive(false);
-				isSelectTime = false;
-				isBadEnd = true;
-				isSuccess = false;
-				break;
-			default:
-				break;
-			}
+			++step;
 		}
-	}
-
-	if (!isSelectTime && isBadEnd)
-	{
-		//space누르면 bad end장면 출력
-		isBadEnd = false;
-	}
-
-	if (!isSelectTime && isSuccess)
-	{
-		//space누르면 success장면 출력
-		isSuccess = false;
+		break;
+	case 3:
+		switch (currentSelect)
+		{
+		case CollectDemon::SelectLine::Correct:
+			demonLine->SetString(L"참 달콤한 제안이에요. 커피를 마시고 싶네요.");
+			demonLine2->SetString(L"피곤해서 정신을 못 차리겠어요.");
+			demon->SetTexture("Texture2D/pand_flust.png");
+			isSelectTime = false;
+			isBadEnd = false;
+			isSuccess = true;
+			break;
+		case CollectDemon::SelectLine::Wrong:
+			demonLine->SetString(L"지옥을 살아서 나갈 생각을 한거야? 망상도 심하셔라.");
+			demonLine2->SetActive(false);
+			isSelectTime = false;
+			isBadEnd = true;
+			isSuccess = false;
+			break;
+		default:
+			break;
+		}
+		break;
 	}
 }
 
