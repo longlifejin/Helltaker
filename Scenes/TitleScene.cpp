@@ -12,6 +12,11 @@ TitleScene::~TitleScene()
 
 void TitleScene::Init()
 {
+	backColor.setFillColor(sf::Color(2, 2, 27));
+	backColor.setSize({ (float)FRAMEWORK.GetWindowSize().x, (float)FRAMEWORK.GetWindowSize().y });
+	backColor.setOrigin({ 0.f,0.f });
+	backColor.setPosition({ 0.f,0.f });
+
 	background1 = new SpriteGo("Background1");
 	background1->SetTexture("Texture2D/titleBG.png");
 	background1->SetOrigin(Origins::TL);
@@ -255,4 +260,10 @@ void TitleScene::Update(float dt)
 			break;
 		}
 	}
+}
+
+void TitleScene::Draw(sf::RenderWindow& window)
+{
+	window.draw(backColor);
+	Scene::Draw(window);
 }

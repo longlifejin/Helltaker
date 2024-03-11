@@ -11,6 +11,7 @@ protected:
 
 	SceneIds startScene = SceneIds::COLLECT;
 	SceneIds currentScene = startScene;
+	SceneIds nextScene = SceneIds::NONE;
 
 	SceneMgr() = default;
 	virtual ~SceneMgr();

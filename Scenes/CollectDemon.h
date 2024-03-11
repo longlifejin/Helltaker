@@ -30,6 +30,7 @@ class CollectDemon : public Scene
 	};
 
 protected:
+	sf::RectangleShape backColor;
 
 	SpriteGo* background;
 	SpriteGo* demon;

@@ -41,16 +41,21 @@ void SceneMgr::Release()
 void SceneMgr::ChangeScene(SceneIds id)
 {
 	//바꿀 씬을 저장해뒀다가 전 씬이 업데이트를 마치고 바꿀 수 있도록 수정
-
-
-	scenes[(int)currentScene]->Exit();
-	currentScene = id;
-	scenes[(int)currentScene]->Enter();
+	nextScene = id;
 }
 
 void SceneMgr::Update(float dt)
 {
 	scenes[(int)currentScene]->Update(dt);
+
+	if (nextScene != SceneIds::NONE)
+	{
+		scenes[(int)currentScene]->Exit();
+		currentScene = nextScene;
+		scenes[(int)currentScene]->Enter();
+
+		nextScene = SceneIds::NONE;
+	}
 }
 
 void SceneMgr::LateUpdate(float dt)

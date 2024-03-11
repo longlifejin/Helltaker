@@ -22,6 +22,8 @@ public:
 	TitleScene(SceneIds id);
 	virtual ~TitleScene();
 
+	sf::RectangleShape backColor;
+
 	SpriteGo* background1;
 	SpriteGo* background2;
 
@@ -49,6 +51,7 @@ public:
 	Button currentSelection = Button::NEWGAME;
 
 	void Update(float dt) override;
+	void Draw(sf::RenderWindow& window) override;
 
 };
 

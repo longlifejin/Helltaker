@@ -14,6 +14,11 @@ CollectDemon::~CollectDemon()
 
 void CollectDemon::Init()
 {
+	backColor.setFillColor(sf::Color(2, 2, 27));
+	backColor.setSize({ (float)FRAMEWORK.GetWindowSize().x, (float)FRAMEWORK.GetWindowSize().y });
+	backColor.setOrigin({ 0.f,0.f });
+	backColor.setPosition({ 0.f,0.f });
+
 	float Offset = 50.f;
 
 	background = new SpriteGo("Background");
@@ -239,5 +244,7 @@ void CollectDemon::Select()
 
 void CollectDemon::Draw(sf::RenderWindow& window)
 {
+	window.draw(backColor);
+
 	Scene::Draw(window);
 }
