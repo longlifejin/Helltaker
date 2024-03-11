@@ -57,7 +57,6 @@ protected:
 	std::list<Skeleton*> skeletonList;
 	std::list<Box*> boxList;
 	std::list<Skeleton*> deadSkeletonList;
-	std::list<Box*> destroyedBoxList;
 
 	sf::VertexArray grid;
 

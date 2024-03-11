@@ -122,13 +122,6 @@ void Chapter1::Exit()
 	}
 		deadSkeletonList.clear();
 
-	for (auto& b : destroyedBoxList)
-	{
-		if(b != nullptr)
-			RemoveGo(b);
-	}
-		destroyedBoxList.clear();
-
 	for (auto& skull : skeletonList)
 	{
 		if(skull != nullptr)
@@ -242,11 +235,10 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					b->currentIndex -= col;
 					if (mapObj[b->currentIndex] == MapObject::wall)
 					{
-						b->Destroy();
-						destroyedBoxList.push_back(b);
-						mapObj[b->prevIndex] = MapObject::empty;
+						b->currentIndex = b->prevIndex;
+						mapObj[b->currentIndex] = MapObject::box;
 						player->moveCount -= 1;
-						return true;
+						return false;
 					}
 					else if (mapObj[b->currentIndex] == MapObject::demon ||
 						mapObj[b->currentIndex] == MapObject::box ||
@@ -270,11 +262,10 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					b->currentIndex += col;
 					if (mapObj[b->currentIndex] == MapObject::wall)
 					{
-						b->Destroy();
-						destroyedBoxList.push_back(b); 
-						mapObj[b->prevIndex] = MapObject::empty;
+						b->currentIndex = b->prevIndex;
+						mapObj[b->currentIndex] = MapObject::box;
 						player->moveCount -= 1;
-						return true;
+						return false;
 					}
 					else if (mapObj[b->currentIndex] == MapObject::demon ||
 						mapObj[b->currentIndex] == MapObject::box ||
@@ -298,11 +289,10 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					b->currentIndex -= 1;
 					if (mapObj[b->currentIndex] == MapObject::wall)
 					{
-						b->Destroy();
-						destroyedBoxList.push_back(b);
-						mapObj[b->prevIndex] = MapObject::empty;
+						b->currentIndex = b->prevIndex;
+						mapObj[b->currentIndex] = MapObject::box;
 						player->moveCount -= 1;
-						return true;
+						return false;
 					}
 					else if (mapObj[b->currentIndex] == MapObject::demon ||
 						mapObj[b->currentIndex] == MapObject::box ||
@@ -326,11 +316,10 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					b->currentIndex += 1;
 					if (mapObj[b->currentIndex] == MapObject::wall)
 					{
-						b->Destroy();
-						destroyedBoxList.push_back(b);
-						mapObj[b->prevIndex] = MapObject::empty;
+						b->currentIndex = b->prevIndex;
+						mapObj[b->currentIndex] = MapObject::box;
 						player->moveCount -= 1;
-						return true;
+						return false;
 					}
 					else if (mapObj[b->currentIndex] == MapObject::demon ||
 						mapObj[b->currentIndex] == MapObject::box ||

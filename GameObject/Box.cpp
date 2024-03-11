@@ -56,16 +56,9 @@ Box::~Box()
 {
 }
 
-void Box::Destroy()
-{
-	this->SetActive(false);
-}
-
 void Box::Init()
 {
 	SpriteGo::Init();
-	//SetTexture("PlusSprite/boxExport0001.png");
-	//SetOrigin(Origins::BC);
 }
 
 void Box::Release()

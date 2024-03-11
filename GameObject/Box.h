@@ -21,7 +21,6 @@ public:
 	~Box();
 
 	int GetCurrentIndex() { return currentIndex; }
-	void Destroy();
 
 	void Init() override;
 	void Release() override;
