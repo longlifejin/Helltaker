@@ -9,7 +9,7 @@ class SceneMgr : public Singleton<SceneMgr>
 protected:
 	std::vector<Scene*> scenes;
 
-	SceneIds startScene = SceneIds::COLLECT;
+	SceneIds startScene = SceneIds::CHAPTER1;
 	SceneIds currentScene = startScene;
 	SceneIds nextScene = SceneIds::NONE;
 
@@ -25,7 +25,7 @@ public:
 
 	Scene* GetCurrentScene() { return scenes[(int)currentScene]; }
 
-	void Update(float dt);
+	bool Update(float dt);
 	void LateUpdate(float dt);
 	void FixedUpdate(float dt);
 	void Draw(sf::RenderWindow& window);

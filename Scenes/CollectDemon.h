@@ -1,18 +1,9 @@
 #pragma once
 #include "Scene.h"
+#include "SpriteGo.h"
+#include "TextGo.h"
 
-class SpriteGo;
-class TextGo;
-
-struct Dialogue
-{
-	std::wstring text;
-	std::vector<std::wstring> options; // 선택지
-	std::vector<int> nextIndex; // 선택지에 따른 다음 대사의 인덱스
-	bool haveOptions() const { return !options.empty(); }
-};
-
-class CollectDemon : public Scene
+class CollectDemon : public GameObject
 {
 	enum class SelectLine
 	{
@@ -20,35 +11,29 @@ class CollectDemon : public Scene
 		Wrong,
 	};
 
-
-	enum class Page //space누를때마다 대사 변경되게 하려고
-	{
-		FirstLine = 0,
-		SelectWrong_1,
-		SelectCorrect_1,
-
-	};
-
 protected:
+	sf::Font& fontEB = RES_MGR_FONT.Get("Font/NanumSquareEB.otf");
+	sf::Font& fontR = RES_MGR_FONT.Get("Font/NanumSquareEB.otf");
+
 	sf::RectangleShape backColor;
 
-	SpriteGo* background;
-	SpriteGo* demon;
+	SpriteGo background;
+	SpriteGo demon;
 	
-	TextGo* demonName;
-	TextGo* demonLine;
-	TextGo* demonLine2;
+	TextGo demonName;
+	TextGo demonLine;
+	TextGo demonLine2;
 
-	SpriteGo* wrongButton;
-	SpriteGo* correctButton;
+	SpriteGo wrongButton;
+	SpriteGo correctButton;
 
-	TextGo* wrongText;
-	TextGo* correctText;
+	TextGo wrongText;
+	TextGo correctText;
 
-	SpriteGo* booper;
+	SpriteGo booper;
 
-	SpriteGo* success;
-	SpriteGo* badEnd;
+	SpriteGo success;
+	SpriteGo badEnd;
 
 	std::wstring panName = L"● 지친 악마, 판데모니카 ●";
 	std::wstring pandLine1 = L"지옥 고객 서비스 센터의 판데모니카입니다.";
@@ -59,24 +44,21 @@ protected:
 
 	SelectLine currentSelect = SelectLine::Wrong;
 
-	bool isSelectTime = false;
-
-
 	int step = 0;
 
+	bool isAnswerSelect = false;
+
 public:
-	CollectDemon(SceneIds id);
+	CollectDemon(const std::string& name = "");
 	virtual ~CollectDemon();
 
 	void Init() override;
 	void Release() override;
 
-	void Enter() override;
-	void Exit() override;
-
 	void Update(float dt) override;
 
 	void Select();
+	bool GetAnswerSelect() { return isAnswerSelect; }
 
 	void Draw(sf::RenderWindow& window) override;
 

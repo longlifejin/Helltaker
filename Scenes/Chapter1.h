@@ -7,6 +7,7 @@ class Player;
 class Box;
 class Demon;
 class Skeleton;
+class CollectDemon;
 
 class Chapter1 : public Scene
 {
@@ -49,6 +50,8 @@ protected:
 	Demon* demon = nullptr;
 	Skeleton* skeleton = nullptr;
 	Box* box = nullptr;
+
+	CollectDemon* collectDemon = nullptr;
 
 
 	std::wstring adviceText = L"● 인생 조언 [L] ●";

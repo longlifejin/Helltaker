@@ -5,6 +5,7 @@
 #include "Skeleton.h"
 #include "Box.h"
 #include "TextGo.h"
+#include "CollectDemon.h"
 
 Chapter1::Chapter1(SceneIds id)
 	:Scene(id)
@@ -79,6 +80,11 @@ void Chapter1::Init()
 	//Update때 챕터에 따라 맵을 다시 세팅해주기 위해서 Init에서 빈 것으로 해줌
 
 	SetMap();
+
+	collectDemon = new CollectDemon("Collect");
+	collectDemon->sortLayer = 1;
+	AddGo(collectDemon, Layers::Ui);
+	collectDemon->SetActive(false);
 
 	Scene::Init();
 }
@@ -603,9 +609,15 @@ void Chapter1::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
 	}
 
-	if (isDemonGet)
+	if (isDemonGet && !collectDemon->GetActive())
 	{
-		SCENE_MGR.ChangeScene(SceneIds::COLLECT);
+		collectDemon->SetActive(true);
+		isDemonGet = false;
+	}
+
+	if (collectDemon->GetAnswerSelect())
+	{
+		//획득 애니메이션 재생 후 다음 챕터로 넘어가기
 	}
 }
 
