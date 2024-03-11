@@ -79,7 +79,6 @@ void Chapter1::Init()
 	mapObj.resize(col * row, MapObject::empty); //모든 내용 비어있는 것으로 처리
 	//Update때 챕터에 따라 맵을 다시 세팅해주기 위해서 Init에서 빈 것으로 해줌
 
-	SetMap();
 
 	collectDemon = new CollectDemon("Collect");
 	collectDemon->sortLayer = 1;
@@ -102,23 +101,24 @@ void Chapter1::Enter()
 	uiView.setSize(windowSize);
 	uiView.setCenter(windowSize * 0.5f);
 
+
+	SetMap();
+
 	Scene::Enter();
 }
 
 void Chapter1::Exit()
 {
-	Scene::Exit();
 
 	if (player != nullptr)
 	{
-		delete player;
-		player = nullptr;
+		RemoveGo(player);
+
 	}
 
 	if (demon != nullptr)
 	{
-		delete demon;
-		demon = nullptr;
+		RemoveGo(player);
 	}
 
 	for (auto& skull : deadSkeletonList)
@@ -140,8 +140,10 @@ void Chapter1::Exit()
 		if(b!= nullptr)
 			RemoveGo(b);
 	}
-		boxList.clear();
+	boxList.clear();
 
+
+	Scene::Exit();
 }
 
 void Chapter1::SetGrid()
@@ -554,6 +556,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		player->SetTexture("Sprite/assets100V20057.png");
 		player->SetOrigin(Origins::BC);
 		player->SetPosition(IndexToPos(index));
+		player->Init();
 		AddGo(player, Layers::World);
 		break;
 	case Chapter1::MapObject::demon:
@@ -561,6 +564,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		demon->SetTexture("Sprite/pandemonica_finalModel0010.png");
 		demon->SetPosition(IndexToPos(index));
 		demon->SetOrigin(Origins::BC);
+		demon->Init();
 		AddGo(demon, Layers::World);
 		break;
 	case Chapter1::MapObject::skeleton:
@@ -569,6 +573,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		skeleton->currentIndex = skeleton->prevIndex = index;
 		skeleton->SetPosition(IndexToPos(index));
 		skeleton->SetOrigin(Origins::BC);
+		skeleton->Init();
 		skeletonList.push_back(skeleton); //생성하면 list에 넣어주기
 		AddGo(skeleton, Layers::World);
 		break;
@@ -578,6 +583,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		box->currentIndex = box->prevIndex = index;
 		box->SetPosition(IndexToPos(index));
 		box->SetOrigin(Origins::BC);
+		box->Init();
 		boxList.push_back(box);
 		AddGo(box, Layers::World);
 		break;
@@ -618,6 +624,7 @@ void Chapter1::Update(float dt)
 	if (collectDemon->GetAnswerSelect())
 	{
 		//획득 애니메이션 재생 후 다음 챕터로 넘어가기
+		std::cout << "다음 챕터로 가자" << std::endl;
 	}
 }
 

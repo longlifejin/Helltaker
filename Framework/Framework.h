@@ -26,6 +26,9 @@ protected:
 	sf::Time realDeltaTime;
 	sf::Time deltaTime;
 
+	float fixedUpdateTime = 1.f;
+	sf::Time fixedDeltaTime;
+
 public:
 	sf::RenderWindow& GetWindow() { return window; } //조심해서 써야 함(왜?)
 	const sf::Vector2i& GetWindowSize() const { return windowSize; }
