@@ -8,6 +8,7 @@ class Box;
 class Demon;
 class Skeleton;
 class CollectDemon;
+class Pause;
 
 class Chapter1 : public Scene
 {
@@ -51,6 +52,7 @@ protected:
 	Skeleton* skeleton = nullptr;
 	Box* box = nullptr;
 
+	Pause* pause = nullptr;
 	CollectDemon* collectDemon = nullptr;
 
 

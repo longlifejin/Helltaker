@@ -13,7 +13,7 @@ class CollectDemon : public GameObject
 
 protected:
 	sf::Font& fontEB = RES_MGR_FONT.Get("Font/NanumSquareEB.otf");
-	sf::Font& fontR = RES_MGR_FONT.Get("Font/NanumSquareEB.otf");
+	sf::Font& fontR = RES_MGR_FONT.Get("Font/NanumSquareR.otf");
 
 	sf::RectangleShape backColor;
 

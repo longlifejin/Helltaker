@@ -6,6 +6,7 @@
 #include "Box.h"
 #include "TextGo.h"
 #include "CollectDemon.h"
+#include "Pause.h"
 
 Chapter1::Chapter1(SceneIds id)
 	:Scene(id)
@@ -78,6 +79,11 @@ void Chapter1::Init()
 	mapObj.resize(col * row, MapObject::empty); //모든 내용 비어있는 것으로 처리
 	//Update때 챕터에 따라 맵을 다시 세팅해주기 위해서 Init에서 빈 것으로 해줌
 
+	pause = new Pause("Pause");
+	pause->sortLayer = 2;
+	AddGo(pause, Layers::Ui);
+	pause->SetActive(false);
+
 	collectDemon = new CollectDemon("Collect");
 	collectDemon->sortLayer = 1;
 	AddGo(collectDemon, Layers::Ui);
@@ -98,7 +104,6 @@ void Chapter1::Enter()
 	worldView.setCenter(windowSize * 0.5f);
 	uiView.setSize(windowSize);
 	uiView.setCenter(windowSize * 0.5f);
-
 
 	SetMap();
 
@@ -597,6 +602,11 @@ void Chapter1::Update(float dt)
 	Scene::Update(dt);
 
 	moveCount->SetString(std::to_string(player->moveCount));
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
+	{
+		pause->SetActive(true);
+	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::F1))
 	{

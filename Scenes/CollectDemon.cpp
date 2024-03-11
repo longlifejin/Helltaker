@@ -229,7 +229,7 @@ void CollectDemon::Select()
 void CollectDemon::Draw(sf::RenderWindow& window)
 {
 	window.draw(backColor);
-	if(background.GetActive())	{ background.Draw(window); }
+	if (background.GetActive())	{ background.Draw(window); }
 	if (demon.GetActive())	{ demon.Draw(window); }
 	if (demonName.GetActive())	{ demonName.Draw(window); }
 	if (demonLine.GetActive())	{ demonLine.Draw(window); }

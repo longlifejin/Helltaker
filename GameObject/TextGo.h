@@ -21,6 +21,9 @@ public:
 	void SetFont(const std::string& textureId);
 	void SetFont(const sf::Font& texture);
 
+	void SetColor(int r, int g, int b);
+	void SetColor(const sf::Color& color);
+
 	void SetOrigin(Origins preset) override;
 	void SetOrigin(const sf::Vector2f& newOrigin) override;
 

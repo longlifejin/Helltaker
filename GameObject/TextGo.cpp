@@ -57,6 +57,16 @@ void TextGo::SetFont(const sf::Font& font)
 	text.setFont(font);
 }
 
+void TextGo::SetColor(int r, int g, int b)
+{
+	text.setFillColor(sf::Color(r, g, b));
+}
+
+void TextGo::SetColor(const sf::Color& color)
+{
+	text.setFillColor(color);
+}
+
 void TextGo::SetPosition(const sf::Vector2f& pos)
 {
 	position = pos;
