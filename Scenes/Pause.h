@@ -6,6 +6,24 @@
 
 class Pause : public GameObject
 {
+public:
+	enum class Select
+	{
+		BACK,
+		PASS,
+		BGM,
+		SFX,
+		MAIN,
+	};
+
+	enum class Volume
+	{
+		LOUD,
+		MIDDLE,
+		SMALL,
+		MUTE,
+	};
+
 protected:
 	sf::Font& fontEB = RES_MGR_FONT.Get("Font/NanumSquareEB.otf");
 	sf::Font& fontR = RES_MGR_FONT.Get("Font/NanumSquareR.otf");
@@ -31,8 +49,13 @@ protected:
 	SpriteGo ritCodeLeft;
 	SpriteGo ritCodeRight;
 
-	SpriteGo ritBorder;
+	SpriteGo ritBorderLeft;
+	SpriteGo ritBorderRight;
 	SpriteGo ritStar;
+
+	Select currentSelect = Select::BACK;
+	Volume currentBGMVolume = Volume::LOUD;
+	Volume currentSFXVolume = Volume::LOUD;
 
 public:
 	Pause(const std::string& name = "");
@@ -42,6 +65,7 @@ public:
 	void Release() override;
 
 	void Update(float dt) override;
+
 	void Draw(sf::RenderWindow& window) override;
 };
 

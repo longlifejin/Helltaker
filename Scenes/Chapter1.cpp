@@ -605,6 +605,7 @@ void Chapter1::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{
+		//FRAMEWORK.SetTimeScale(0.f); //일시정지할때 멈추는거 수정하기
 		pause->SetActive(true);
 	}
 
