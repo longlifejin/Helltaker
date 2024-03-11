@@ -35,7 +35,7 @@ void CollectDemon::Init()
 	AddGo(demonName, Layers::Ui);
 
 	demonLine = new TextGo("DemonLine");
-	demonLine->Set(fontResMgr.Get("Font/NanumSquareR.otf"), L"", 30, sf::Color::White);
+	demonLine->Set(fontResMgr.Get("Font/NanumSquareR.otf"), pandLine1, 30, sf::Color::White);
 	demonLine->SetOrigin(Origins::TC);
 	demonLine->SetPosition({ demonName->GetPosition().x, demonName->GetPosition().y + Offset });
 	AddGo(demonLine, Layers::Ui);
@@ -145,6 +145,9 @@ void CollectDemon::Update(float dt)
 			switch (currentSelect)
 			{
 			case CollectDemon::SelectLine::Correct:
+				demonLine->SetString(L"참 달콤한 제안이에요. 커피를 마시고 싶네요.");
+				demonLine2->SetString(L"피곤해서 정신을 못 차리겠어요.");
+				demon->SetTexture("Texture2D/pand_flust.png");
 				isSelectTime = false;
 				isBadEnd = false;
 				isSuccess = true;
