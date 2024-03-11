@@ -122,9 +122,7 @@ void CollectDemon::Update(float dt)
 	{
 	case 0:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
-		{
-			++step;
-		}
+		{ ++step; }
 		break;
 	case 1:
 		wrongButton->SetActive(true);
@@ -132,15 +130,12 @@ void CollectDemon::Update(float dt)
 		correctButton->SetActive(true);
 		correctText->SetActive(true);
 		booper->SetActive(false);
-
 		isSelectTime = true;
 		++step;
 		break;
 	case 2:
 		if (InputMgr::GetKeyDown(sf::Keyboard::W) || InputMgr::GetKeyDown(sf::Keyboard::S))
-		{
-			Select();
-		}
+		{ Select();	}
 
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
@@ -149,7 +144,6 @@ void CollectDemon::Update(float dt)
 			correctButton->SetActive(false);
 			correctText->SetActive(false);
 			booper->SetActive(true);
-
 			++step;
 		}
 		break;
@@ -160,20 +154,56 @@ void CollectDemon::Update(float dt)
 			demonLine->SetString(L"참 달콤한 제안이에요. 커피를 마시고 싶네요.");
 			demonLine2->SetString(L"피곤해서 정신을 못 차리겠어요.");
 			demon->SetTexture("Texture2D/pand_flust.png");
+
+			success = new SpriteGo("Success");
+			success->SetTexture("Texture2D/success0007.png");
+			success->SetOrigin(Origins::MC);
+			success->SetPosition({demonLine2->GetPosition().x, demonLine2->GetPosition().y + 120.f});
+			success->SetScale({ 0.7f,0.7f });
+			AddGo(success, Layers::Ui);
+
 			isSelectTime = false;
-			isBadEnd = false;
-			isSuccess = true;
+			if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+			{ ++step; }
 			break;
 		case CollectDemon::SelectLine::Wrong:
 			demonLine->SetString(L"지옥을 살아서 나갈 생각을 한거야? 망상도 심하셔라.");
 			demonLine2->SetActive(false);
 			isSelectTime = false;
-			isBadEnd = true;
-			isSuccess = false;
+			if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+			{ ++step; }
 			break;
 		default:
 			break;
 		}
+		break;
+	case 4:
+		switch (currentSelect)
+		{
+		case CollectDemon::SelectLine::Wrong:
+			badEnd = new SpriteGo("BadEnd");
+			badEnd->SetTexture("Texture2D/dialogueDeathExport0009.png");
+			badEnd->SetOrigin(Origins::BC);
+			badEnd->SetPosition(demon->GetPosition());
+			AddGo(badEnd, Layers::Ui);
+			demon->SetActive(false);
+			background->SetActive(false);
+			demonName->SetActive(false);
+			demonLine->Set(fontResMgr.Get("Font/NanumSquareEB.otf"), L"그녀의 전문적인 친절함이 담긴 손길로 당신의 얼굴을 잡고", 25, sf::Color::Red);
+			demonLine2->Set(fontResMgr.Get("Font/NanumSquareEB.otf"), L"목을 비틀어 버렸습니다.", 25, sf::Color::Red);
+			demonLine2->SetActive(true);
+			if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+			{ ++step; }
+			break;
+		case CollectDemon::SelectLine::Correct:
+			//이전 게임 상황으로 돌아가서 획득 애니메이션 재생 후 다음 챕터
+			break;
+		}
+		break;
+	case 5:
+		//게임 재시작
+		break;
+	default:
 		break;
 	}
 }

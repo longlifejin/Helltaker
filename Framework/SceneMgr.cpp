@@ -40,6 +40,9 @@ void SceneMgr::Release()
 
 void SceneMgr::ChangeScene(SceneIds id)
 {
+	//¹Ù²Ü ¾ÀÀ» ÀúÀåÇØµ×´Ù°¡ Àü ¾ÀÀÌ ¾÷µ¥ÀÌÆ®¸¦ ¸¶Ä¡°í ¹Ù²Ü ¼ö ÀÖµµ·Ï ¼öÁ¤
+
+
 	scenes[(int)currentScene]->Exit();
 	currentScene = id;
 	scenes[(int)currentScene]->Enter();
