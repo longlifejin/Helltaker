@@ -1,8 +1,8 @@
 #pragma once
 #include "SpriteGo.h"
+#include "Animator.h"
 
 class Chapter1;
-class Animator;
 
 class Player : public SpriteGo
 {
@@ -34,12 +34,12 @@ public:
 
 	int moveCount = 23; //√©≈Õ∏∂¥Ÿ πŸ≤„¡÷±‚
 	int currentIndex = 49;
-	int prevIndex;
+	int prevIndex = currentIndex;
 
 	float speed = 300.f;
 
 	Chapter1* chapter;
-	Animator* animator;
+	Animator animator;
 
 	void Init() override;
 	void Release() override;

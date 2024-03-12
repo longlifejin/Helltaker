@@ -225,302 +225,109 @@ void Chapter1::SetMap()
 	}
 }
 
-bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
+Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
 {
-	if(mapObj[index] == MapObject::wall)
+	int moveAmount = curr - prev;
+
+	switch (mapObj[curr])
 	{
-		player->currentIndex = player->prevIndex;
-		return false;
-	}
-	else if(mapObj[index] == MapObject::box)
-	{
-		for (auto& b : boxList)
-		{
-			if (b->GetCurrentIndex() == index)
-			{
-				if (key == sf::Keyboard::W) // TO-DO : 반복되는 내용 함수로 만들어서 쓰기
-				{
-					b->prevIndex = b->currentIndex;
-					b->currentIndex -= col;
-					if (mapObj[b->currentIndex] == MapObject::wall)
-					{
-						b->currentIndex = b->prevIndex;
-						mapObj[b->currentIndex] = MapObject::box;
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[b->currentIndex] == MapObject::demon ||
-						mapObj[b->currentIndex] == MapObject::box ||
-						mapObj[b->currentIndex] == MapObject::key ||
-						mapObj[b->currentIndex] == MapObject::lockbox ||
-						mapObj[b->currentIndex] == MapObject::skeleton)
-					{
-						b->currentIndex = b->prevIndex;
-						player->moveCount -= 1;
-						return false;
-					}
-					b->SetPosition(IndexToPos(b->currentIndex));
-					mapObj[b->prevIndex] = MapObject::player;
-					mapObj[b->currentIndex] = MapObject::box;
-					player->moveCount -= 1;
-					return false;
-				}
-				if (key == sf::Keyboard::S) // TO-DO : 반복되는 내용 함수로 만들어서 쓰기
-				{
-					b->prevIndex = b->currentIndex;
-					b->currentIndex += col;
-					if (mapObj[b->currentIndex] == MapObject::wall)
-					{
-						b->currentIndex = b->prevIndex;
-						mapObj[b->currentIndex] = MapObject::box;
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[b->currentIndex] == MapObject::demon ||
-						mapObj[b->currentIndex] == MapObject::box ||
-						mapObj[b->currentIndex] == MapObject::key ||
-						mapObj[b->currentIndex] == MapObject::lockbox ||
-						mapObj[b->currentIndex] == MapObject::skeleton)
-					{
-						b->currentIndex = b->prevIndex;
-						player->moveCount -= 1;
-						return false;
-					}
-					b->SetPosition(IndexToPos(b->currentIndex));
-					mapObj[b->prevIndex] = MapObject::player;
-					mapObj[b->currentIndex] = MapObject::box;
-					player->moveCount -= 1;
-					return false;
-				}
-				if (key == sf::Keyboard::A)
-				{
-					b->prevIndex = b->currentIndex;
-					b->currentIndex -= 1;
-					if (mapObj[b->currentIndex] == MapObject::wall)
-					{
-						b->currentIndex = b->prevIndex;
-						mapObj[b->currentIndex] = MapObject::box;
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[b->currentIndex] == MapObject::demon ||
-						mapObj[b->currentIndex] == MapObject::box ||
-						mapObj[b->currentIndex] == MapObject::key ||
-						mapObj[b->currentIndex] == MapObject::lockbox ||
-						mapObj[b->currentIndex] == MapObject::skeleton)
-					{
-						b->currentIndex = b->prevIndex;
-						player->moveCount -= 1;
-						return false;
-					}
-					b->SetPosition(IndexToPos(b->currentIndex));
-					mapObj[b->prevIndex] = MapObject::player;
-					mapObj[b->currentIndex] = MapObject::box;
-					player->moveCount -= 1;
-					return false;
-				}
-				if (key == sf::Keyboard::D)
-				{
-					b->prevIndex = b->currentIndex;
-					b->currentIndex += 1;
-					if (mapObj[b->currentIndex] == MapObject::wall)
-					{
-						b->currentIndex = b->prevIndex;
-						mapObj[b->currentIndex] = MapObject::box;
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[b->currentIndex] == MapObject::demon ||
-						mapObj[b->currentIndex] == MapObject::box ||
-						mapObj[b->currentIndex] == MapObject::key ||
-						mapObj[b->currentIndex] == MapObject::lockbox ||
-						mapObj[b->currentIndex] == MapObject::skeleton)
-					{
-						b->currentIndex = b->prevIndex;
-						player->moveCount -= 1;
-						return false;
-					}
-					b->SetPosition(IndexToPos(b->currentIndex));
-					mapObj[b->prevIndex] = MapObject::player;
-					mapObj[b->currentIndex] = MapObject::box;
-					player->moveCount -= 1;
-					return false;
-				}
-			}
-		}
-		player->currentIndex = player->prevIndex;
-		return false;
-	}
-	else if(mapObj[index] == MapObject::demon)
-	{
+	case MapObject::wall:
+		player->currentIndex = prev;
+		return MapObject::wall;
+	case MapObject::demon:
 		player->currentIndex = player->prevIndex;
 		player->moveCount = 0;
 		isDemonGet = true;
-		return false;
-	}
-	else if (mapObj[index] == MapObject::skeleton)
-	{
+		return MapObject::demon;
+	case MapObject::skeleton:
 		for (auto& skull : skeletonList)
 		{
-			if (skull->GetCurrentIndex() == index)
+			if (skull->GetCurrentIndex() == curr)
 			{
-				if (key == sf::Keyboard::W)
+				skull->prevIndex = skull->currentIndex;
+				skull->currentIndex += moveAmount;
+				if (mapObj[skull->currentIndex] == MapObject::wall)
 				{
-					skull->prevIndex = skull->currentIndex;
-					skull->currentIndex -= col;
-					if (mapObj[skull->currentIndex] == MapObject::wall)
-					{
-						skull->OnDie();
-						deadSkeletonList.push_back(skull);
-						mapObj[skull->prevIndex] = MapObject::empty;
-						skeletonList.remove(skull);
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[skull->currentIndex] == MapObject::demon ||
-						mapObj[skull->currentIndex] == MapObject::box ||
-						mapObj[skull->currentIndex] == MapObject::key ||
-						mapObj[skull->currentIndex] == MapObject::lockbox)
-					{
-						skull->currentIndex = skull->prevIndex;
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[skull->currentIndex] == MapObject::skeleton)
-					{
-						skull->OnDie();
-						deadSkeletonList.push_back(skull);
-						mapObj[skull->prevIndex] = MapObject::empty;
-						skeletonList.remove(skull);
-						player->moveCount -= 1;
-						return false;
-					}
+					skull->OnDie();
+					deadSkeletonList.push_back(skull);
+					mapObj[skull->prevIndex] = MapObject::empty;
+					skeletonList.remove(skull);
+					player->moveCount -= 1;
+					break;
+				}
+				else if (mapObj[skull->currentIndex] == MapObject::skeleton)
+				{
+					skull->OnDie();
+					deadSkeletonList.push_back(skull);
+					mapObj[skull->prevIndex] = MapObject::empty;
+					mapObj[skull->currentIndex] = MapObject::skeleton;
+					skeletonList.remove(skull);
+					player->moveCount -= 1;
+					break;
+				}
+				else if (mapObj[skull->currentIndex] == MapObject::demon ||
+					mapObj[skull->currentIndex] == MapObject::box ||
+					mapObj[skull->currentIndex] == MapObject::key ||
+					mapObj[skull->currentIndex] == MapObject::lockbox)
+				{
+					skull->currentIndex = skull->prevIndex;
+					player->moveCount -= 1;
+					break;
+				}
+				else if (mapObj[skull->currentIndex] == MapObject::empty)
+				{
 					skull->SetPosition(IndexToPos(skull->currentIndex));
 					mapObj[skull->prevIndex] = MapObject::player;
 					mapObj[skull->currentIndex] = MapObject::skeleton;
 					player->moveCount -= 1;
-					return false;
-				}
-				else if (key == sf::Keyboard::S)
-				{
-					skull->prevIndex = skull->currentIndex;
-					skull->currentIndex += col; 
-					if (mapObj[skull->currentIndex] == MapObject::wall)
-					{
-						skull->OnDie();
-						deadSkeletonList.push_back(skull);
-						mapObj[skull->prevIndex] = MapObject::empty;
-						skeletonList.remove(skull);
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[skull->currentIndex] == MapObject::demon ||
-						mapObj[skull->currentIndex] == MapObject::box ||
-						mapObj[skull->currentIndex] == MapObject::key ||
-						mapObj[skull->currentIndex] == MapObject::lockbox)
-					{
-						skull->currentIndex = skull->prevIndex;
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[skull->currentIndex] == MapObject::skeleton)
-					{
-						skull->OnDie();
-						deadSkeletonList.push_back(skull);
-						mapObj[skull->prevIndex] = MapObject::empty;
-						skeletonList.remove(skull);
-						player->moveCount -= 1;
-						return false;
-					}
-					skull->SetPosition(IndexToPos(skull->currentIndex));
-					mapObj[skull->prevIndex] = MapObject::player;
-					mapObj[skull->currentIndex] = MapObject::skeleton;
-					player->moveCount -= 1;
-					return false;
-				}
-				else if (key == sf::Keyboard::A)
-				{
-					skull->prevIndex = skull->currentIndex;
-					skull->currentIndex -= 1;
-					if (mapObj[skull->currentIndex] == MapObject::wall)
-					{
-						skull->OnDie();
-						deadSkeletonList.push_back(skull);
-						mapObj[skull->prevIndex] = MapObject::empty;
-						skeletonList.remove(skull);
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[skull->currentIndex] == MapObject::demon ||
-						mapObj[skull->currentIndex] == MapObject::box ||
-						mapObj[skull->currentIndex] == MapObject::key ||
-						mapObj[skull->currentIndex] == MapObject::lockbox)
-					{
-						skull->currentIndex = skull->prevIndex;
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[skull->currentIndex] == MapObject::skeleton)
-					{
-						skull->OnDie();
-						deadSkeletonList.push_back(skull);
-						mapObj[skull->prevIndex] = MapObject::empty;
-						skeletonList.remove(skull);
-						player->moveCount -= 1;
-						return false;
-					}
-					skull->SetPosition(IndexToPos(skull->currentIndex));
-					mapObj[skull->prevIndex] = MapObject::player;
-					mapObj[skull->currentIndex] = MapObject::skeleton;
-					player->moveCount -= 1;
-					return false;
-				}
-				else if (key == sf::Keyboard::D)
-				{
-					skull->prevIndex = skull->currentIndex;
-					skull->currentIndex += 1;
-					if (mapObj[skull->currentIndex] == MapObject::wall)
-					{
-						skull->OnDie();
-						deadSkeletonList.push_back(skull);
-						mapObj[skull->prevIndex] = MapObject::empty;
-						skeletonList.remove(skull);
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[skull->currentIndex] == MapObject::demon ||
-						mapObj[skull->currentIndex] == MapObject::box ||
-						mapObj[skull->currentIndex] == MapObject::key ||
-						mapObj[skull->currentIndex] == MapObject::lockbox)
-					{
-						skull->currentIndex = skull->prevIndex;
-						player->moveCount -= 1;
-						return false;
-					}
-					else if (mapObj[skull->currentIndex] == MapObject::skeleton)
-					{
-						skull->OnDie();
-						deadSkeletonList.push_back(skull);
-						mapObj[skull->prevIndex] = MapObject::empty;
-						skeletonList.remove(skull);
-						player->moveCount -= 1;
-						return false;
-					}
-					skull->SetPosition(IndexToPos(skull->currentIndex));
-					mapObj[skull->prevIndex] = MapObject::player;
-					mapObj[skull->currentIndex] = MapObject::skeleton;
-					return false;
+					break;
 				}
 			}
 		}
 		player->currentIndex = player->prevIndex;
+		return MapObject::skeleton;
+	case MapObject::box:
+		for (auto& b : boxList)
+		{
+			if (b->GetCurrentIndex() == curr)
+			{
+				b->prevIndex = b->currentIndex;
+				b->currentIndex += moveAmount;
+				if (mapObj[b->currentIndex] == MapObject::wall)
+				{
+					b->currentIndex = b->prevIndex;
+					mapObj[b->currentIndex] = MapObject::box;
+					player->moveCount -= 1;
+					break;
+				}
+				else if (mapObj[b->currentIndex] == MapObject::demon ||
+					mapObj[b->currentIndex] == MapObject::box ||
+					mapObj[b->currentIndex] == MapObject::key ||
+					mapObj[b->currentIndex] == MapObject::lockbox ||
+					mapObj[b->currentIndex] == MapObject::skeleton)
+				{
+					b->currentIndex = b->prevIndex;
+					player->moveCount -= 1;
+					break;
+				}
+				else if (mapObj[b->currentIndex] == MapObject::empty)
+				{
+					b->SetPosition(IndexToPos(b->currentIndex));
+					mapObj[b->prevIndex] = MapObject::player;
+					mapObj[b->currentIndex] = MapObject::box;
+					player->moveCount -= 1;
+					break;
+				}
+			}
+		}
+		player->currentIndex = player->prevIndex;
+		return MapObject::box;
+	default:
+		mapObj[player->prevIndex] = MapObject::empty;
 		player->moveCount -= 1;
-		return false;
+		return MapObject::empty;
 	}
-	//empty인 경우
-	mapObj[player->prevIndex] = MapObject::empty;
-	player->moveCount -= 1;
-	return true;
+
 }
 
 int Chapter1::PosToIndex(sf::Vector2f pos)

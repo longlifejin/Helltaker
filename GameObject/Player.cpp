@@ -17,11 +17,6 @@ void Player::Init()
 	SetOrigin(Origins::BC);
 	moveCount = 23;
 	SpriteGo::Init();
-
-	clipInfos.push_back({ "Tables/player_Idle.csv", "animations/Move.csv", false, Utils::GetNormal({-1,-1}) });
-	clipInfos.push_back({ "Tables/player_Idle.csv", "animations/Move.csv", true, Utils::GetNormal({-1,-1}) });
-	clipInfos.push_back({ "Tables/player_Idle.csv", "animations/Move.csv", false, Utils::GetNormal({-1,-1}) });
-	clipInfos.push_back({ "Tables/player_Idle.csv", "animations/Move.csv", true, Utils::GetNormal({-1,-1}) });
 }
 
 void Player::Release()
@@ -32,11 +27,11 @@ void Player::Release()
 void Player::Reset()
 {
 	SpriteGo::Reset();
-	animator->Play("Tables/player_Idle.csv");
+	//animator.Play("Tables/player_Idle.csv");
 	SetOrigin(Origins::BC);
 	SetFlipX(false);
 
-	currentClipInfo = clipInfos[6]; //???
+	//currentClipInfo = clipInfos[6]; //???
 }
 
 void Player::Update(float dt)
@@ -44,59 +39,39 @@ void Player::Update(float dt)
 	SpriteGo::Update(dt);
 
 	chapter = dynamic_cast<Chapter1*>(SCENE_MGR.GetCurrentScene());
+	
+	prevIndex = currentIndex;
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::W)) //상
+	if (InputMgr::GetKeyDown(sf::Keyboard::W))
 	{
-		prevIndex = currentIndex;
 		currentIndex -= chapter->GetCurrentCol();
-		if (chapter->CheckInteraction(currentIndex, sf::Keyboard::W))
-		{
-			SetPosition(chapter->IndexToPos(currentIndex));
-		}
-		else
-		{
-			currentIndex = prevIndex;
-		}
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::S)) //하
+	if (InputMgr::GetKeyDown(sf::Keyboard::S))
 	{
-		prevIndex = currentIndex;
 		currentIndex += chapter->GetCurrentCol();
-		if(chapter->CheckInteraction(currentIndex, sf::Keyboard::S))
-		{
-			SetPosition(chapter->IndexToPos(currentIndex));
-		}
-		else
-		{
-			currentIndex = prevIndex;
-		}
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::A)) //좌
+	if (InputMgr::GetKeyDown(sf::Keyboard::A))
 	{
-		prevIndex = currentIndex;
-		SetFlipX(true);
 		currentIndex -= 1;
-		if (chapter->CheckInteraction(currentIndex, sf::Keyboard::A))
-		{
-			SetPosition(chapter->IndexToPos(currentIndex));
-		}
-		else
-		{
-			currentIndex = prevIndex;
-		}
+		this->SetFlipX(true);
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::D)) //우
+	if (InputMgr::GetKeyDown(sf::Keyboard::D))
 	{
-		prevIndex = currentIndex;
-		SetFlipX(false);
 		currentIndex += 1;
-		if (chapter->CheckInteraction(currentIndex, sf::Keyboard::D))
+		this->SetFlipX(false);
+	}
+
+	if (prevIndex != currentIndex)
+	{
+		if (chapter->CheckInteraction(currentIndex, prevIndex) == Chapter1::MapObject::empty)
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 		}
-		else
+		else if (chapter->CheckInteraction(currentIndex, prevIndex) == Chapter1::MapObject::box
+			|| chapter->CheckInteraction(currentIndex, prevIndex) == Chapter1::MapObject::skeleton)
 		{
 			currentIndex = prevIndex;
+			SetPosition(chapter->IndexToPos(currentIndex));
 		}
 	}
 
@@ -104,7 +79,6 @@ void Player::Update(float dt)
 	{
 		OnDie();
 	}
-
 }
 
 void Player::OnDamage()
@@ -115,7 +89,6 @@ void Player::OnDamage()
 void Player::OnDie()
 {
 	std::cout << "Game Over" << std::endl;
-	
 	moveCount = 0;
 	//죽는 애니메이션 재생 후 자동 재시작
 }
