@@ -21,6 +21,7 @@
     <ClCompile Include="Scenes\TitleScene.cpp" />
     <ClCompile Include="Scenes\CollectDemon.cpp" />
     <ClCompile Include="Scenes\Pause.cpp" />
+    <ClCompile Include="Animator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Framework.h" />
@@ -45,5 +46,7 @@
     <ClInclude Include="Scenes\TitleScene.h" />
     <ClInclude Include="Scenes\CollectDemon.h" />
     <ClInclude Include="Scenes\Pause.h" />
+    <ClInclude Include="Animator.h" />
+    <ClInclude Include="Framework\rapidcsv.h" />
   </ItemGroup>
 </Project>

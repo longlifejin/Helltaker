@@ -292,7 +292,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					player->moveCount -= 1;
 					return false;
 				}
-				if (key == sf::Keyboard::A) // TO-DO : 반복되는 내용 함수로 만들어서 쓰기
+				if (key == sf::Keyboard::A)
 				{
 					b->prevIndex = b->currentIndex;
 					b->currentIndex -= 1;
@@ -319,7 +319,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 					player->moveCount -= 1;
 					return false;
 				}
-				if (key == sf::Keyboard::D) // TO-DO : 반복되는 내용 함수로 만들어서 쓰기
+				if (key == sf::Keyboard::D)
 				{
 					b->prevIndex = b->currentIndex;
 					b->currentIndex += 1;
@@ -364,7 +364,7 @@ bool Chapter1::CheckInteraction(int index, sf::Keyboard::Key key)
 		{
 			if (skull->GetCurrentIndex() == index)
 			{
-				if (key == sf::Keyboard::W) // TO-DO : 반복되는 내용 함수로 만들어서 쓰기
+				if (key == sf::Keyboard::W)
 				{
 					skull->prevIndex = skull->currentIndex;
 					skull->currentIndex -= col;
@@ -575,7 +575,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		skeleton->SetPosition(IndexToPos(index));
 		skeleton->SetOrigin(Origins::BC);
 		skeleton->Init();
-		skeletonList.push_back(skeleton); //생성하면 list에 넣어주기
+		skeletonList.push_back(skeleton);
 		AddGo(skeleton, Layers::World);
 		break;
 	case Chapter1::MapObject::box:
@@ -631,7 +631,6 @@ void Chapter1::Update(float dt)
 	if (collectDemon->GetAnswerSelect())
 	{
 		//획득 애니메이션 재생 후 다음 챕터로 넘어가기
-		//std::cout << "다음 챕터로 가자" << std::endl;
 	}
 }
 

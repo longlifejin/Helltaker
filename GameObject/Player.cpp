@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Player.h"
 #include "Chapter1.h"
+#include "Animator.h"
 
 Player::Player(const std::string& name)
 	:SpriteGo(name)
@@ -16,6 +17,11 @@ void Player::Init()
 	SetOrigin(Origins::BC);
 	moveCount = 23;
 	SpriteGo::Init();
+
+	clipInfos.push_back({ "Tables/player_Idle.csv", "animations/Move.csv", false, Utils::GetNormal({-1,-1}) });
+	clipInfos.push_back({ "Tables/player_Idle.csv", "animations/Move.csv", true, Utils::GetNormal({-1,-1}) });
+	clipInfos.push_back({ "Tables/player_Idle.csv", "animations/Move.csv", false, Utils::GetNormal({-1,-1}) });
+	clipInfos.push_back({ "Tables/player_Idle.csv", "animations/Move.csv", true, Utils::GetNormal({-1,-1}) });
 }
 
 void Player::Release()
@@ -26,6 +32,11 @@ void Player::Release()
 void Player::Reset()
 {
 	SpriteGo::Reset();
+	animator->Play("Tables/player_Idle.csv");
+	SetOrigin(Origins::BC);
+	SetFlipX(false);
+
+	currentClipInfo = clipInfos[6]; //???
 }
 
 void Player::Update(float dt)

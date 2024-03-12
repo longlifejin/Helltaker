@@ -2,10 +2,31 @@
 #include "SpriteGo.h"
 
 class Chapter1;
+class Animator;
 
 class Player : public SpriteGo
 {
+public:
+	struct ClipInfo //좌,우,위,아래 총 4개
+	{
+		std::string idle;
+		std::string move;
+		bool flipX = false;
+		sf::Vector2f point; //기준점
+
+		ClipInfo()
+		{
+		}
+
+		ClipInfo(const std::string& idle, const std::string& move, bool flipX, sf::Vector2f point)
+			:idle(idle), move(move), flipX(flipX), point(point)
+		{
+		}
+	};
+
 protected:
+	std::vector<ClipInfo> clipInfos;
+	ClipInfo currentClipInfo;
 
 public:
 	Player(const std::string& name = "");
@@ -15,7 +36,10 @@ public:
 	int currentIndex = 49;
 	int prevIndex;
 
+	float speed = 300.f;
+
 	Chapter1* chapter;
+	Animator* animator;
 
 	void Init() override;
 	void Release() override;
