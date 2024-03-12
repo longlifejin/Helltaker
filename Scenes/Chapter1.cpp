@@ -233,9 +233,11 @@ Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
 	{
 	case MapObject::wall:
 		player->currentIndex = prev;
+		mapObj[player->currentIndex] = MapObject::player;
+		mapObj[curr] = MapObject::wall;
 		return MapObject::wall;
 	case MapObject::demon:
-		player->currentIndex = player->prevIndex;
+		player->currentIndex = prev;
 		player->moveCount = 0;
 		isDemonGet = true;
 		return MapObject::demon;

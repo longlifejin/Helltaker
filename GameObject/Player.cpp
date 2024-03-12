@@ -17,6 +17,32 @@ void Player::Init()
 	SetOrigin(Origins::BC);
 	moveCount = 23;
 	SpriteGo::Init();
+
+	animator.SetTarget(&sprite);
+
+	/*{
+		AnimationClip clip;
+		clip.id = "player_Ilde";
+		clip.fps = 10;
+		clip.looptype = AnimationLoopType::Loop;
+		clip.frames.push_back({ "Sprite/hero0022.png", { 0,0,89,92 } });
+	}
+
+	{
+		AnimationClip clip;
+		clip.id = "player_Kick";
+		clip.fps = 10;
+		clip.looptype = AnimationLoopType::Loop;
+		clip.frames.push_back({ "Sprite/hero0040.png", { 0,0,100,100 } });
+	}
+
+	{
+		AnimationClip clip;
+		clip.id = "player_DemonGet";
+		clip.fps = 10;
+		clip.looptype = AnimationLoopType::Loop;
+		clip.frames.push_back({ "Sprite/hero0040.png", { 0,0,89,92 } });
+	}*/
 }
 
 void Player::Release()
@@ -27,17 +53,17 @@ void Player::Release()
 void Player::Reset()
 {
 	SpriteGo::Reset();
-	//animator.Play("Tables/player_Idle.csv");
+	animator.Play("Tables/player_Idle.csv");
 	SetOrigin(Origins::BC);
 	SetFlipX(false);
 
-	//currentClipInfo = clipInfos[6]; //???
 }
 
 void Player::Update(float dt)
 {
 	SpriteGo::Update(dt);
-
+	animator.Update(dt);
+	
 	chapter = dynamic_cast<Chapter1*>(SCENE_MGR.GetCurrentScene());
 	
 	prevIndex = currentIndex;
@@ -63,15 +89,18 @@ void Player::Update(float dt)
 
 	if (prevIndex != currentIndex)
 	{
-		if (chapter->CheckInteraction(currentIndex, prevIndex) == Chapter1::MapObject::empty)
+		Chapter1::MapObject type = chapter->CheckInteraction(currentIndex, prevIndex);
+
+		if (type == Chapter1::MapObject::empty)
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
+			animator.Play("Tables/player_Move.csv");
 		}
-		else if (chapter->CheckInteraction(currentIndex, prevIndex) == Chapter1::MapObject::box
-			|| chapter->CheckInteraction(currentIndex, prevIndex) == Chapter1::MapObject::skeleton)
+		else if (type == Chapter1::MapObject::box || type == Chapter1::MapObject::skeleton)
 		{
 			currentIndex = prevIndex;
 			SetPosition(chapter->IndexToPos(currentIndex));
+			animator.Play("Tables/player_Kick.csv");
 		}
 	}
 

@@ -15,6 +15,7 @@ public:
 	~Skeleton();
 
 	Chapter1* chapter;
+	Animator animator;
 
 	int GetCurrentIndex() { return currentIndex; }
 
