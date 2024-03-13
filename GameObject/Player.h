@@ -20,7 +20,6 @@ public:
 
 	Chapter1* chapter;
 	Animator animator;
-	
 
 	void Init() override;
 	void Release() override;

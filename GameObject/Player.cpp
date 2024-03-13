@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Chapter1.h"
 #include "Animator.h"
+#include "CollectDemon.h"
 
 Player::Player(const std::string& name)
 	:SpriteGo(name)
@@ -20,29 +21,6 @@ void Player::Init()
 
 	animator.SetTarget(&sprite);
 
-	/*{
-		AnimationClip clip;
-		clip.id = "player_Ilde";
-		clip.fps = 10;
-		clip.looptype = AnimationLoopType::Loop;
-		clip.frames.push_back({ "Sprite/hero0022.png", { 0,0,89,92 } });
-	}
-
-	{
-		AnimationClip clip;
-		clip.id = "player_Kick";
-		clip.fps = 10;
-		clip.looptype = AnimationLoopType::Loop;
-		clip.frames.push_back({ "Sprite/hero0040.png", { 0,0,100,100 } });
-	}
-
-	{
-		AnimationClip clip;
-		clip.id = "player_DemonGet";
-		clip.fps = 10;
-		clip.looptype = AnimationLoopType::Loop;
-		clip.frames.push_back({ "Sprite/hero0040.png", { 0,0,89,92 } });
-	}*/
 }
 
 void Player::Release()
@@ -95,12 +73,15 @@ void Player::Update(float dt)
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 			animator.Play("Tables/player_Move.csv");
+			animator.PlayQueue("Tables/player_Idle.csv");
+			
 		}
 		else if (type == Chapter1::MapObject::box || type == Chapter1::MapObject::skeleton)
 		{
 			currentIndex = prevIndex;
 			SetPosition(chapter->IndexToPos(currentIndex));
 			animator.Play("Tables/player_Kick.csv");
+			animator.PlayQueue("Tables/player_Idle.csv");
 		}
 	}
 
@@ -108,6 +89,8 @@ void Player::Update(float dt)
 	{
 		OnDie();
 	}
+
+
 }
 
 void Player::OnDamage()

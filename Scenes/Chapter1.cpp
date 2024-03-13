@@ -414,7 +414,7 @@ void Chapter1::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{
-		//FRAMEWORK.SetTimeScale(0.f); //일시정지할때 멈추는거 수정하기
+		FRAMEWORK.SetTimeScale(0.f); //일시정지할때 멈추는거 수정하기
 		pause->SetActive(true);
 	}
 
@@ -437,9 +437,9 @@ void Chapter1::Update(float dt)
 		isDemonGet = false;
 	}
 
-	if (collectDemon->GetAnswerSelect())
+	if (!isDemonGet && collectDemon->GetAnswerSelect())
 	{
-		//획득 애니메이션 재생 후 다음 챕터로 넘어가기
+		player->animator.Play("Tables/player_GetDemon.csv"); //왜 애니메이션 재생을 안하지?
 	}
 }
 
