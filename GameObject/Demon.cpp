@@ -26,7 +26,7 @@ void Demon::Reset()
 {
 	SpriteGo::Reset();
 	animator.Play(demonIdle);
-	SetOrigin(Origins::MC);
+	SetOrigin(Origins::SELF);
 }
 
 void Demon::Update(float dt)

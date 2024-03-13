@@ -26,7 +26,7 @@ void Skeleton::Reset()
 {
 	SpriteGo::Reset();
 	animator.Play("Tables/skeleton_Idle.csv");
-	SetOrigin(Origins::BC);
+	SetOrigin(Origins::SELF);
 
 }
 
@@ -39,6 +39,6 @@ void Skeleton::Update(float dt)
 
 void Skeleton::OnDie()
 {
-	this->SetActive(false);
+	//this->SetActive(false);
 
 }

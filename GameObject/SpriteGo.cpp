@@ -54,6 +54,11 @@ void SpriteGo::SetOrigin(Origins preset)
 	}
 	originPreset = preset;
 	origin = Utils::SetOrigin(sprite, originPreset);
+
+	if (preset == Origins::SELF)
+	{
+		sprite.setOrigin({ 50.f,80.f });
+	}
 }
 
 void SpriteGo::SetOrigin(const sf::Vector2f& newOrigin)

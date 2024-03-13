@@ -250,7 +250,7 @@ Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
 				skull->currentIndex += moveAmount;
 				if (mapObj[skull->currentIndex] == MapObject::wall)
 				{
-					skull->OnDie();
+					skull->animator.Play("Tables/skeleton_Dead.csv"); //뼈가 화면 밖까지 날라가야하는데.. 프레임 끝나면 그대로 남아있음
 					deadSkeletonList.push_back(skull);
 					mapObj[skull->prevIndex] = MapObject::empty;
 					skeletonList.remove(skull);
@@ -259,7 +259,7 @@ Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::skeleton)
 				{
-					skull->OnDie();
+					skull->animator.Play("Tables/skeleton_Dead.csv");
 					deadSkeletonList.push_back(skull);
 					mapObj[skull->prevIndex] = MapObject::empty;
 					mapObj[skull->currentIndex] = MapObject::skeleton;
@@ -281,6 +281,8 @@ Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
 					skull->SetPosition(IndexToPos(skull->currentIndex));
 					mapObj[skull->prevIndex] = MapObject::player;
 					mapObj[skull->currentIndex] = MapObject::skeleton;
+					skull->animator.Play("Tables/Skeleton_Damage.csv");
+					skull->animator.PlayQueue("Tables/Skeleton_Idle.csv");
 					player->moveCount -= 1;
 					break;
 				}
@@ -372,8 +374,8 @@ void Chapter1::SetObject(int index, MapObject obj)
 	case Chapter1::MapObject::demon:
 		demon = new Demon("Demon");
 		demon->SetTexture("Sprite/pandemonica_finalModel0010.png");
-		demon->SetPosition(IndexToPos(index));
 		demon->SetOrigin(Origins::BC);
+		demon->SetPosition(IndexToPos(index));
 		demon->Init();
 		AddGo(demon, Layers::World);
 		break;
@@ -381,8 +383,8 @@ void Chapter1::SetObject(int index, MapObject obj)
 		skeleton = new Skeleton("Skeleton");
 		skeleton->SetTexture("Sprite/assets100V20235.png");
 		skeleton->currentIndex = skeleton->prevIndex = index;
-		skeleton->SetPosition(IndexToPos(index));
 		skeleton->SetOrigin(Origins::BC);
+		skeleton->SetPosition(IndexToPos(index));
 		skeleton->Init();
 		skeletonList.push_back(skeleton);
 		AddGo(skeleton, Layers::World);
@@ -439,7 +441,7 @@ void Chapter1::Update(float dt)
 
 	if (!isDemonGet && collectDemon->GetAnswerSelect() && !collectDemon->GetActive()) //demon을 획득하고 나서, 선택지를 correct로 고르고 collectDemon창이 꺼져있으면 실행
 	{
-		player->animator.Play("Tables/player_GetDemon.csv"); //왜 애니메이션 첫 프레임만 나오지?
+		player->animator.Play("Tables/player_GetDemon.csv"); //애니메이션이 계속 재생되고 있어서 첫 프레임만 나오는 것 같다고 하심
 	}
 }
 

@@ -32,7 +32,7 @@ void Player::Reset()
 {
 	SpriteGo::Reset();
 	animator.Play("Tables/player_Idle.csv");
-	SetOrigin(Origins::BC);
+	SetOrigin(Origins::SELF);
 	SetFlipX(false);
 
 }
