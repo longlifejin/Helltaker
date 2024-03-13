@@ -7,6 +7,7 @@
 #include "TextGo.h"
 #include "CollectDemon.h"
 #include "Pause.h"
+#include "SkeletonDead.h"
 
 Chapter1::Chapter1(SceneIds id)
 	:Scene(id)
@@ -88,6 +89,7 @@ void Chapter1::Init()
 	collectDemon->sortLayer = 1;
 	AddGo(collectDemon, Layers::Ui);
 	collectDemon->SetActive(false);
+
 
 	Scene::Init();
 }
@@ -248,27 +250,42 @@ Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
 			{
 				skull->prevIndex = skull->currentIndex;
 				skull->currentIndex += moveAmount;
-				if (mapObj[skull->currentIndex] == MapObject::wall)
+				if (mapObj[skull->currentIndex] == MapObject::wall ||
+					mapObj[skull->currentIndex] == MapObject::box)
 				{
-					skull->animator.Play("Tables/skeleton_Dead.csv"); //뼈가 화면 밖까지 날라가야하는데.. 프레임 끝나면 그대로 남아있음
+					SkeletonDead* skeletonDestroy = new SkeletonDead("Skeleton Dead Animation");
+					skeletonDestroy->Init();
+					skeletonDestroy->Reset();
+					skeletonDestroy->SetPosition(IndexToPos(curr));
+					AddGo(skeletonDestroy, Layers::World);
+
+					skull->SetActive(false);
 					deadSkeletonList.push_back(skull);
 					mapObj[skull->prevIndex] = MapObject::empty;
 					skeletonList.remove(skull);
 					player->moveCount -= 1;
+
 					break;
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::skeleton)
 				{
-					skull->animator.Play("Tables/skeleton_Dead.csv");
+					SkeletonDead* skeletonDestroy = new SkeletonDead("Skeleton Dead Animation");
+					skeletonDestroy->Init();
+					skeletonDestroy->Reset();
+					skeletonDestroy->SetPosition(IndexToPos(curr));
+					AddGo(skeletonDestroy, Layers::World);
+
+					skull->SetActive(false);
 					deadSkeletonList.push_back(skull);
 					mapObj[skull->prevIndex] = MapObject::empty;
 					mapObj[skull->currentIndex] = MapObject::skeleton;
 					skeletonList.remove(skull);
 					player->moveCount -= 1;
+
+
 					break;
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::demon ||
-					mapObj[skull->currentIndex] == MapObject::box ||
 					mapObj[skull->currentIndex] == MapObject::key ||
 					mapObj[skull->currentIndex] == MapObject::lockbox)
 				{

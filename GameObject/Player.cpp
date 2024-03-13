@@ -15,7 +15,7 @@ Player::~Player()
 
 void Player::Init()
 {
-	SetOrigin(Origins::BC);
+	SetOrigin(Origins::SELF);
 	moveCount = 23;
 	SpriteGo::Init();
 

@@ -9,6 +9,7 @@ class Demon;
 class Skeleton;
 class CollectDemon;
 class Pause;
+class SkeletonDead;
 
 class Chapter1 : public Scene
 {
