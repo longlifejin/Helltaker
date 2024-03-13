@@ -34,6 +34,7 @@ protected:
 	float offsetX = 10.f;
 	float offsetY = 40.f;
 
+
 	SpriteGo* background = nullptr;
 
 	SpriteGo* uiRoseLeft = nullptr;
@@ -86,6 +87,8 @@ protected:
 public:
 	Chapter1(SceneIds id);
 	virtual ~Chapter1();
+
+	SpriteGo* backColor;
 
 	bool isDemonGet = false;
 

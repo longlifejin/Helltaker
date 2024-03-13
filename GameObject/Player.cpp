@@ -100,8 +100,13 @@ void Player::OnDamage()
 
 void Player::OnDie()
 {
-	std::cout << "Game Over" << std::endl;
+	//chapter->backColor->sortLayer = 1;
+	animator.Play("Tables/player_Die.csv");
 	moveCount = 0;
+	if (!animator.IsPlaying())
+	{
+		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+	}
 	//죽는 애니메이션 재생 후 자동 재시작
 }
 

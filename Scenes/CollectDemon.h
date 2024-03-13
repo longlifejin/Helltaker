@@ -33,7 +33,9 @@ protected:
 	SpriteGo booper;
 
 	SpriteGo success;
-	SpriteGo badEnd;
+	sf::Sprite badEnd;
+
+	Animator badEndAnimator;
 
 	std::wstring panName = L"● 지친 악마, 판데모니카 ●";
 	std::wstring pandLine1 = L"지옥 고객 서비스 센터의 판데모니카입니다.";
@@ -43,6 +45,9 @@ protected:
 	std::wstring correctLine = L"오히려 '그 쪽'을 도와줘야 할 판인데?";
 
 	SelectLine currentSelect = SelectLine::Wrong;
+
+	bool isBadEnd = false;
+	bool isSuccess = false;
 
 	int step = 0;
 
@@ -55,6 +60,8 @@ public:
 
 	void Init() override;
 	void Release() override;
+
+	void Reset() override;
 
 	void Update(float dt) override;
 

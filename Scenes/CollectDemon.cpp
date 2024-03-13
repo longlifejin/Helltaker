@@ -14,6 +14,8 @@ CollectDemon::~CollectDemon()
 void CollectDemon::Init()
 {
 	step = 0;
+	isBadEnd = false;
+	isSuccess = false;
 
 	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
 
@@ -70,15 +72,15 @@ void CollectDemon::Init()
 	booper.SetPosition({ (float)FRAMEWORK.GetWindowSize().x * 0.5f, (float)FRAMEWORK.GetWindowSize().y * 0.95f });
 	booper.SetColor(219, 72, 77);
 
-	badEnd.SetTexture("Texture2D/dialogueDeathExport0009.png");
-	badEnd.SetOrigin(Origins::BC);
-	badEnd.SetPosition(demon.GetPosition());
+	badEnd.setTexture((RES_MGR_TEXTURE.Get("Texture2D/dialogueDeathExport0009.png")));
+	badEnd.setOrigin({ badEnd.getLocalBounds().width * 0.5f, badEnd.getLocalBounds().height * 0.5f });
+	badEnd.setPosition(background.GetPosition());
+	badEndAnimator.SetTarget(&badEnd);
 
 	success.SetTexture("Texture2D/success0007.png");
 	success.SetOrigin(Origins::MC);
 	success.SetPosition({ demonLine2.GetPosition().x, demonLine2.GetPosition().y + 120.f });
 	success.SetScale({ 0.7f,0.7f });
-
 
 	background.SetActive(true);
 	demon.SetActive(true);
@@ -88,9 +90,8 @@ void CollectDemon::Init()
 	wrongText.SetActive(false);
 	correctText.SetActive(false);
 	booper.SetActive(true);
-	badEnd.SetActive(false);
 	success.SetActive(false);
-
+	
 	currentSelect = SelectLine::Wrong;
 	//isAnswerSelect = false;
 
@@ -102,9 +103,17 @@ void CollectDemon::Release()
 	GameObject::Release();
 }
 
+void CollectDemon::Reset()
+{
+	GameObject::Reset();
+	badEndAnimator.Play("Tables/badEnd.csv");
+	badEnd.setOrigin(background.GetOrigin());
+}
+
 void CollectDemon::Update(float dt)
 {
 	GameObject::Update(dt);
+	badEndAnimator.Update(dt);
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::R))
 	{
@@ -157,9 +166,11 @@ void CollectDemon::Update(float dt)
 		case CollectDemon::SelectLine::Wrong:
 			demonLine.SetString(L"지옥을 살아서 나갈 생각을 한거야? 망상도 심하셔라.");
 			demonLine2.SetActive(false);
-
 			if (InputMgr::GetKeyDown(sf::Keyboard::Space))
-			{ ++step; }
+			{ 
+				isBadEnd = true;
+				++step; 
+			}
 			break;
 		default:
 			break;
@@ -175,7 +186,7 @@ void CollectDemon::Update(float dt)
 			this->Init();
 			break;
 		case CollectDemon::SelectLine::Wrong:
-			badEnd.SetActive(true);
+			badEndAnimator.Play("Tables/badEnd.csv");
 			demon.SetActive(false);
 			background.SetActive(false);
 			demonName.SetActive(false);
@@ -183,12 +194,18 @@ void CollectDemon::Update(float dt)
 			demonLine.Set(fontEB, L"그녀의 전문적인 친절함이 담긴 손길로 당신의 얼굴을 잡고", 25, sf::Color::Red);
 			demonLine2.Set(fontEB, L"목을 비틀어 버렸습니다.", 25, sf::Color::Red);
 			demonLine2.SetActive(true);
-			if (InputMgr::GetKeyDown(sf::Keyboard::Space))
-			{ ++step; }
 			break;
 		}
+		++step;
 		break;
 	case 5:
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			isBadEnd = false;
+			++step;
+		}
+		break;
+	case 6:
 		//게임 재시작
 		this->SetActive(false);
 		this->Release();
@@ -243,5 +260,5 @@ void CollectDemon::Draw(sf::RenderWindow& window)
 	if (correctText.GetActive()) { correctText.Draw(window); }
 	if (booper.GetActive()) { booper.Draw(window); }
 	if (success.GetActive()) { success.Draw(window); }
-	if (badEnd.GetActive()) { badEnd.Draw(window); }
+	if (isBadEnd) { window.draw(badEnd); }
 }

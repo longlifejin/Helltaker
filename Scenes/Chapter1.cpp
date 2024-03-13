@@ -20,6 +20,13 @@ Chapter1::~Chapter1()
 
 void Chapter1::Init()
 {
+	backColor = new SpriteGo("BackColor");
+	backColor->SetTexture("Texture2D/backColor.png");
+	backColor->SetOrigin({ 0.f,0.f });
+	backColor->SetPosition({ 0.f,0.f });
+	/*AddGo(backColor, Layers::World);
+	backColor->sortLayer = -1;*/ //Á×¾úÀ» ¶§ µ¤¾îÁá´Ù°¡ Áö¿ì±â
+
 	background = new SpriteGo("Background");
 	background->SetTexture("PlusSprite/chapterBG0001.png");
 	background->SetOrigin(Origins::TL);
@@ -264,7 +271,6 @@ Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
 					mapObj[skull->prevIndex] = MapObject::empty;
 					skeletonList.remove(skull);
 					player->moveCount -= 1;
-
 					break;
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::skeleton)
@@ -281,8 +287,6 @@ Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
 					mapObj[skull->currentIndex] = MapObject::skeleton;
 					skeletonList.remove(skull);
 					player->moveCount -= 1;
-
-
 					break;
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::demon ||
