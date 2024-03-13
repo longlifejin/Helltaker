@@ -80,6 +80,8 @@ protected:
 		"WWWWWWWWWWWWWWWWWWW",
 	};
 
+	
+
 public:
 	Chapter1(SceneIds id);
 	virtual ~Chapter1();

@@ -47,6 +47,7 @@ protected:
 	int step = 0;
 
 	bool isAnswerSelect = false;
+	int currentStage = 1; //stage마다 창 내용 다르게 바꿔주려고
 
 public:
 	CollectDemon(const std::string& name = "");

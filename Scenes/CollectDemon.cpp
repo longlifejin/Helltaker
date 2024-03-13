@@ -79,6 +79,10 @@ void CollectDemon::Init()
 	success.SetPosition({ demonLine2.GetPosition().x, demonLine2.GetPosition().y + 120.f });
 	success.SetScale({ 0.7f,0.7f });
 
+
+	background.SetActive(true);
+	demon.SetActive(true);
+	demonName.SetActive(true);
 	wrongButton.SetActive(false);
 	correctButton.SetActive(false);
 	wrongText.SetActive(false);
@@ -88,7 +92,7 @@ void CollectDemon::Init()
 	success.SetActive(false);
 
 	currentSelect = SelectLine::Wrong;
-	isAnswerSelect = false;
+	//isAnswerSelect = false;
 
 	GameObject::Init();
 }
@@ -172,7 +176,6 @@ void CollectDemon::Update(float dt)
 			break;
 		case CollectDemon::SelectLine::Wrong:
 			badEnd.SetActive(true);
-
 			demon.SetActive(false);
 			background.SetActive(false);
 			demonName.SetActive(false);

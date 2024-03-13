@@ -414,7 +414,7 @@ void Chapter1::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{
-		FRAMEWORK.SetTimeScale(0.f); //일시정지할때 멈추는거 수정하기
+		FRAMEWORK.SetTimeScale(0.f); //일시정지할때 멈추는거 수정하기 (키 입력 받을때 애니메이션 재생만 멈추고 움직임)
 		pause->SetActive(true);
 	}
 
@@ -431,15 +431,15 @@ void Chapter1::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
 	}
 
-	if (isDemonGet && !collectDemon->GetActive())
+	if (isDemonGet && !collectDemon->GetActive()) //isDemonGet - demon 획득한 처음 순간 / collectDemon창이 안열려있으면 실행
 	{
 		collectDemon->SetActive(true);
 		isDemonGet = false;
 	}
 
-	if (!isDemonGet && collectDemon->GetAnswerSelect())
+	if (!isDemonGet && collectDemon->GetAnswerSelect() && !collectDemon->GetActive()) //demon을 획득하고 나서, 선택지를 correct로 고르고 collectDemon창이 꺼져있으면 실행
 	{
-		player->animator.Play("Tables/player_GetDemon.csv"); //왜 애니메이션 재생을 안하지?
+		player->animator.Play("Tables/player_GetDemon.csv"); //왜 애니메이션 첫 프레임만 나오지?
 	}
 }
 
@@ -450,4 +450,3 @@ void Chapter1::Draw(sf::RenderWindow& window)
 	window.setView(worldView);
 	window.draw(grid);
 }
-
