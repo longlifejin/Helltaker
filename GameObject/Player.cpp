@@ -36,7 +36,7 @@ void Player::Reset()
 	SetFlipX(false);
 	std::function<void()> DeadEvent_SceneChange = std::bind(&Player::ChangeSceneEvent);
 	animator.AddEvent("Tables/player_Die.csv", 17, DeadEvent_SceneChange);
-	//std::function<void()> DeadEvent_transition = std::bind(&ChangeScene->ChangeSceneEvent);
+	//std::function<void()> DeadEvent_transition = std::bind(&Player::ChangeSceneEvent);
 }
 
 void Player::Update(float dt)
@@ -98,7 +98,7 @@ void Player::Update(float dt)
 
 void Player::ChangeSceneEvent()
 {
-	SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+	SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
 	//chapter->PlayTransition(); //어떻게해야 transition을 출력할 수 있을까~~~~
 }
 

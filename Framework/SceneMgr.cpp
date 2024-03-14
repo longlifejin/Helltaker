@@ -15,7 +15,7 @@ void SceneMgr::Init()
 	Release();
 
 	scenes.push_back(new TitleScene(SceneIds::TITLESCENE));
-	scenes.push_back(new Chapter(SceneIds::CHAPTER1));
+	scenes.push_back(new Chapter(SceneIds::CHAPTER));
 	scenes.push_back(new SceneDev1(SceneIds::SCENEDVE1));
 
 	for (auto scene : scenes)

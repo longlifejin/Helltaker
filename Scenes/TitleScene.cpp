@@ -266,7 +266,7 @@ void TitleScene::Update(float dt)
 		switch (currentSelection)
 		{
 		case Button::NEWGAME:
-			SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+			SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
 			break;
 		case Button::CHAPTERSELECT:
 			//chapter select 화면으로 이동

@@ -24,7 +24,7 @@ void Transition::RemoveChangeSceneImage()
 
 void Transition::SceneChange()
 {
-	SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+	SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
 }
 
 void Transition::Reset()

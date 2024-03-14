@@ -53,8 +53,6 @@ protected:
 	Pause* pause = nullptr;
 	CollectDemon* collectDemon = nullptr;
 
-	Animator animator;
-
 	bool isPause = false;
 
 	std::wstring adviceText = L"● 인생 조언 [L] ●";

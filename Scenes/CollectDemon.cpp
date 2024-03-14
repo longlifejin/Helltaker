@@ -128,7 +128,7 @@ void CollectDemon::Update(float dt)
 	{
 		this->SetActive(false);
 		this->Init();
-		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+		SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
 	}
 
 	switch (step)
@@ -227,7 +227,7 @@ void CollectDemon::Update(float dt)
 		this->SetActive(false);
 		this->Release();
 		this->Init();
-		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+		SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
 		break;
 	default:
 		break;
