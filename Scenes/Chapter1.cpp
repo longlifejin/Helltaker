@@ -475,6 +475,11 @@ void Chapter1::Update(float dt)
 		pause->SetActive(true);
 	}
 
+	if (FRAMEWORK.GetTimeScale() == 1.f)
+	{
+		isPause = false;
+	}
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::F1))
 	{
 		SetGrid();

@@ -532,6 +532,57 @@ void Pause::Update(float dt)
 			}
 		}
 	}
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	{
+		switch (currentSelect)
+		{
+		case Pause::Select::BACK:
+			this->SetActive(false);
+			FRAMEWORK.SetTimeScale(1.f);
+			break;
+		case Pause::Select::PASS: //collectDemon창 출력 후 올바르게 고르면 그 자리에서 getdemon애니메이션 출력
+			
+			break;
+		case Pause::Select::BGM: //사운드 넣고 볼륨 설정 추가해주기
+			switch (currentBGMVolume)
+			{
+			case Pause::Volume::LOUD:
+				break;
+			case Pause::Volume::MIDDLE:
+				break;
+			case Pause::Volume::SMALL:
+				break;
+			case Pause::Volume::MUTE:
+				break;
+			default:
+				break;
+			}
+			break;
+		case Pause::Select::SFX:
+			switch (currentSFXVolume)
+			{
+			case Pause::Volume::LOUD:
+				break;
+			case Pause::Volume::MIDDLE:
+				break;
+			case Pause::Volume::SMALL:
+				break;
+			case Pause::Volume::MUTE:
+				break;
+			default:
+				break;
+			}
+			break;
+		case Pause::Select::MAIN:
+			FRAMEWORK.SetTimeScale(1.f);
+			SCENE_MGR.ChangeScene(SceneIds::TITLESCENE);
+			this->SetActive(false);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void Pause::Draw(sf::RenderWindow& window)

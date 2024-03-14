@@ -109,6 +109,7 @@ public:
 	sf::Vector2f GetPlayerCurrentPos();
 
 	bool IsPause() { return isPause; }
+	void SetPause(bool active) { isPause = active; }
 
 	int PosToIndex(sf::Vector2f pos);
 	sf::Vector2f IndexToPos(int index);
