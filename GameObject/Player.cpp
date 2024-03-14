@@ -100,10 +100,15 @@ void Player::OnDamage()
 void Player::OnDie()
 {
 	//chapter->backColor->sortLayer = 1;
+	SetOrigin({360.f, 900.f});
 	animator.Play("Tables/player_Die.csv");
 	moveCount = 0;
-	SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+
 	//죽는 애니메이션 재생 후 자동 재시작
+	if (animator.IsAnimationDone())
+	{
+		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+	}
 }
 
 void Player::GetDemon()

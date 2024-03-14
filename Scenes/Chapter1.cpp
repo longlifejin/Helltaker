@@ -397,6 +397,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		player->SetPosition(IndexToPos(index));
 		player->Init();
 		AddGo(player, Layers::World);
+		player->sortLayer = 3;
 		break;
 	case Chapter1::MapObject::demon:
 		demon = new Demon("Demon");
@@ -464,6 +465,10 @@ void Chapter1::Update(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::F3))
 	{
 		collectDemon->SetActive(true);
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::F4))
+	{
+		player->OnDie();
 	}
 	//////////////////////////////////////////
 

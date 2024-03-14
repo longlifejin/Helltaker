@@ -85,6 +85,7 @@ public:
 
 	float GetSpeed() const { return speed; }
 	void SetSpeed(float s) { speed = s; }
+	bool IsAnimationDone() { return currentFrame == totalFrame; }
 
 	void Update(float dt);    //현재 재생되고 있는 시간을 누적하면서 프래임 변경
 

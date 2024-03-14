@@ -176,6 +176,8 @@ void CollectDemon::Update(float dt)
 			isBooperOn = false;
 			break;
 		case CollectDemon::SelectLine::Wrong:
+			isBooperOn = true;
+			booperAnimator.Play("Tables/booper.csv");
 			demonLine.SetString(L"지옥을 살아서 나갈 생각을 한거야? 망상도 심하셔라.");
 			demonLine2.SetActive(false);
 			break;
@@ -186,6 +188,7 @@ void CollectDemon::Update(float dt)
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
 			isSuccess = false;
+			isBooperOn = false;
 			++step;
 		}
 		break;
