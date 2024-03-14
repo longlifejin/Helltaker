@@ -8,6 +8,7 @@
 #include "CollectDemon.h"
 #include "Pause.h"
 #include "SkeletonDead.h"
+#include "ChangeScene.h"
 
 Chapter1::Chapter1(SceneIds id)
 	:Scene(id)
@@ -24,8 +25,8 @@ void Chapter1::Init()
 	backColor->SetTexture("Texture2D/backColor.png");
 	backColor->SetOrigin({ 0.f,0.f });
 	backColor->SetPosition({ 0.f,0.f });
+	backColor->sortOrder = -1;
 	AddGo(backColor, Layers::World);
-	backColor->sortLayer = -1; //Á×¾úÀ» ¶§ µ¤¾îÁá´Ù°¡ Áö¿ì±â
 
 	background = new SpriteGo("Background");
 	background->SetTexture("PlusSprite/chapterBG0001.png");
@@ -109,7 +110,8 @@ void Chapter1::Release()
 
 void Chapter1::Enter()
 {
-	backColor->sortLayer = -1;
+	backColor->sortOrder = -1;
+	ResortGo(backColor);
 	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
 	worldView.setSize(windowSize);
 	worldView.setCenter(windowSize * 0.5f);
@@ -412,7 +414,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		player->SetPosition(IndexToPos(index));
 		player->Init();
 		AddGo(player, Layers::World);
-		player->sortLayer = 3;
+		player->sortOrder = 2;
 		break;
 	case Chapter1::MapObject::demon:
 		demon = new Demon("Demon");
@@ -441,6 +443,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		box->Init();
 		boxList.push_back(box);
 		AddGo(box, Layers::World);
+		//box->sortOrder = 1;
 		break;
 	case Chapter1::MapObject::key:
 		break;
@@ -473,6 +476,11 @@ void Chapter1::Update(float dt)
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::R))
 	{
+		ChangeScene* changeScene = new ChangeScene("ChangeScene Animation");
+		changeScene->Init();
+		changeScene->Reset();
+		changeScene->SetPosition({ 0.f,0.f});
+		AddGo(changeScene, Layers::Ui);
 		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
 	}
 

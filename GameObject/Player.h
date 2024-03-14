@@ -3,6 +3,7 @@
 #include "Animator.h"
 
 class Chapter1;
+class ChangeScene;
 
 class Player : public SpriteGo
 {
@@ -21,6 +22,7 @@ public:
 	float speed = 300.f;
 
 	Chapter1* chapter;
+	ChangeScene* changeScene;
 	Animator animator;
 
 	void Init() override;

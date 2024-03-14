@@ -65,11 +65,14 @@ protected:
 	float accumTime = 0.f;
 
 	sf::Sprite* target;
+	Origins origin = Origins::NONE;
+
 
 public:
 	Animator();
 	~Animator();
 
+	void SetOrigin(Origins set) { origin = set; }
 	//void AddClip(const AnimationClip& clip);
 
 	void AddEvent(const std::string& clipId, int frame, std::function<void()> action);

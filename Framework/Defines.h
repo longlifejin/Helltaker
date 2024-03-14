@@ -4,7 +4,7 @@ enum class Origins
 {
 	// T M B
 	// L C R
-	TL, TC, TR, ML, MC, MR, BL, BC, BR, CUSTOM, SELF,
+	NONE = -1, TL, TC, TR, ML, MC, MR, BL, BC, BR, CUSTOM, SELF,
 };
 
 enum class Sides

@@ -10,7 +10,10 @@ public:
 	~ChangeScene() override;
 
 	void Init() override;
-	void Update(float dt) override;
+
+	void RemoveChangeSceneImage();
+
 	void Reset() override;
+	void Update(float dt) override;
 };
 

@@ -129,6 +129,10 @@ void Animator::SetFrame(const AnimationFrame& frame)
 	//애니매이션에 들어가 있는 정보를 
 	target->setTexture(frame.GetTexture());
 	target->setTextureRect(frame.texCoord);
+	if (origin != Origins::NONE)
+	{
+		Utils::SetOrigin(*target, origin);
+	}
 }
 
 bool AnimationClip::loadFromFile(const std::string& filePath)

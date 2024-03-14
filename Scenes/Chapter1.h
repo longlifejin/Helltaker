@@ -50,9 +50,6 @@ protected:
 	TextGo* restart = nullptr;
 
 	Player* player = nullptr;
-	Demon* demon = nullptr;
-	Skeleton* skeleton = nullptr;
-	Box* box = nullptr;
 
 	Pause* pause = nullptr;
 	CollectDemon* collectDemon = nullptr;
@@ -89,6 +86,9 @@ public:
 	virtual ~Chapter1();
 
 	SpriteGo* backColor;
+	Demon* demon = nullptr;
+	Skeleton* skeleton = nullptr;
+	Box* box = nullptr;
 
 	bool isDemonGet = false;
 

@@ -33,8 +33,9 @@ void Player::Reset()
 	animator.Play("Tables/player_Idle.csv");
 	SetOrigin(Origins::SELF);
 	SetFlipX(false);
-	std::function<void()> DeadEvent = std::bind(&Player::ChangeSceneEvent);
-	animator.AddEvent("Tables/player_Die.csv", 17, DeadEvent);
+	std::function<void()> DeadEvent_SceneChange = std::bind(&Player::ChangeSceneEvent);
+	//std::function<void()> DeadEvent_transition = std::bind(&ChangeScene->ChangeSceneEvent);
+	animator.AddEvent("Tables/player_Die.csv", 17, DeadEvent_SceneChange);
 }
 
 void Player::Update(float dt)
@@ -103,17 +104,20 @@ void Player::OnDamage()
 
 void Player::OnDie()
 {
-	chapter->backColor->sortLayer = 10;
 	chapter->SetUiActive(false);
 	SetOrigin({360.f, 900.f});
 	animator.Play("Tables/player_Die.csv");
 	moveCount = 0;
+	sortOrder = 3;
+	chapter->ResortGo(this);
+	chapter->backColor->sortOrder = 2;
+	chapter->ResortGo(chapter->backColor);
 
-	//죽는 애니메이션 재생 후 자동 재시작
 }
 
 void Player::GetDemon()
 {
+	SetOrigin(Origins::SELF);
 	animator.Play("Tables/player_GetDemon.csv");
 
 	//애니메이션 재생 후 다음 챕터 이동
