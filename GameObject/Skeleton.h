@@ -1,7 +1,7 @@
 #pragma once
 #include "SpriteGo.h"
 
-class Chapter1;
+class Chapter;
 
 class Skeleton : public SpriteGo
 {
@@ -14,7 +14,7 @@ public:
 	Skeleton(const std::string& name = "");
 	~Skeleton();
 
-	Chapter1* chapter;
+	Chapter* chapter;
 	Animator animator;
 
 	int GetCurrentIndex() { return currentIndex; }

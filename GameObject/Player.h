@@ -2,7 +2,7 @@
 #include "SpriteGo.h"
 #include "Animator.h"
 
-class Chapter1;
+class Chapter;
 class ChangeScene;
 
 class Player : public SpriteGo
@@ -21,7 +21,7 @@ public:
 
 	float speed = 300.f;
 
-	Chapter1* chapter;
+	Chapter* chapter;
 	ChangeScene* changeScene;
 	Animator animator;
 

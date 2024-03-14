@@ -1,13 +1,13 @@
 #pragma once
 #include "SpriteGo.h"
-class ChangeScene : public SpriteGo
+class Transition : public SpriteGo
 {
 protected:
 	Animator animator;
 
 public:
-	ChangeScene(const std::string& name = "");
-	~ChangeScene() override;
+	Transition(const std::string& name = "");
+	~Transition() override;
 
 	void Init() override;
 

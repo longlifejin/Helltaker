@@ -2,7 +2,7 @@
 #include "SpriteGo.h"
 #include "Animator.h"
 
-class Chapter1;
+class Chapter;
 
 class Demon :  public SpriteGo
 {
@@ -13,7 +13,7 @@ public:
 	Demon(const std::string& name = "");
 	~Demon();
 
-	Chapter1* chapter;
+	Chapter* chapter;
 	Animator animator;
 
 	void Init() override;

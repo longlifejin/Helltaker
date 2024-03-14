@@ -3,6 +3,8 @@
 #include "SpriteGo.h"
 #include "TextGo.h"
 
+class Chapter;
+class CollectDemon;
 
 class Pause : public GameObject
 {
@@ -56,6 +58,9 @@ protected:
 	Select currentSelect = Select::BACK;
 	Volume currentBGMVolume = Volume::LOUD;
 	Volume currentSFXVolume = Volume::LOUD;
+
+	Chapter* chapter;
+	CollectDemon* collectDemon;
 
 public:
 	Pause(const std::string& name = "");

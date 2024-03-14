@@ -11,7 +11,7 @@ class CollectDemon;
 class Pause;
 class SkeletonDead;
 
-class Chapter1 : public Scene
+class Chapter : public Scene
 {
 public:
 	enum class MapObject
@@ -82,8 +82,8 @@ protected:
 	};
 
 public:
-	Chapter1(SceneIds id);
-	virtual ~Chapter1();
+	Chapter(SceneIds id);
+	virtual ~Chapter();
 
 	SpriteGo* backColor;
 	Demon* demon = nullptr;

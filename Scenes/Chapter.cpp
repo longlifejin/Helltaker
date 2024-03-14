@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Chapter1.h"
+#include "Chapter.h"
 #include "Player.h"
 #include "Demon.h"
 #include "Skeleton.h"
@@ -8,18 +8,18 @@
 #include "CollectDemon.h"
 #include "Pause.h"
 #include "SkeletonDead.h"
-#include "ChangeScene.h"
+#include "Transition.h"
 
-Chapter1::Chapter1(SceneIds id)
+Chapter::Chapter(SceneIds id)
 	:Scene(id)
 {
 }
 
-Chapter1::~Chapter1()
+Chapter::~Chapter()
 {
 }
 
-void Chapter1::Init()
+void Chapter::Init()
 {
 	backColor = new SpriteGo("BackColor");
 	backColor->SetTexture("Texture2D/backColor.png");
@@ -103,12 +103,12 @@ void Chapter1::Init()
 	Scene::Init();
 }
 
-void Chapter1::Release()
+void Chapter::Release()
 {
 	Scene::Release();
 }
 
-void Chapter1::Enter()
+void Chapter::Enter()
 {
 	backColor->sortOrder = -1;
 	ResortGo(backColor);
@@ -124,7 +124,7 @@ void Chapter1::Enter()
 	Scene::Enter();
 }
 
-void Chapter1::Exit()
+void Chapter::Exit()
 {
 	if (player != nullptr)
 	{
@@ -160,7 +160,7 @@ void Chapter1::Exit()
 	Scene::Exit();
 }
 
-void Chapter1::SetGrid()
+void Chapter::SetGrid()
 {
 	grid.clear();
 	grid.setPrimitiveType(sf::Lines);
@@ -201,7 +201,7 @@ void Chapter1::SetGrid()
 	}
 }
 
-void Chapter1::SetMap()
+void Chapter::SetMap()
 {
 	for (int i = 0; i < mapLayout.size(); ++i) //10번 반복
 	{
@@ -238,7 +238,7 @@ void Chapter1::SetMap()
 	}
 }
 
-void Chapter1::SetUiActive(bool active)
+void Chapter::SetUiActive(bool active)
 {
 	uiRoseLeft->SetActive(active);
 	uiRoseRight->SetActive(active);
@@ -251,16 +251,16 @@ void Chapter1::SetUiActive(bool active)
 	background->SetActive(active);
 }
 
-void Chapter1::PlayTransition()
+void Chapter::PlayTransition()
 {
-	ChangeScene* changeScene = new ChangeScene("ChangeScene Animation");
+	Transition* changeScene = new Transition("ChangeScene Animation");
 	changeScene->Init();
 	changeScene->SetPosition({ 0.f,0.f });
 	changeScene->Reset();
 	AddGo(changeScene, Layers::Ui);
 }
 
-Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
+Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 {
 	int moveAmount = curr - prev;
 
@@ -381,12 +381,12 @@ Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
 
 }
 
-sf::Vector2f Chapter1::GetPlayerCurrentPos()
+sf::Vector2f Chapter::GetPlayerCurrentPos()
 {
 	return IndexToPos(player->currentIndex);
 }
 
-int Chapter1::PosToIndex(sf::Vector2f pos)
+int Chapter::PosToIndex(sf::Vector2f pos)
 {
 	int rowIndex = (pos.y - offsetY - (size / 2)) / size;
 	int columnIndex = (pos.x - offsetX - (size / 2)) / size;
@@ -395,7 +395,7 @@ int Chapter1::PosToIndex(sf::Vector2f pos)
 	return index;
 }
 
-sf::Vector2f Chapter1::IndexToPos(int index)
+sf::Vector2f Chapter::IndexToPos(int index)
 {
 	int rowIndex = index / col;
 	int columnIndex = index % col; 
@@ -406,16 +406,16 @@ sf::Vector2f Chapter1::IndexToPos(int index)
 	return sf::Vector2f(x, y);
 }
 
-void Chapter1::SetObject(int index, MapObject obj)
+void Chapter::SetObject(int index, MapObject obj)
 {
 	mapObj[index] = obj;
 	switch (obj)
 	{
-	case Chapter1::MapObject::empty:
+	case Chapter::MapObject::empty:
 		break;
-	case Chapter1::MapObject::wall:
+	case Chapter::MapObject::wall:
 		break;
-	case Chapter1::MapObject::player:
+	case Chapter::MapObject::player:
 		player = new Player("Player");
 		player->SetTexture("Sprite/assets100V20057.png");
 		player->SetOrigin(Origins::SELF);
@@ -424,7 +424,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		AddGo(player, Layers::World);
 		player->sortOrder = 2;
 		break;
-	case Chapter1::MapObject::demon:
+	case Chapter::MapObject::demon:
 		demon = new Demon("Demon");
 		demon->SetTexture("Sprite/pandemonica_finalModel0010.png");
 		demon->SetOrigin(Origins::SELF);
@@ -432,7 +432,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		demon->Init();
 		AddGo(demon, Layers::World);
 		break;
-	case Chapter1::MapObject::skeleton:
+	case Chapter::MapObject::skeleton:
 		skeleton = new Skeleton("Skeleton");
 		skeleton->SetTexture("Sprite/assets100V20235.png");
 		skeleton->currentIndex = skeleton->prevIndex = index;
@@ -442,7 +442,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		skeletonList.push_back(skeleton);
 		AddGo(skeleton, Layers::World);
 		break;
-	case Chapter1::MapObject::box:
+	case Chapter::MapObject::box:
 		box = new Box("Box");
 		box->SetTexture("Sprite/boxExport0001.png");
 		box->currentIndex = box->prevIndex = index;
@@ -453,16 +453,16 @@ void Chapter1::SetObject(int index, MapObject obj)
 		AddGo(box, Layers::World);
 		//box->sortOrder = 1;
 		break;
-	case Chapter1::MapObject::key:
+	case Chapter::MapObject::key:
 		break;
-	case Chapter1::MapObject::lockbox:
+	case Chapter::MapObject::lockbox:
 		break;
 	default:
 		break;
 	}
 }
 
-void Chapter1::Update(float dt)
+void Chapter::Update(float dt)
 {
 	Scene::Update(dt);
 
@@ -512,12 +512,13 @@ void Chapter1::Update(float dt)
 
 	if (!isDemonGet && collectDemon->GetAnswerSelect() && !collectDemon->GetActive()) //demon을 획득하고 나서, 선택지를 correct로 고르고 collectDemon창이 꺼져있으면 실행
 	{
+		player->SetOrigin(Origins::SELF);
 		player->GetDemon();
 		collectDemon->SetAnswerSelect(false);
 	}
 }
 
-void Chapter1::Draw(sf::RenderWindow& window)
+void Chapter::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
 

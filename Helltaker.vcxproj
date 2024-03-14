@@ -137,14 +137,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ChangeScene.cpp" />
+    <ClCompile Include="Scenes\Transition.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
     <ClCompile Include="Scenes\Pause.cpp" />
     <ClCompile Include="Scenes\CollectDemon.cpp" />
     <ClCompile Include="GameObject\Demon.cpp" />
     <ClCompile Include="GameObject\Box.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
-    <ClCompile Include="Scenes\Chapter1.cpp" />
+    <ClCompile Include="Scenes\Chapter.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
     <ClCompile Include="Framework\InputMgr.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
@@ -167,10 +167,10 @@
     <ClCompile Include="GameObject\TextGo.cpp" />
     <ClCompile Include="GameObject\Skeleton.cpp" />
     <ClCompile Include="Scenes\TitleScene.cpp" />
-    <ClCompile Include="SkeletonDead.cpp" />
+    <ClCompile Include="Scenes\SkeletonDead.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ChangeScene.h" />
+    <ClInclude Include="Scenes\Transition.h" />
     <ClInclude Include="Framework\Animator.h" />
     <ClInclude Include="Framework\rapidcsv.h" />
     <ClInclude Include="Scenes\Pause.h" />
@@ -178,7 +178,7 @@
     <ClInclude Include="GameObject\Demon.h" />
     <ClInclude Include="GameObject\Box.h" />
     <ClInclude Include="GameObject\Player.h" />
-    <ClInclude Include="Scenes\Chapter1.h" />
+    <ClInclude Include="Scenes\Chapter.h" />
     <ClInclude Include="Framework\Framework.h" />
     <ClInclude Include="Framework\Defines.h" />
     <ClInclude Include="Framework\InputMgr.h" />
@@ -197,7 +197,7 @@
     <ClInclude Include="GameObject\TextGo.h" />
     <ClInclude Include="GameObject\Skeleton.h" />
     <ClInclude Include="Scenes\TitleScene.h" />
-    <ClInclude Include="SkeletonDead.h" />
+    <ClInclude Include="Scenes\SkeletonDead.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

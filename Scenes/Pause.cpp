@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Pause.h"
+#include "Chapter.h"
+#include "CollectDemon.h"
 
 Pause::Pause(const std::string& name)
 	:GameObject(name)
@@ -111,6 +113,8 @@ void Pause::Release()
 
 void Pause::Update(float dt)
 {
+	chapter = dynamic_cast<Chapter*>(SCENE_MGR.GetCurrentScene());
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::W))
 	{
 		switch (currentSelect)
@@ -542,7 +546,9 @@ void Pause::Update(float dt)
 			FRAMEWORK.SetTimeScale(1.f);
 			break;
 		case Pause::Select::PASS: //collectDemon창 출력 후 올바르게 고르면 그 자리에서 getdemon애니메이션 출력
-			
+			FRAMEWORK.SetTimeScale(1.f);
+			this->SetActive(false);
+			chapter->isDemonGet = true;
 			break;
 		case Pause::Select::BGM: //사운드 넣고 볼륨 설정 추가해주기
 			switch (currentBGMVolume)

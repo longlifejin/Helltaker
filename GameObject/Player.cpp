@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "Player.h"
-#include "Chapter1.h"
+#include "Chapter.h"
 #include "Animator.h"
 #include "CollectDemon.h"
-#include "ChangeScene.h"
+#include "Transition.h"
 
 Player::Player(const std::string& name)
 	:SpriteGo(name)
@@ -44,7 +44,7 @@ void Player::Update(float dt)
 	SpriteGo::Update(dt);
 	animator.Update(dt);
 
-	chapter = dynamic_cast<Chapter1*>(SCENE_MGR.GetCurrentScene());
+	chapter = dynamic_cast<Chapter*>(SCENE_MGR.GetCurrentScene());
 	SpriteGo::Update(dt);
 
 	prevIndex = currentIndex;
@@ -73,15 +73,15 @@ void Player::Update(float dt)
 
 	if (prevIndex != currentIndex)
 	{
-		Chapter1::MapObject type = chapter->CheckInteraction(currentIndex, prevIndex);
+		Chapter::MapObject type = chapter->CheckInteraction(currentIndex, prevIndex);
 
-		if (type == Chapter1::MapObject::empty)
+		if (type == Chapter::MapObject::empty)
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 			animator.Play("Tables/player_Move.csv");
 			animator.PlayQueue("Tables/player_Idle.csv");
 		}
-		else if (type == Chapter1::MapObject::box || type == Chapter1::MapObject::skeleton)
+		else if (type == Chapter::MapObject::box || type == Chapter::MapObject::skeleton)
 		{
 			currentIndex = prevIndex;
 			SetPosition(chapter->IndexToPos(currentIndex));

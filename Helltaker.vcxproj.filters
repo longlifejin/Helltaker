@@ -13,7 +13,7 @@
     <ClCompile Include="GameObject\SpriteGo.cpp" />
     <ClCompile Include="GameObject\TextGo.cpp" />
     <ClCompile Include="Framework\SoundMgr.cpp" />
-    <ClCompile Include="Scenes\Chapter1.cpp" />
+    <ClCompile Include="Scenes\Chapter.cpp" />
     <ClCompile Include="GameObject\Box.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
     <ClCompile Include="GameObject\Demon.cpp" />
@@ -22,8 +22,8 @@
     <ClCompile Include="Scenes\CollectDemon.cpp" />
     <ClCompile Include="Scenes\Pause.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
-    <ClCompile Include="SkeletonDead.cpp" />
-    <ClCompile Include="ChangeScene.cpp" />
+    <ClCompile Include="Scenes\SkeletonDead.cpp" />
+    <ClCompile Include="Scenes\Transition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Framework.h" />
@@ -40,7 +40,7 @@
     <ClInclude Include="GameObject\SpriteGo.h" />
     <ClInclude Include="GameObject\TextGo.h" />
     <ClInclude Include="Framework\SoundMgr.h" />
-    <ClInclude Include="Scenes\Chapter1.h" />
+    <ClInclude Include="Scenes\Chapter.h" />
     <ClInclude Include="GameObject\Box.h" />
     <ClInclude Include="GameObject\Player.h" />
     <ClInclude Include="GameObject\Demon.h" />
@@ -50,7 +50,7 @@
     <ClInclude Include="Scenes\Pause.h" />
     <ClInclude Include="Framework\Animator.h" />
     <ClInclude Include="Framework\rapidcsv.h" />
-    <ClInclude Include="SkeletonDead.h" />
-    <ClInclude Include="ChangeScene.h" />
+    <ClInclude Include="Scenes\SkeletonDead.h" />
+    <ClInclude Include="Scenes\Transition.h" />
   </ItemGroup>
 </Project>
