@@ -57,6 +57,8 @@ protected:
 	Pause* pause = nullptr;
 	CollectDemon* collectDemon = nullptr;
 
+	Animator animator;
+
 
 	std::wstring adviceText = L"● 인생 조언 [L] ●";
 	std::wstring restartText = L"● 재시작 [R] ●";
@@ -105,6 +107,7 @@ public:
 	MapObject CheckInteraction(int curr, int prev); //인덱스 번호를 받아서 오브젝트 상호작용 작동
 	int GetCurrentCol() { return col; }
 	int GetCurrentRow() { return row; }
+	sf::Vector2f GetPlayerCurrentPos();
 
 	int PosToIndex(sf::Vector2f pos);
 	sf::Vector2f IndexToPos(int index);

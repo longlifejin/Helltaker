@@ -18,6 +18,7 @@ protected:
 	std::wstring chaterSelect = L"챕터 선택";
 	std::wstring exit = L"나가기";
 
+
 public:
 	TitleScene(SceneIds id);
 	virtual ~TitleScene();

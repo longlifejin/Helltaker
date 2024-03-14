@@ -97,6 +97,7 @@ void Chapter1::Init()
 	AddGo(collectDemon, Layers::Ui);
 	collectDemon->SetActive(false);
 
+	
 
 	Scene::Init();
 }
@@ -355,6 +356,11 @@ Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
 
 }
 
+sf::Vector2f Chapter1::GetPlayerCurrentPos()
+{
+	return IndexToPos(player->currentIndex);
+}
+
 int Chapter1::PosToIndex(sf::Vector2f pos)
 {
 	int rowIndex = (pos.y - offsetY - (size / 2)) / size;
@@ -387,7 +393,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 	case Chapter1::MapObject::player:
 		player = new Player("Player");
 		player->SetTexture("Sprite/assets100V20057.png");
-		player->SetOrigin(Origins::BC);
+		player->SetOrigin(Origins::SELF);
 		player->SetPosition(IndexToPos(index));
 		player->Init();
 		AddGo(player, Layers::World);
@@ -395,7 +401,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 	case Chapter1::MapObject::demon:
 		demon = new Demon("Demon");
 		demon->SetTexture("Sprite/pandemonica_finalModel0010.png");
-		demon->SetOrigin(Origins::BC);
+		demon->SetOrigin(Origins::SELF);
 		demon->SetPosition(IndexToPos(index));
 		demon->Init();
 		AddGo(demon, Layers::World);
@@ -404,7 +410,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		skeleton = new Skeleton("Skeleton");
 		skeleton->SetTexture("Sprite/assets100V20235.png");
 		skeleton->currentIndex = skeleton->prevIndex = index;
-		skeleton->SetOrigin(Origins::BC);
+		skeleton->SetOrigin(Origins::SELF);
 		skeleton->SetPosition(IndexToPos(index));
 		skeleton->Init();
 		skeletonList.push_back(skeleton);
@@ -415,7 +421,7 @@ void Chapter1::SetObject(int index, MapObject obj)
 		box->SetTexture("Sprite/boxExport0001.png");
 		box->currentIndex = box->prevIndex = index;
 		box->SetPosition(IndexToPos(index));
-		box->SetOrigin(Origins::BC);
+		box->SetOrigin(Origins::SELF);
 		box->Init();
 		boxList.push_back(box);
 		AddGo(box, Layers::World);
@@ -454,6 +460,13 @@ void Chapter1::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
 	}
 
+	/////////////////테스트용//////////////////
+	if (InputMgr::GetKeyDown(sf::Keyboard::F3))
+	{
+		collectDemon->SetActive(true);
+	}
+	//////////////////////////////////////////
+
 	if (isDemonGet && !collectDemon->GetActive()) //isDemonGet - demon 획득한 처음 순간 / collectDemon창이 안열려있으면 실행
 	{
 		collectDemon->SetActive(true);
@@ -462,7 +475,8 @@ void Chapter1::Update(float dt)
 
 	if (!isDemonGet && collectDemon->GetAnswerSelect() && !collectDemon->GetActive()) //demon을 획득하고 나서, 선택지를 correct로 고르고 collectDemon창이 꺼져있으면 실행
 	{
-		player->animator.Play("Tables/player_GetDemon.csv"); //애니메이션이 계속 재생되고 있어서 첫 프레임만 나오는 것 같다고 하심
+		player->GetDemon();
+		collectDemon->SetAnswerSelect(false);
 	}
 }
 

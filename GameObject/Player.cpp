@@ -20,7 +20,6 @@ void Player::Init()
 	SpriteGo::Init();
 
 	animator.SetTarget(&sprite);
-
 }
 
 void Player::Release()
@@ -34,16 +33,16 @@ void Player::Reset()
 	animator.Play("Tables/player_Idle.csv");
 	SetOrigin(Origins::SELF);
 	SetFlipX(false);
-
 }
 
 void Player::Update(float dt)
 {
 	SpriteGo::Update(dt);
 	animator.Update(dt);
-	
+
 	chapter = dynamic_cast<Chapter1*>(SCENE_MGR.GetCurrentScene());
-	
+	SpriteGo::Update(dt);
+
 	prevIndex = currentIndex;
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::W))
@@ -103,10 +102,14 @@ void Player::OnDie()
 	//chapter->backColor->sortLayer = 1;
 	animator.Play("Tables/player_Die.csv");
 	moveCount = 0;
-	if (!animator.IsPlaying())
-	{
-		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
-	}
+	SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
 	//죽는 애니메이션 재생 후 자동 재시작
+}
+
+void Player::GetDemon()
+{
+	animator.Play("Tables/player_GetDemon.csv");
+
+	//애니메이션 재생 후 다음 챕터 이동
 }
 

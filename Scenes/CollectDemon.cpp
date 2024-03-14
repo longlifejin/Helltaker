@@ -67,20 +67,23 @@ void CollectDemon::Init()
 	correctText.SetOrigin(Origins::MC);
 	correctText.SetPosition({ correctButton.GetPosition().x, correctButton.GetPosition().y - 10.f });
 
-	booper.SetTexture("Texture2D/booper0023.png");
-	booper.SetOrigin(Origins::MC);
-	booper.SetPosition({ (float)FRAMEWORK.GetWindowSize().x * 0.5f, (float)FRAMEWORK.GetWindowSize().y * 0.95f });
-	booper.SetColor(219, 72, 77);
+	booper.setTexture((RES_MGR_TEXTURE.Get("Texture2D/booper0023.png")));
+	booper.setOrigin({ booper.getLocalBounds().width * 0.5f, booper.getLocalBounds().height * 0.5f });
+	booper.setPosition({ (float)FRAMEWORK.GetWindowSize().x * 0.5f, (float)FRAMEWORK.GetWindowSize().y * 0.95f });
+	booper.setColor(sf::Color(219, 72, 77));
+	booperAnimator.SetTarget(&booper);
+	isBooperOn = true;
 
 	badEnd.setTexture((RES_MGR_TEXTURE.Get("Texture2D/dialogueDeathExport0009.png")));
 	badEnd.setOrigin({ badEnd.getLocalBounds().width * 0.5f, badEnd.getLocalBounds().height * 0.5f });
-	badEnd.setPosition(background.GetPosition());
+	badEnd.setPosition({ background.GetPosition().x,background.GetPosition().y - 300.f });
 	badEndAnimator.SetTarget(&badEnd);
 
-	success.SetTexture("Texture2D/success0007.png");
-	success.SetOrigin(Origins::MC);
-	success.SetPosition({ demonLine2.GetPosition().x, demonLine2.GetPosition().y + 120.f });
-	success.SetScale({ 0.7f,0.7f });
+	success.setTexture((RES_MGR_TEXTURE.Get("Texture2D/success0007.png")));
+	success.setOrigin({ success.getLocalBounds().width * 0.5f, success.getLocalBounds().height * 0.5f });
+	success.setPosition({ demonLine2.GetPosition().x, demonLine2.GetPosition().y + 120.f });
+	success.setScale({ 0.7f,0.7f });
+	successAnimator.SetTarget(&success);
 
 	background.SetActive(true);
 	demon.SetActive(true);
@@ -89,8 +92,6 @@ void CollectDemon::Init()
 	correctButton.SetActive(false);
 	wrongText.SetActive(false);
 	correctText.SetActive(false);
-	booper.SetActive(true);
-	success.SetActive(false);
 	
 	currentSelect = SelectLine::Wrong;
 	//isAnswerSelect = false;
@@ -107,13 +108,21 @@ void CollectDemon::Reset()
 {
 	GameObject::Reset();
 	badEndAnimator.Play("Tables/badEnd.csv");
-	badEnd.setOrigin(background.GetOrigin());
+	badEnd.setOrigin({ badEnd.getLocalBounds().width * 0.5f, badEnd.getLocalBounds().height * 0.5f });
+	successAnimator.Play("Tables/success.csv");
+	success.setOrigin({ success.getLocalBounds().width * 0.5f, success.getLocalBounds().height * 0.5f });
+	isBadEnd = false;
+	isSuccess = false;
+	booperAnimator.Play("Tables/booper.csv");
+	isBooperOn = true;
 }
 
 void CollectDemon::Update(float dt)
 {
 	GameObject::Update(dt);
 	badEndAnimator.Update(dt);
+	successAnimator.Update(dt);
+	booperAnimator.Update(dt);
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::R))
 	{
@@ -125,18 +134,24 @@ void CollectDemon::Update(float dt)
 	switch (step)
 	{
 	case 0:
-		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
-		{ ++step; }
+		booperAnimator.Play("Tables/booper.csv"); //왜 여기서도 멈춰있는거지? 한번 재생하고 바로 다음 스텝인데?
+		++step;
 		break;
 	case 1:
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			++step;
+		}
+		break;
+	case 2:
 		wrongButton.SetActive(true);
 		wrongText.SetActive(true);
 		correctButton.SetActive(true);
 		correctText.SetActive(true);
-		booper.SetActive(false);
+		isBooperOn = false;
 		++step;
 		break;
-	case 2:
+	case 3:
 		if (InputMgr::GetKeyDown(sf::Keyboard::W) || InputMgr::GetKeyDown(sf::Keyboard::S))
 		{ Select();	}
 
@@ -146,54 +161,23 @@ void CollectDemon::Update(float dt)
 			wrongText.SetActive(false);
 			correctButton.SetActive(false);
 			correctText.SetActive(false);
-			booper.SetActive(true);
 			++step;
-		}
-		break;
-	case 3:
-		switch (currentSelect)
-		{
-		case CollectDemon::SelectLine::Correct:
-			demonLine.SetString(L"참 달콤한 제안이에요. 커피를 마시고 싶네요.");
-			demonLine2.SetString(L"피곤해서 정신을 못 차리겠어요.");
-			demon.SetTexture("Texture2D/pand_flust.png");
-			booper.SetActive(false);
-			success.SetActive(true);
-
-			if (InputMgr::GetKeyDown(sf::Keyboard::Space))
-			{ ++step; }
-			break;
-		case CollectDemon::SelectLine::Wrong:
-			demonLine.SetString(L"지옥을 살아서 나갈 생각을 한거야? 망상도 심하셔라.");
-			demonLine2.SetActive(false);
-			if (InputMgr::GetKeyDown(sf::Keyboard::Space))
-			{ 
-				isBadEnd = true;
-				++step; 
-			}
-			break;
-		default:
-			break;
 		}
 		break;
 	case 4:
 		switch (currentSelect)
 		{
 		case CollectDemon::SelectLine::Correct:
-			isAnswerSelect = true;
-			this->SetActive(false);
-			this->Release();
-			this->Init();
+			isSuccess = true;
+			successAnimator.Play("Tables/success.csv");
+			demonLine.SetString(L"참 달콤한 제안이에요. 커피를 마시고 싶네요.");
+			demonLine2.SetString(L"피곤해서 정신을 못 차리겠어요.");
+			demon.SetTexture("Texture2D/pand_flust.png");
+			isBooperOn = false;
 			break;
 		case CollectDemon::SelectLine::Wrong:
-			badEndAnimator.Play("Tables/badEnd.csv");
-			demon.SetActive(false);
-			background.SetActive(false);
-			demonName.SetActive(false);
-			booper.SetActive(false);
-			demonLine.Set(fontEB, L"그녀의 전문적인 친절함이 담긴 손길로 당신의 얼굴을 잡고", 25, sf::Color::Red);
-			demonLine2.Set(fontEB, L"목을 비틀어 버렸습니다.", 25, sf::Color::Red);
-			demonLine2.SetActive(true);
+			demonLine.SetString(L"지옥을 살아서 나갈 생각을 한거야? 망상도 심하셔라.");
+			demonLine2.SetActive(false);
 			break;
 		}
 		++step;
@@ -201,12 +185,42 @@ void CollectDemon::Update(float dt)
 	case 5:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
-			isBadEnd = false;
+			isSuccess = false;
 			++step;
 		}
 		break;
 	case 6:
-		//게임 재시작
+		switch (currentSelect)
+		{
+		case CollectDemon::SelectLine::Correct:
+			isAnswerSelect = true;
+			this->SetActive(false);
+			this->Release();
+			this->Init();
+			isSuccess = false;
+			break;
+		case CollectDemon::SelectLine::Wrong:
+			isBadEnd = true;
+			badEndAnimator.Play("Tables/badEnd.csv");
+			demon.SetActive(false);
+			background.SetActive(false);
+			demonName.SetActive(false);
+			isBooperOn = false;
+			demonLine.Set(fontEB, L"그녀의 전문적인 친절함이 담긴 손길로 당신의 얼굴을 잡고", 25, sf::Color::Red);
+			demonLine2.Set(fontEB, L"목을 비틀어 버렸습니다.", 25, sf::Color::Red);
+			demonLine2.SetActive(true);
+			break;
+		}
+		++step;
+		break;
+	case 7:
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			isBadEnd = false;
+			++step;
+		}
+		break;
+	case 8:
 		this->SetActive(false);
 		this->Release();
 		this->Init();
@@ -258,7 +272,7 @@ void CollectDemon::Draw(sf::RenderWindow& window)
 	if (correctButton.GetActive()) { correctButton.Draw(window); }
 	if (wrongText.GetActive()) { wrongText.Draw(window); }
 	if (correctText.GetActive()) { correctText.Draw(window); }
-	if (booper.GetActive()) { booper.Draw(window); }
-	if (success.GetActive()) { success.Draw(window); }
+	if (isBooperOn) { window.draw(booper); }
+	if (isSuccess) { window.draw(success); }
 	if (isBadEnd) { window.draw(badEnd); }
 }

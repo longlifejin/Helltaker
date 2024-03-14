@@ -30,12 +30,14 @@ protected:
 	TextGo wrongText;
 	TextGo correctText;
 
-	SpriteGo booper;
+	sf::Sprite booper;
 
-	SpriteGo success;
+	sf::Sprite success;
 	sf::Sprite badEnd;
 
+	Animator booperAnimator;
 	Animator badEndAnimator;
+	Animator successAnimator;
 
 	std::wstring panName = L"● 지친 악마, 판데모니카 ●";
 	std::wstring pandLine1 = L"지옥 고객 서비스 센터의 판데모니카입니다.";
@@ -48,6 +50,7 @@ protected:
 
 	bool isBadEnd = false;
 	bool isSuccess = false;
+	bool isBooperOn = false;
 
 	int step = 0;
 
@@ -67,6 +70,7 @@ public:
 
 	void Select();
 	bool GetAnswerSelect() { return isAnswerSelect; }
+	void SetAnswerSelect(bool answer) { isAnswerSelect = answer; }
 
 	void Draw(sf::RenderWindow& window) override;
 

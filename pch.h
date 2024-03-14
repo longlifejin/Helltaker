@@ -6,6 +6,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 #include <iostream>
 #include <vector>
 #include <list>
