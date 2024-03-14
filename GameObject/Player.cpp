@@ -3,6 +3,7 @@
 #include "Chapter1.h"
 #include "Animator.h"
 #include "CollectDemon.h"
+#include "ChangeScene.h"
 
 Player::Player(const std::string& name)
 	:SpriteGo(name)
@@ -34,8 +35,8 @@ void Player::Reset()
 	SetOrigin(Origins::SELF);
 	SetFlipX(false);
 	std::function<void()> DeadEvent_SceneChange = std::bind(&Player::ChangeSceneEvent);
-	//std::function<void()> DeadEvent_transition = std::bind(&ChangeScene->ChangeSceneEvent);
 	animator.AddEvent("Tables/player_Die.csv", 17, DeadEvent_SceneChange);
+	//std::function<void()> DeadEvent_transition = std::bind(&ChangeScene->ChangeSceneEvent);
 }
 
 void Player::Update(float dt)
@@ -47,24 +48,27 @@ void Player::Update(float dt)
 	SpriteGo::Update(dt);
 
 	prevIndex = currentIndex;
-
-	if (InputMgr::GetKeyDown(sf::Keyboard::W))
+	
+	if (!chapter->IsPause())
 	{
-		currentIndex -= chapter->GetCurrentCol();
-	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::S))
-	{
-		currentIndex += chapter->GetCurrentCol();
-	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::A))
-	{
-		currentIndex -= 1;
-		this->SetFlipX(true);
-	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::D))
-	{
-		currentIndex += 1;
-		this->SetFlipX(false);
+		if (InputMgr::GetKeyDown(sf::Keyboard::W))
+		{
+			currentIndex -= chapter->GetCurrentCol();
+		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::S))
+		{
+			currentIndex += chapter->GetCurrentCol();
+		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::A))
+		{
+			currentIndex -= 1;
+			this->SetFlipX(true);
+		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::D))
+		{
+			currentIndex += 1;
+			this->SetFlipX(false);
+		}
 	}
 
 	if (prevIndex != currentIndex)
@@ -95,6 +99,7 @@ void Player::Update(float dt)
 void Player::ChangeSceneEvent()
 {
 	SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+	//chapter->PlayTransition(); //어떻게해야 transition을 출력할 수 있을까~~~~
 }
 
 void Player::OnDamage()

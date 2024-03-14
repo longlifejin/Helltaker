@@ -126,7 +126,6 @@ void Chapter1::Enter()
 
 void Chapter1::Exit()
 {
-
 	if (player != nullptr)
 	{
 		RemoveGo(player);
@@ -250,6 +249,15 @@ void Chapter1::SetUiActive(bool active)
 	advice->SetActive(active);
 	restart->SetActive(active);
 	background->SetActive(active);
+}
+
+void Chapter1::PlayTransition()
+{
+	ChangeScene* changeScene = new ChangeScene("ChangeScene Animation");
+	changeScene->Init();
+	changeScene->SetPosition({ 0.f,0.f });
+	changeScene->Reset();
+	AddGo(changeScene, Layers::Ui);
 }
 
 Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)
@@ -462,6 +470,7 @@ void Chapter1::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{
+		isPause = true;
 		FRAMEWORK.SetTimeScale(0.f); //일시정지할때 멈추는거 수정하기 (키 입력 받을때 애니메이션 재생만 멈추고 움직임)
 		pause->SetActive(true);
 	}
@@ -476,12 +485,7 @@ void Chapter1::Update(float dt)
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::R))
 	{
-		ChangeScene* changeScene = new ChangeScene("ChangeScene Animation");
-		changeScene->Init();
-		changeScene->Reset();
-		changeScene->SetPosition({ 0.f,0.f});
-		AddGo(changeScene, Layers::Ui);
-		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
+		PlayTransition();
 	}
 
 	/////////////////테스트용//////////////////

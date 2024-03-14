@@ -12,6 +12,7 @@ public:
 	void Init() override;
 
 	void RemoveChangeSceneImage();
+	static void SceneChange();
 
 	void Reset() override;
 	void Update(float dt) override;

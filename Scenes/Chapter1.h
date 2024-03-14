@@ -34,7 +34,6 @@ protected:
 	float offsetX = 10.f;
 	float offsetY = 40.f;
 
-
 	SpriteGo* background = nullptr;
 
 	SpriteGo* uiRoseLeft = nullptr;
@@ -56,6 +55,7 @@ protected:
 
 	Animator animator;
 
+	bool isPause = false;
 
 	std::wstring adviceText = L"● 인생 조언 [L] ●";
 	std::wstring restartText = L"● 재시작 [R] ●";
@@ -88,7 +88,7 @@ public:
 	SpriteGo* backColor;
 	Demon* demon = nullptr;
 	Skeleton* skeleton = nullptr;
-	Box* box = nullptr;
+	Box* box = nullptr; 
 
 	bool isDemonGet = false;
 
@@ -101,11 +101,14 @@ public:
 	void SetGrid(); 
 	void SetMap();
 	void SetUiActive(bool active);
+	void PlayTransition();
 
 	MapObject CheckInteraction(int curr, int prev); //인덱스 번호를 받아서 오브젝트 상호작용 작동
 	int GetCurrentCol() { return col; }
 	int GetCurrentRow() { return row; }
 	sf::Vector2f GetPlayerCurrentPos();
+
+	bool IsPause() { return isPause; }
 
 	int PosToIndex(sf::Vector2f pos);
 	sf::Vector2f IndexToPos(int index);
