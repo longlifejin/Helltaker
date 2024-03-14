@@ -84,8 +84,6 @@ protected:
 		"WWWWWWWWWWWWWWWWWWW",
 	};
 
-	
-
 public:
 	Chapter1(SceneIds id);
 	virtual ~Chapter1();
@@ -101,8 +99,8 @@ public:
 	void Exit() override;
 
 	void SetGrid(); 
-
 	void SetMap();
+	void SetUiActive(bool active);
 
 	MapObject CheckInteraction(int curr, int prev); //인덱스 번호를 받아서 오브젝트 상호작용 작동
 	int GetCurrentCol() { return col; }

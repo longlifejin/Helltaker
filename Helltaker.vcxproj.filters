@@ -23,6 +23,7 @@
     <ClCompile Include="Scenes\Pause.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
     <ClCompile Include="SkeletonDead.cpp" />
+    <ClCompile Include="ChangeScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Framework.h" />
@@ -50,5 +51,6 @@
     <ClInclude Include="Framework\Animator.h" />
     <ClInclude Include="Framework\rapidcsv.h" />
     <ClInclude Include="SkeletonDead.h" />
+    <ClInclude Include="ChangeScene.h" />
   </ItemGroup>
 </Project>

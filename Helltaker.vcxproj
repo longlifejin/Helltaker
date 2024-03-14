@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ChangeScene.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
     <ClCompile Include="Scenes\Pause.cpp" />
     <ClCompile Include="Scenes\CollectDemon.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="SkeletonDead.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChangeScene.h" />
     <ClInclude Include="Framework\Animator.h" />
     <ClInclude Include="Framework\rapidcsv.h" />
     <ClInclude Include="Scenes\Pause.h" />

@@ -24,8 +24,8 @@ void Chapter1::Init()
 	backColor->SetTexture("Texture2D/backColor.png");
 	backColor->SetOrigin({ 0.f,0.f });
 	backColor->SetPosition({ 0.f,0.f });
-	/*AddGo(backColor, Layers::World);
-	backColor->sortLayer = -1;*/ //Á×¾úÀ» ¶§ µ¤¾îÁá´Ù°¡ Áö¿ì±â
+	AddGo(backColor, Layers::World);
+	backColor->sortLayer = -1; //Á×¾úÀ» ¶§ µ¤¾îÁá´Ù°¡ Áö¿ì±â
 
 	background = new SpriteGo("Background");
 	background->SetTexture("PlusSprite/chapterBG0001.png");
@@ -97,7 +97,7 @@ void Chapter1::Init()
 	AddGo(collectDemon, Layers::Ui);
 	collectDemon->SetActive(false);
 
-	
+	SetUiActive(true);
 
 	Scene::Init();
 }
@@ -109,6 +109,7 @@ void Chapter1::Release()
 
 void Chapter1::Enter()
 {
+	backColor->sortLayer = -1;
 	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
 	worldView.setSize(windowSize);
 	worldView.setCenter(windowSize * 0.5f);
@@ -116,6 +117,7 @@ void Chapter1::Enter()
 	uiView.setCenter(windowSize * 0.5f);
 
 	SetMap();
+	SetUiActive(true);
 
 	Scene::Enter();
 }
@@ -233,6 +235,19 @@ void Chapter1::SetMap()
 			SetObject(index, mapObj);
 		}
 	}
+}
+
+void Chapter1::SetUiActive(bool active)
+{
+	uiRoseLeft->SetActive(active);
+	uiRoseRight->SetActive(active);
+	uiDemonLeft->SetActive(active);
+	uiDemonRight->SetActive(active);
+	moveCount->SetActive(active);
+	currentStage->SetActive(active);
+	advice->SetActive(active);
+	restart->SetActive(active);
+	background->SetActive(active);
 }
 
 Chapter1::MapObject Chapter1::CheckInteraction(int curr, int prev)

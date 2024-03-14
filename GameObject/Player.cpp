@@ -33,6 +33,8 @@ void Player::Reset()
 	animator.Play("Tables/player_Idle.csv");
 	SetOrigin(Origins::SELF);
 	SetFlipX(false);
+	std::function<void()> DeadEvent = std::bind(&Player::ChangeSceneEvent);
+	animator.AddEvent("Tables/player_Die.csv", 17, DeadEvent);
 }
 
 void Player::Update(float dt)
@@ -73,7 +75,6 @@ void Player::Update(float dt)
 			SetPosition(chapter->IndexToPos(currentIndex));
 			animator.Play("Tables/player_Move.csv");
 			animator.PlayQueue("Tables/player_Idle.csv");
-			
 		}
 		else if (type == Chapter1::MapObject::box || type == Chapter1::MapObject::skeleton)
 		{
@@ -88,8 +89,11 @@ void Player::Update(float dt)
 	{
 		OnDie();
 	}
+}
 
-
+void Player::ChangeSceneEvent()
+{
+	SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
 }
 
 void Player::OnDamage()
@@ -99,16 +103,13 @@ void Player::OnDamage()
 
 void Player::OnDie()
 {
-	//chapter->backColor->sortLayer = 1;
+	chapter->backColor->sortLayer = 10;
+	chapter->SetUiActive(false);
 	SetOrigin({360.f, 900.f});
 	animator.Play("Tables/player_Die.csv");
 	moveCount = 0;
 
 	//죽는 애니메이션 재생 후 자동 재시작
-	if (animator.IsAnimationDone())
-	{
-		SCENE_MGR.ChangeScene(SceneIds::CHAPTER1);
-	}
 }
 
 void Player::GetDemon()
