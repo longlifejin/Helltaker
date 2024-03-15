@@ -97,6 +97,7 @@ void Player::Update(float dt)
 void Player::ChangeSceneEvent()
 {
 	animator.Stop();
+	chapter->transition->SetChangeScene(SceneIds::CHAPTER);
 	chapter->transition->PlayTransitionUp();
 }
 

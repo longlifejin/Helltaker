@@ -40,6 +40,7 @@ void SceneMgr::Release()
 void SceneMgr::ChangeScene(SceneIds id)
 {
 	//바꿀 씬을 저장해뒀다가 전 씬이 업데이트를 마치고 바꿀 수 있도록 수정
+	prevScene = currentScene;
 	nextScene = id;
 }
 

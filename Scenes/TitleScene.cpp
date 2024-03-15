@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "TitleScene.h"
 #include "Transition.h"
+#include "Chapter.h"
 
 TitleScene::TitleScene(SceneIds id)
 	: Scene(id)
@@ -108,11 +109,17 @@ void TitleScene::Enter()
 	uiView.setSize(windowSize);
 	uiView.setCenter(windowSize * 0.5f);
 
+	if (SCENE_MGR.CheckPrevScene() != SceneIds::TITLESCENE)
+	{
+		transition->PlayTransitionDown();
+	}
+
 	Scene::Enter();
 }
 
 void TitleScene::Exit()
 {
+	transition->SetChangeScene(SceneIds::TITLESCENE);
 	transition->PlayTransitionUp();
 	Scene::Exit(); 
 }
@@ -120,6 +127,7 @@ void TitleScene::Exit()
 void TitleScene::Update(float dt)
 {
 	Scene::Update(dt);
+	chapter = dynamic_cast<Chapter*>(SCENE_MGR.GetCurrentScene());
 
 	float backgroundSpeed = 50.f;
 
@@ -273,6 +281,7 @@ void TitleScene::Update(float dt)
 		switch (currentSelection)
 		{
 		case Button::NEWGAME:
+			transition->SetChangeScene(SceneIds::CHAPTER);
 			transition->PlayTransitionUp();
 			break;
 		case Button::CHAPTERSELECT:

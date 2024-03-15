@@ -2,6 +2,7 @@
 #include "Pause.h"
 #include "Chapter.h"
 #include "CollectDemon.h"
+#include "Transition.h"
 
 Pause::Pause(const std::string& name)
 	:GameObject(name)
@@ -585,7 +586,9 @@ void Pause::Update(float dt)
 			break;
 		case Pause::Select::MAIN:
 			FRAMEWORK.SetTimeScale(1.f);
-			SCENE_MGR.ChangeScene(SceneIds::TITLESCENE);
+			//SCENE_MGR.ChangeScene(SceneIds::TITLESCENE);
+			chapter->transition->SetChangeScene(SceneIds::TITLESCENE);
+			chapter->transition->PlayTransitionUp();
 			this->SetActive(false);
 			break;
 		default:

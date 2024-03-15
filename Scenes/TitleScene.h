@@ -4,6 +4,7 @@
 #include "TextGo.h"
 
 class Transition;
+class Chapter;
 
 class TitleScene : public Scene
 {
@@ -26,6 +27,7 @@ public:
 	virtual ~TitleScene();
 
 	Transition* transition = nullptr;
+	Chapter* chapter;
 
 	sf::RectangleShape backColor;
 

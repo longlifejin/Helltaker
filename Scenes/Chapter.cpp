@@ -502,6 +502,7 @@ void Chapter::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::R))
 	{
+		transition->SetChangeScene(SceneIds::TITLESCENE);
 		transition->PlayTransitionUp();
 	}
 

@@ -12,6 +12,7 @@ protected:
 	SceneIds startScene = SceneIds::TITLESCENE;
 	SceneIds currentScene = startScene;
 	SceneIds nextScene = SceneIds::NONE;
+	SceneIds prevScene = SceneIds::TITLESCENE;
 
 	SceneMgr() = default;
 	virtual ~SceneMgr();
@@ -24,6 +25,7 @@ public:
 	void ChangeScene(SceneIds id);
 
 	Scene* GetCurrentScene() { return scenes[(int)currentScene]; }
+	SceneIds CheckPrevScene() { return prevScene; }
 
 	bool Update(float dt);
 	void LateUpdate(float dt);

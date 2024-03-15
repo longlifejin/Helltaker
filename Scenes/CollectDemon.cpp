@@ -225,6 +225,7 @@ void CollectDemon::Update(float dt)
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
 			isBadEnd = false;
+			chapter->transition->SetChangeScene(SceneIds::CHAPTER);
 			chapter->transition->PlayTransitionUp();
 			++step;
 		}
