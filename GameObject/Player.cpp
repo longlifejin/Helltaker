@@ -30,13 +30,11 @@ void Player::Release()
 
 void Player::Reset()
 {
-	SpriteGo::Reset();
 	animator.Play("Tables/player_Idle.csv");
 	SetOrigin(Origins::SELF);
 	SetFlipX(false);
 	std::function<void()> DeadEvent_SceneChange = std::bind(&Player::ChangeSceneEvent);
 	animator.AddEvent("Tables/player_Die.csv", 17, DeadEvent_SceneChange);
-	//std::function<void()> DeadEvent_transition = std::bind(&Player::ChangeSceneEvent);
 }
 
 void Player::Update(float dt)
@@ -49,7 +47,7 @@ void Player::Update(float dt)
 
 	prevIndex = currentIndex;
 	
-	if (!chapter->IsPause())
+	if (!chapter->IsPause() && !chapter->IsAdvice())
 	{
 		if (InputMgr::GetKeyDown(sf::Keyboard::W))
 		{
@@ -99,7 +97,11 @@ void Player::Update(float dt)
 void Player::ChangeSceneEvent()
 {
 	SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
-	//chapter->PlayTransition(); //어떻게해야 transition을 출력할 수 있을까~~~~
+	//Transition* changeScene = new Transition("ChangeScene Animation");
+	//changeScene->Init();
+	//changeScene->SetPosition({ 0.f,0.f });
+	//changeScene->Reset();
+	//SCENE_MGR.GetCurrentScene()->AddGo(changeScene, SCENE_MGR.GetCurrentScene()->Ui);
 }
 
 void Player::OnDamage()
@@ -117,14 +119,12 @@ void Player::OnDie()
 	chapter->ResortGo(this);
 	chapter->backColor->sortOrder = 2;
 	chapter->ResortGo(chapter->backColor);
-
 }
 
 void Player::GetDemon()
 {
 	SetOrigin(Origins::SELF);
 	animator.Play("Tables/player_GetDemon.csv");
-
 	//애니메이션 재생 후 다음 챕터 이동
 }
 

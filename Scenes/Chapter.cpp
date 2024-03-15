@@ -7,8 +7,10 @@
 #include "TextGo.h"
 #include "CollectDemon.h"
 #include "Pause.h"
+#include "Advice.h"
 #include "SkeletonDead.h"
 #include "Transition.h"
+#include "TransitionDown.h"
 
 Chapter::Chapter(SceneIds id)
 	:Scene(id)
@@ -21,6 +23,7 @@ Chapter::~Chapter()
 
 void Chapter::Init()
 {
+
 	backColor = new SpriteGo("BackColor");
 	backColor->SetTexture("Texture2D/backColor.png");
 	backColor->SetOrigin({ 0.f,0.f });
@@ -93,12 +96,29 @@ void Chapter::Init()
 	AddGo(pause, Layers::Ui);
 	pause->SetActive(false);
 
+	adviceTab = new Advice("Advice");
+	adviceTab->sortLayer = 2;
+	AddGo(adviceTab, Layers::Ui);
+	adviceTab->SetActive(false);
+
 	collectDemon = new CollectDemon("Collect");
 	collectDemon->sortLayer = 1;
 	AddGo(collectDemon, Layers::Ui);
 	collectDemon->SetActive(false);
 
 	SetUiActive(true);
+
+	//transitionUp = new Transition("Transition Up");
+	//transitionUp->Init();
+	//transitionUp->SetPosition({ 0.f,0.f });
+	////transitionUp->Reset();
+	//AddGo(transitionUp, Layers::Ui);
+
+	transitionDown = new TransitionDown("Transition Down");
+	transitionDown->Init();
+	//transitionDown->SetPosition({ 0.f,0.f });
+	transitionDown->Reset();
+	AddGo(transitionDown, Layers::Ui);
 
 	Scene::Init();
 }
@@ -126,6 +146,7 @@ void Chapter::Enter()
 
 void Chapter::Exit()
 {
+
 	if (player != nullptr)
 	{
 		RemoveGo(player);
@@ -249,15 +270,6 @@ void Chapter::SetUiActive(bool active)
 	advice->SetActive(active);
 	restart->SetActive(active);
 	background->SetActive(active);
-}
-
-void Chapter::PlayTransition()
-{
-	Transition* changeScene = new Transition("ChangeScene Animation");
-	changeScene->Init();
-	changeScene->SetPosition({ 0.f,0.f });
-	changeScene->Reset();
-	AddGo(changeScene, Layers::Ui);
 }
 
 Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
@@ -471,14 +483,22 @@ void Chapter::Update(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{
 		isPause = true;
-		FRAMEWORK.SetTimeScale(0.f); //일시정지할때 멈추는거 수정하기 (키 입력 받을때 애니메이션 재생만 멈추고 움직임)
+		FRAMEWORK.SetTimeScale(0.f);
 		pause->SetActive(true);
+	}
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::L))
+	{
+		isAdvice = true;
+		adviceTab->SetActive(true);
 	}
 
 	if (FRAMEWORK.GetTimeScale() == 1.f)
 	{
 		isPause = false;
 	}
+
+	
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::F1))
 	{
@@ -488,9 +508,10 @@ void Chapter::Update(float dt)
 	{
 		grid.clear();
 	}
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::R))
 	{
-		PlayTransition();
+		SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
 	}
 
 	/////////////////테스트용//////////////////

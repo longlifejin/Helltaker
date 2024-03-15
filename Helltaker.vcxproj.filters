@@ -24,6 +24,8 @@
     <ClCompile Include="Framework\Animator.cpp" />
     <ClCompile Include="Scenes\SkeletonDead.cpp" />
     <ClCompile Include="Scenes\Transition.cpp" />
+    <ClCompile Include="Scenes\TransitionDown.cpp" />
+    <ClCompile Include="Scenes\Advice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Framework.h" />
@@ -52,5 +54,7 @@
     <ClInclude Include="Framework\rapidcsv.h" />
     <ClInclude Include="Scenes\SkeletonDead.h" />
     <ClInclude Include="Scenes\Transition.h" />
+    <ClInclude Include="Scenes\TransitionDown.h" />
+    <ClInclude Include="Scenes\Advice.h" />
   </ItemGroup>
 </Project>

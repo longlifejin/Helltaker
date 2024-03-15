@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "TitleScene.h"
+#include "TransitionDown.h"
 
 TitleScene::TitleScene(SceneIds id)
 	: Scene(id)
@@ -107,7 +108,7 @@ void TitleScene::Enter()
 
 void TitleScene::Exit()
 {
-	Scene::Exit();
+	Scene::Exit(); 
 }
 
 void TitleScene::Update(float dt)

@@ -14,6 +14,8 @@ Pause::~Pause()
 
 void Pause::Init()
 {
+	currentSelect = Select::BACK;
+
 	backColor.setFillColor({ 2, 2, 27, 220});
 	backColor.setSize({ (float)FRAMEWORK.GetWindowSize().x, (float)FRAMEWORK.GetWindowSize().y });
 	backColor.setOrigin({ 0.f,0.f });
@@ -109,6 +111,7 @@ void Pause::Init()
 
 void Pause::Release()
 {
+	GameObject::Release();
 }
 
 void Pause::Update(float dt)
@@ -588,6 +591,12 @@ void Pause::Update(float dt)
 		default:
 			break;
 		}
+	}
+
+	if (FRAMEWORK.GetTimeScale() == 1.f)
+	{
+		Release();
+		Init();
 	}
 }
 

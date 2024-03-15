@@ -69,7 +69,7 @@ void CollectDemon::Init()
 
 	booper.setTexture((RES_MGR_TEXTURE.Get("Texture2D/booper0023.png")));
 	booper.setOrigin({ booper.getLocalBounds().width * 0.5f, booper.getLocalBounds().height * 0.5f });
-	booper.setPosition({ (float)FRAMEWORK.GetWindowSize().x * 0.5f, (float)FRAMEWORK.GetWindowSize().y * 0.95f });
+	booper.setPosition({ (float)FRAMEWORK.GetWindowSize().x * 0.5f, (float)FRAMEWORK.GetWindowSize().y * 0.6f });
 	booper.setColor(sf::Color(219, 72, 77));
 	booperAnimator.SetTarget(&booper);
 	isBooperOn = true;
@@ -134,7 +134,7 @@ void CollectDemon::Update(float dt)
 	switch (step)
 	{
 	case 0:
-		booperAnimator.Play("Tables/booper.csv"); //왜 여기서도 멈춰있는거지? 한번 재생하고 바로 다음 스텝인데?
+		booperAnimator.Play("Tables/booper.csv");
 		++step;
 		break;
 	case 1:

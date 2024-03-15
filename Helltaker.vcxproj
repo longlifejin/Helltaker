@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scenes\Advice.cpp" />
     <ClCompile Include="Scenes\Transition.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
     <ClCompile Include="Scenes\Pause.cpp" />
@@ -168,8 +169,10 @@
     <ClCompile Include="GameObject\Skeleton.cpp" />
     <ClCompile Include="Scenes\TitleScene.cpp" />
     <ClCompile Include="Scenes\SkeletonDead.cpp" />
+    <ClCompile Include="Scenes\TransitionDown.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scenes\Advice.h" />
     <ClInclude Include="Scenes\Transition.h" />
     <ClInclude Include="Framework\Animator.h" />
     <ClInclude Include="Framework\rapidcsv.h" />
@@ -198,6 +201,7 @@
     <ClInclude Include="GameObject\Skeleton.h" />
     <ClInclude Include="Scenes\TitleScene.h" />
     <ClInclude Include="Scenes\SkeletonDead.h" />
+    <ClInclude Include="Scenes\TransitionDown.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

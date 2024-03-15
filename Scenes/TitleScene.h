@@ -3,6 +3,8 @@
 #include "SpriteGo.h"
 #include "TextGo.h"
 
+class TransitionDown;
+
 class TitleScene : public Scene
 {
 	enum class Button
@@ -23,6 +25,8 @@ public:
 	TitleScene(SceneIds id);
 	virtual ~TitleScene();
 
+	TransitionDown* transitionDown;
+
 	sf::RectangleShape backColor;
 
 	SpriteGo* background1;
@@ -30,8 +34,6 @@ public:
 
 	SpriteGo* beelzebub;
 	TextGo* theGreatFly;
-
-	SpriteGo* whiteCircle;
 
 	SpriteGo* newGameButton;
 	TextGo* newGameText;

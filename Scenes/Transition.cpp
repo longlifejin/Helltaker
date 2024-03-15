@@ -13,33 +13,34 @@ Transition::~Transition()
 void Transition::Init()
 {
 	SpriteGo::Init();
-	animator.SetTarget(&sprite);
 	SetOrigin(Origins::BC);
+	animator.SetTarget(&sprite);
 }
 
 void Transition::RemoveChangeSceneImage()
 {
-	SCENE_MGR.GetCurrentScene()->RemoveGo(this);
+	SCENE_MGR.GetCurrentScene()->RemoveGo(this); //생성할때마다 지워주는 구조니까 불필요한 것 같다. 이거 없애기
 }
 
 void Transition::SceneChange()
 {
-	SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
+	SCENE_MGR.ChangeScene(scene); //TO-DO : 원하는 창으로 이동할 수 있도록 멤버 변수 두기
+}
+
+void Transition::PlayTransitionUp()
+{
 }
 
 void Transition::Reset()
 {
 	animator.ClearEvent();
 
-	//SpriteGo::Reset();
 	SetPosition({1920.f * 0.5f, 1080.f});
-
 	animator.SetOrigin(Origins::BC);
-	std::function<void()> goChapter = std::bind(&Transition::SceneChange);
-	animator.AddEvent("Tables/sceneChange.csv", 28, std::bind(&Transition::RemoveChangeSceneImage, this)); //이미지 지워주는거
-	animator.AddEvent("Tables/sceneChange.csv", 28, goChapter); //씬 이동하는거
-
-	animator.Play("Tables/sceneChange.csv");
+	//std::function<void()> goChapter = std::bind(&Transition::SceneChange);
+	//animator.AddEvent("Tables/transition_Up.csv", 11, std::bind(&Transition::PlayTransitionDown, this));
+	//animator.AddEvent("Tables/transition_Up.csv", 13, std::bind(&Transition::SceneChange, this)); //씬 이동하는거
+	//animator.Play("Tables/transition_Up.csv");
 }
 
 void Transition::Update(float dt)

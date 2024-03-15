@@ -9,7 +9,11 @@ class Demon;
 class Skeleton;
 class CollectDemon;
 class Pause;
+class Advice;
 class SkeletonDead;
+class Transition;
+class TransitionDown;
+
 
 class Chapter : public Scene
 {
@@ -27,6 +31,11 @@ public:
 	};
 
 protected:
+	Transition* transitionUp;
+	TransitionDown* transitionDown;
+
+	int stage = 1;
+
 	int col = 19;
 	int row = 10;
 	float size = 100.f;
@@ -51,9 +60,14 @@ protected:
 	Player* player = nullptr;
 
 	Pause* pause = nullptr;
+	Advice* adviceTab = nullptr;
 	CollectDemon* collectDemon = nullptr;
 
 	bool isPause = false;
+	bool isAdvice = false;
+
+	float timer = 0.f;
+	float transitionTime = 1.f;
 
 	std::wstring adviceText = L"● 인생 조언 [L] ●";
 	std::wstring restartText = L"● 재시작 [R] ●";
@@ -88,6 +102,8 @@ public:
 	Skeleton* skeleton = nullptr;
 	Box* box = nullptr; 
 
+	Animator animator;
+
 	bool isDemonGet = false;
 
 	void Init() override;
@@ -96,10 +112,12 @@ public:
 	void Enter() override;
 	void Exit() override;
 
+	int GetCurrentStage() const { return stage; }
+	void SetCurrentStage(int stageNumber) { stage = stageNumber; } //챕터 2,3 만들 때 사용할 함수
+
 	void SetGrid(); 
 	void SetMap();
 	void SetUiActive(bool active);
-	void PlayTransition();
 
 	MapObject CheckInteraction(int curr, int prev); //인덱스 번호를 받아서 오브젝트 상호작용 작동
 	int GetCurrentCol() { return col; }
@@ -108,6 +126,9 @@ public:
 
 	bool IsPause() { return isPause; }
 	void SetPause(bool active) { isPause = active; }
+
+	bool IsAdvice() { return isAdvice; }
+	void SetAdvice(bool active) { isAdvice = active; }
 
 	int PosToIndex(sf::Vector2f pos);
 	sf::Vector2f IndexToPos(int index);
