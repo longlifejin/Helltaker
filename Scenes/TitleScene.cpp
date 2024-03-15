@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 #include "TitleScene.h"
-#include "TransitionDown.h"
+#include "Transition.h"
 
 TitleScene::TitleScene(SceneIds id)
 	: Scene(id)
@@ -87,6 +87,11 @@ void TitleScene::Init()
 	exitText->SetPosition({ chapterSelectText->GetPosition().x, chapterSelectText->GetPosition().y + buttonOffset });
 	AddGo(exitText, Layers::Ui);
 
+	transition = new Transition("Transition");
+	AddGo(transition, Layers::Ui);
+
+
+
 	Scene::Init();
 }
 
@@ -108,6 +113,7 @@ void TitleScene::Enter()
 
 void TitleScene::Exit()
 {
+	transition->PlayTransitionUp();
 	Scene::Exit(); 
 }
 
@@ -267,7 +273,7 @@ void TitleScene::Update(float dt)
 		switch (currentSelection)
 		{
 		case Button::NEWGAME:
-			SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
+			transition->PlayTransitionUp();
 			break;
 		case Button::CHAPTERSELECT:
 			//chapter select 화면으로 이동

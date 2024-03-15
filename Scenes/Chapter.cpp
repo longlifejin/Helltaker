@@ -108,17 +108,9 @@ void Chapter::Init()
 
 	SetUiActive(true);
 
-	//transitionUp = new Transition("Transition Up");
-	//transitionUp->Init();
-	//transitionUp->SetPosition({ 0.f,0.f });
-	////transitionUp->Reset();
-	//AddGo(transitionUp, Layers::Ui);
-
-	transitionDown = new TransitionDown("Transition Down");
-	transitionDown->Init();
-	//transitionDown->SetPosition({ 0.f,0.f });
-	transitionDown->Reset();
-	AddGo(transitionDown, Layers::Ui);
+	transition = new Transition("Transition");
+	transition->Reset();
+	AddGo(transition, Layers::Ui);
 
 	Scene::Init();
 }
@@ -141,6 +133,7 @@ void Chapter::Enter()
 	SetMap();
 	SetUiActive(true);
 
+	transition->PlayTransitionDown();
 	Scene::Enter();
 }
 
@@ -498,8 +491,6 @@ void Chapter::Update(float dt)
 		isPause = false;
 	}
 
-	
-
 	if (InputMgr::GetKeyDown(sf::Keyboard::F1))
 	{
 		SetGrid();
@@ -511,7 +502,7 @@ void Chapter::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::R))
 	{
-		SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
+		transition->PlayTransitionUp();
 	}
 
 	/////////////////테스트용//////////////////

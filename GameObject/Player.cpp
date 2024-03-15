@@ -18,7 +18,6 @@ void Player::Init()
 {
 	SetOrigin(Origins::SELF);
 	moveCount = 23;
-	SpriteGo::Init();
 
 	animator.SetTarget(&sprite);
 }
@@ -33,8 +32,7 @@ void Player::Reset()
 	animator.Play("Tables/player_Idle.csv");
 	SetOrigin(Origins::SELF);
 	SetFlipX(false);
-	std::function<void()> DeadEvent_SceneChange = std::bind(&Player::ChangeSceneEvent);
-	animator.AddEvent("Tables/player_Die.csv", 17, DeadEvent_SceneChange);
+	animator.AddEvent("Tables/player_Die.csv", 17, std::bind(&Player::ChangeSceneEvent, this));
 }
 
 void Player::Update(float dt)
@@ -96,12 +94,8 @@ void Player::Update(float dt)
 
 void Player::ChangeSceneEvent()
 {
-	SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
-	//Transition* changeScene = new Transition("ChangeScene Animation");
-	//changeScene->Init();
-	//changeScene->SetPosition({ 0.f,0.f });
-	//changeScene->Reset();
-	//SCENE_MGR.GetCurrentScene()->AddGo(changeScene, SCENE_MGR.GetCurrentScene()->Ui);
+	animator.Stop();
+	chapter->transition->PlayTransitionUp();
 }
 
 void Player::OnDamage()

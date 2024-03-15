@@ -20,6 +20,7 @@ public:
 	void SceneChange();
 	
 	void PlayTransitionUp();
+	void PlayTransitionDown();
 
 	void Reset() override;
 	void Update(float dt) override;

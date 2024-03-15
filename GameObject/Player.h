@@ -3,7 +3,8 @@
 #include "Animator.h"
 
 class Chapter;
-class ChangeScene;
+class Transition;
+
 
 class Player : public SpriteGo
 {
@@ -22,14 +23,14 @@ public:
 	float speed = 300.f;
 
 	Chapter* chapter;
-	ChangeScene* changeScene;
+	Transition* transition;
 	Animator animator;
 
 	void Init() override;
 	void Release() override;
 
 	void Reset() override;
-	static void ChangeSceneEvent();
+	void ChangeSceneEvent();
 	void Update(float dt) override; 
 	
 	sf::Vector2f lerp(const sf::Vector2f& start, const sf::Vector2f& end, float t) {

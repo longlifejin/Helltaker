@@ -31,8 +31,6 @@ public:
 	};
 
 protected:
-	Transition* transitionUp;
-	TransitionDown* transitionDown;
 
 	int stage = 1;
 
@@ -103,6 +101,7 @@ public:
 	Box* box = nullptr; 
 
 	Animator animator;
+	Transition* transition;
 
 	bool isDemonGet = false;
 

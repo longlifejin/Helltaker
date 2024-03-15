@@ -3,7 +3,7 @@
 #include "SpriteGo.h"
 #include "TextGo.h"
 
-class TransitionDown;
+class Transition;
 
 class TitleScene : public Scene
 {
@@ -25,7 +25,7 @@ public:
 	TitleScene(SceneIds id);
 	virtual ~TitleScene();
 
-	TransitionDown* transitionDown;
+	Transition* transition = nullptr;
 
 	sf::RectangleShape backColor;
 
