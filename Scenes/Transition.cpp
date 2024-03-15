@@ -16,6 +16,7 @@ void Transition::Init()
 	SetOrigin(Origins::BC);
 	animator.SetTarget(&sprite);
 
+	//처음 재생할 때 느린 현상 해결하려고 미리 load 해줌//
 	RES_MGR_TEXTURE.Load("Sprite/transition0002.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0003.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0004.png");
@@ -24,8 +25,8 @@ void Transition::Init()
 	RES_MGR_TEXTURE.Load("Sprite/transition0007.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0008.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0009.png");
-	RES_MGR_TEXTURE.Load("Sprite/transition00010.png");
-	RES_MGR_TEXTURE.Load("Sprite/transition00011.png");
+	RES_MGR_TEXTURE.Load("Sprite/transition0010.png");
+	RES_MGR_TEXTURE.Load("Sprite/transition0011.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0012.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0013.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0014.png");
@@ -46,6 +47,7 @@ void Transition::Init()
 	RES_MGR_TEXTURE.Load("Sprite/transition0028.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0029.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0030.png");
+	///////////////////////////////////////////////////
 }
 
 void Transition::RemoveChangeSceneImage()

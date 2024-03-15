@@ -31,6 +31,7 @@ public:
 
 	void Reset() override;
 	void ChangeSceneEvent();
+	void ChapterUp();
 	void Update(float dt) override; 
 	
 	sf::Vector2f lerp(const sf::Vector2f& start, const sf::Vector2f& end, float t) {

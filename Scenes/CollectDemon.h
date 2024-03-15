@@ -3,6 +3,8 @@
 #include "SpriteGo.h"
 #include "TextGo.h"
 
+class Chapter;
+
 class CollectDemon : public GameObject
 {
 	enum class SelectLine
@@ -57,6 +59,9 @@ protected:
 	bool isAnswerSelect = false;
 	int currentStage = 1; //stage마다 창 내용 다르게 바꿔주려고
 
+	float timer = 0.f;
+	float changeTime = 3.f;
+
 public:
 	CollectDemon(const std::string& name = "");
 	virtual ~CollectDemon();
@@ -65,6 +70,8 @@ public:
 	void Release() override;
 
 	void Reset() override;
+
+	Chapter* chapter;
 
 	void Update(float dt) override;
 

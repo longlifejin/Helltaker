@@ -33,6 +33,8 @@ void Player::Reset()
 	SetOrigin(Origins::SELF);
 	SetFlipX(false);
 	animator.AddEvent("Tables/player_Die.csv", 17, std::bind(&Player::ChangeSceneEvent, this));
+	animator.AddEvent("Tables/player_GetDemon.csv", 18, std::bind(&Player::ChangeSceneEvent, this));
+	animator.AddEvent("Tables/player_GetDemon.csv", 18, std::bind(&Player::ChapterUp, this));
 }
 
 void Player::Update(float dt)
@@ -113,6 +115,11 @@ void Player::OnDie()
 	chapter->ResortGo(this);
 	chapter->backColor->sortOrder = 2;
 	chapter->ResortGo(chapter->backColor);
+}
+
+void Player::ChapterUp() //GetDemon 애니메이션 재생 후 그 다음 챕터로 이동하기 위해서 만든 함수
+{
+	chapter->SetCurrentStage(chapter->GetCurrentStage() + 1);
 }
 
 void Player::GetDemon()

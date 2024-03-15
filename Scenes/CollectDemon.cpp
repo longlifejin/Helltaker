@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "CollectDemon.h"
-#include "SpriteGo.h";
+#include "SpriteGo.h"
 #include "TextGo.h"
+#include "Chapter.h"
+#include "Transition.h"
 
 CollectDemon::CollectDemon(const std::string& name) : GameObject(name)
 {
@@ -32,19 +34,19 @@ void CollectDemon::Init()
 
 	demon.SetTexture("Texture2D/pand_idle.png");
 	demon.SetOrigin(Origins::BC);
-	demon.SetPosition(background.GetPosition());
+	demon.SetPosition({ background.GetPosition().x,background.GetPosition().y + Offset });
 
 	demonName.Set(fontEB, panName, 40, sf::Color(219, 72, 77));
 	demonName.SetOrigin(Origins::TC);
-	demonName.SetPosition({ demon.GetPosition().x, demon.GetPosition().y + 20.f});
+	demonName.SetPosition({ demon.GetPosition().x, demon.GetPosition().y - 40.f});
 
-	demonLine.Set(fontR, pandLine1, 30, sf::Color::White);
+	demonLine.Set(fontR, pandLine1, 35, sf::Color::White);
 	demonLine.SetOrigin(Origins::TC);
 	demonLine.SetPosition({ demonName.GetPosition().x, demonName.GetPosition().y + Offset });
 
-	demonLine2.Set(fontR, pandLine2, 30, sf::Color::White);
+	demonLine2.Set(fontR, pandLine2, 35, sf::Color::White);
 	demonLine2.SetOrigin(Origins::TC);
-	demonLine2.SetPosition({ demonLine.GetPosition().x, demonLine.GetPosition().y + 30.f });
+	demonLine2.SetPosition({ demonLine.GetPosition().x, demonLine.GetPosition().y + 40.f });
 
 	float buttonOffset = 90.f;
 
@@ -69,7 +71,7 @@ void CollectDemon::Init()
 
 	booper.setTexture((RES_MGR_TEXTURE.Get("Texture2D/booper0023.png")));
 	booper.setOrigin({ booper.getLocalBounds().width * 0.5f, booper.getLocalBounds().height * 0.5f });
-	booper.setPosition({ (float)FRAMEWORK.GetWindowSize().x * 0.5f, (float)FRAMEWORK.GetWindowSize().y * 0.95f });
+	booper.setPosition({ (float)FRAMEWORK.GetWindowSize().x * 0.5f, (float)FRAMEWORK.GetWindowSize().y * 0.85f });
 	booper.setColor(sf::Color(219, 72, 77));
 	booperAnimator.SetTarget(&booper);
 	isBooperOn = true;
@@ -95,6 +97,7 @@ void CollectDemon::Init()
 	
 	currentSelect = SelectLine::Wrong;
 	//isAnswerSelect = false;
+
 
 	GameObject::Init();
 }
@@ -123,6 +126,8 @@ void CollectDemon::Update(float dt)
 	badEndAnimator.Update(dt);
 	successAnimator.Update(dt);
 	booperAnimator.Update(dt);
+
+	chapter = dynamic_cast<Chapter*>(SCENE_MGR.GetCurrentScene());
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::R))
 	{
@@ -220,6 +225,7 @@ void CollectDemon::Update(float dt)
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
 			isBadEnd = false;
+			chapter->transition->PlayTransitionUp();
 			++step;
 		}
 		break;
@@ -227,7 +233,6 @@ void CollectDemon::Update(float dt)
 		this->SetActive(false);
 		this->Release();
 		this->Init();
-		SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
 		break;
 	default:
 		break;

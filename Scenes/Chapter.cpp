@@ -109,7 +109,7 @@ void Chapter::Init()
 	SetUiActive(true);
 
 	transition = new Transition("Transition");
-	transition->Reset();
+	//transition->Reset();
 	AddGo(transition, Layers::Ui);
 
 	Scene::Init();
@@ -509,6 +509,7 @@ void Chapter::Update(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::F3))
 	{
 		collectDemon->SetActive(true);
+		collectDemon->Init();
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::F4))
 	{
