@@ -154,6 +154,7 @@ void Chapter::Enter()
 	case 1:
 		uiMoveCount->SetString("23");
 		moveCount = 23;
+		//player->currentIndex = 49;
 		currentStage->SetTexture("PlusSprite/01.png");
 		background->SetTexture("PlusSprite/chapterBG0001.png");
 		break;
@@ -163,6 +164,14 @@ void Chapter::Enter()
 		player->currentIndex = 120;
 		currentStage->SetTexture("PlusSprite/02.png");
 		background->SetTexture("PlusSprite/chapterBG0002.png");
+		break;
+	case 3:
+		uiMoveCount->SetString("24");
+		moveCount = 32;
+		player->currentIndex = 120;
+		currentStage->SetTexture("PlusSprite/03.png");
+		background->SetTexture("Texture2D/chapterBG0003_edit.png");
+		background->SetPosition({ -50.f, 50.f });
 		break;
 	default:
 		break;
@@ -205,6 +214,13 @@ void Chapter::Exit()
 			RemoveGo(b);
 	}
 	boxList.clear();
+
+	for (auto& th : thornList)
+	{
+		if (th != nullptr)
+			RemoveGo(th);
+	}
+	thornList.clear();
 
 	Scene::Exit();
 }
@@ -289,13 +305,13 @@ void Chapter::SetMapLayout()
 		{
 			"WWWWWWWWWWWWWWWWWWW",
 			"WWWWWWWWWWWWWWWWWWW",
-			"WWWWWWWWWWEPWWWWWWW",
-			"WWWWWWWEESEEWWWWWWW",
-			"WWWWWWWESESWWWWWWWW",
-			"WWWWWWEEWWWWWWWWWWW",
-			"WWWWWWEBEEBEWWWWWWW",
-			"WWWWWWEBEBEEDWWWWWW",
-			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWDDDEWWWWWWW",
+			"WWWWWWWWWWWEWWWWWWW",
+			"WWWWWWWETTEEPWWWWWW",
+			"WWWWWWWTWTWEEWWWWWW",
+			"WWWWWWWEESTTWWWWWWW",
+			"WWWWWEWTWTWEWWWWWWW",
+			"WWWWWEEEEESEWWWWWWW",
 			"WWWWWWWWWWWWWWWWWWW",
 		};
 		break;
