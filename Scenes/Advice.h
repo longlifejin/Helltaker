@@ -40,6 +40,11 @@ public:
 	void Release() override;
 	void Reset() override;
 	void Update(float dt) override;
+
+	void Stage1();
+	void Stage2();
+	void Develop();
+
 	void Draw(sf::RenderWindow& window) override;
 
 

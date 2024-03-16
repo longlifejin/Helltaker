@@ -250,7 +250,7 @@ void Chapter::SetGrid()
 	}
 }
 
-void Chapter::SetMap()
+void Chapter::SetMapLayout()
 {
 	switch (stage)
 	{
@@ -302,6 +302,11 @@ void Chapter::SetMap()
 	default:
 		break;
 	}
+}
+
+void Chapter::SetMap()
+{
+	SetMapLayout();
 
 	for (int i = 0; i < mapLayout.size(); ++i) //10¹ø ¹Ýº¹
 	{

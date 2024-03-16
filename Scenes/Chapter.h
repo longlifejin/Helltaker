@@ -130,6 +130,7 @@ public:
 	void SetmoveCount(int count) { moveCount = count; }
 
 	void SetGrid(); 
+	void SetMapLayout();
 	void SetMap();
 	void SetUiActive(bool active);
 
