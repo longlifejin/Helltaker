@@ -33,6 +33,7 @@ void Player::Reset()
 	animator.AddEvent("Tables/player_Die.csv", 17, std::bind(&Player::ChangeSceneEvent, this));
 	animator.AddEvent("Tables/player_GetDemon.csv", 18, std::bind(&Player::ChangeSceneEvent, this));
 	animator.AddEvent("Tables/player_GetDemon.csv", 18, std::bind(&Player::ChapterUp, this));
+	
 }
 
 void Player::Update(float dt)
@@ -45,7 +46,7 @@ void Player::Update(float dt)
 
 	prevIndex = currentIndex;
 	
-	if (!chapter->IsPause() && !chapter->IsAdvice())
+	if (!chapter->IsPause() && !chapter->IsAdvice() && !chapter->collectDemon->GetActive())
 	{
 		if (InputMgr::GetKeyDown(sf::Keyboard::W))
 		{
@@ -71,7 +72,7 @@ void Player::Update(float dt)
 	{
 		Chapter::MapObject type = chapter->CheckInteraction(currentIndex, prevIndex);
 
-		if (type == Chapter::MapObject::empty)
+		if (type == Chapter::MapObject::empty || type == Chapter::MapObject::thorn)
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
 			animator.Play("Tables/player_Move.csv");
@@ -89,7 +90,7 @@ void Player::Update(float dt)
 		}
 	}
 
-	if (chapter->GetCurrentMoveCount() == -1)
+	if (chapter->GetCurrentMoveCount() <= -1)
 	{
 		OnDie();
 	}

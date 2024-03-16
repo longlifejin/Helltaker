@@ -75,8 +75,6 @@ void Box::Reset()
 void Box::Update(float dt)
 {
 	SpriteGo::Update(dt);
-
-
 }
 
 void Box::FixedUpdate(float dt)

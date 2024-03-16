@@ -26,6 +26,7 @@
     <ClCompile Include="Scenes\Transition.cpp" />
     <ClCompile Include="Scenes\TransitionDown.cpp" />
     <ClCompile Include="Scenes\Advice.cpp" />
+    <ClCompile Include="GameObject\Thorn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Framework.h" />
@@ -56,5 +57,6 @@
     <ClInclude Include="Scenes\Transition.h" />
     <ClInclude Include="Scenes\TransitionDown.h" />
     <ClInclude Include="Scenes\Advice.h" />
+    <ClInclude Include="GameObject\Thorn.h" />
   </ItemGroup>
 </Project>

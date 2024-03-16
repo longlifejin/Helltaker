@@ -7,6 +7,7 @@ class Player;
 class Box;
 class Demon;
 class Skeleton;
+class Thorn;
 class CollectDemon;
 class Pause;
 class Advice;
@@ -28,7 +29,7 @@ public:
 		box,
 		key,
 		lockbox,
-		throne,
+		thorn,
 	};
 
 protected:
@@ -60,7 +61,6 @@ protected:
 
 	Pause* pause = nullptr;
 	Advice* adviceTab = nullptr;
-	CollectDemon* collectDemon = nullptr;
 
 	bool isPause = false;
 	bool isAdvice = false;
@@ -74,6 +74,7 @@ protected:
 	std::list<Skeleton*> skeletonList;
 	std::list<Box*> boxList;
 	std::list<Skeleton*> deadSkeletonList;
+	std::list<Thorn*> thornList;
 
 	sf::VertexArray grid;
 
@@ -96,11 +97,12 @@ public:
 	Chapter(SceneIds id);
 	virtual ~Chapter();
 
-
 	SpriteGo* backColor;
 	Demon* demon = nullptr;
 	Skeleton* skeleton = nullptr;
-	Box* box = nullptr; 
+	Box* box = nullptr;
+	Thorn* thorn = nullptr;
+	CollectDemon* collectDemon = nullptr;
 
 	Animator animator;
 	Transition* transition;
@@ -110,6 +112,9 @@ public:
 
 	sf::Sprite kickSprite;
 	Animator kickAnimator;
+
+	sf::Sprite bloodSprite;
+	Animator bloodAnimator;
 
 	bool isDemonGet = false;
 

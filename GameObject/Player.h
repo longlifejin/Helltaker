@@ -16,7 +16,7 @@ public:
 
 	sf::Vector2f targetPosition; //이동하려는 위치
 
-	int moveCount = 23; //챕터마다 바꿔주기
+	//int moveCount = 23; //챕터마다 바꿔주기
 	int currentIndex = 49;
 	int prevIndex = currentIndex;
 

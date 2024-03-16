@@ -4,6 +4,7 @@
 #include "Demon.h"
 #include "Skeleton.h"
 #include "Box.h"
+#include "Thorn.h"
 #include "TextGo.h"
 #include "CollectDemon.h"
 #include "Pause.h"
@@ -120,6 +121,11 @@ void Chapter::Init()
 	kickSprite.setPosition(0.f, 0.f);
 	kickAnimator.SetTarget(&kickSprite);
 
+	bloodSprite.setTexture((RES_MGR_TEXTURE.Get("Texture2D/invisible.png")));
+	bloodSprite.setOrigin({ bloodSprite.getLocalBounds().width + 50.f, bloodSprite.getLocalBounds().height});
+	bloodSprite.setPosition(0.f, 0.f);
+	bloodAnimator.SetTarget(&bloodSprite);
+
 	int stage = 1;
 
 	Scene::Init();
@@ -132,6 +138,8 @@ void Chapter::Release()
 
 void Chapter::Enter()
 {
+	mapObj.resize(col * row, MapObject::empty);
+
 	SetUiActive(true);
 	backColor->sortOrder = -1;
 	ResortGo(backColor);
@@ -152,6 +160,7 @@ void Chapter::Enter()
 	case 2:
 		uiMoveCount->SetString("24");
 		moveCount = 24;
+		player->currentIndex = 120;
 		currentStage->SetTexture("PlusSprite/02.png");
 		background->SetTexture("PlusSprite/chapterBG0002.png");
 		break;
@@ -159,7 +168,6 @@ void Chapter::Enter()
 		break;
 	}
 	SetMap();
-
 	transition->PlayTransitionDown();
 	Scene::Enter();
 }
@@ -321,7 +329,7 @@ void Chapter::SetMap()
 				break;
 			case'L': mapObj = MapObject::lockbox;
 				break;
-			case'T': mapObj = MapObject::throne;
+			case'T': mapObj = MapObject::thorn;
 				break;
 			default: mapObj = MapObject::empty;
 				break;
@@ -425,6 +433,10 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 		player->currentIndex = player->prevIndex;
 		return MapObject::skeleton;
 	case MapObject::box:
+		if (mapObj[prev] == MapObject::thorn)
+		{
+			moveCount -= 1;
+		}
 		for (auto& b : boxList)
 		{
 			if (b->GetCurrentIndex() == curr)
@@ -462,8 +474,20 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 		}
 		player->currentIndex = player->prevIndex;
 		return MapObject::box;
+	case MapObject::thorn:
+		for (auto& th : thornList)
+		{
+			if (th->GetCurrentIndex() == curr)
+			{
+				bloodSprite.setPosition(IndexToPos(curr));
+				bloodAnimator.Play("Tables/player_blood.csv");
+				mapObj[player->currentIndex] = MapObject::thorn;
+				moveCount -= 2;
+				return MapObject::thorn;
+			}
+		}
 	default:
-		mapObj[player->prevIndex] = MapObject::empty;
+		//mapObj[player->prevIndex] = MapObject::empty;
 		moveCount -= 1;
 		return MapObject::empty;
 	}
@@ -507,6 +531,7 @@ void Chapter::SetObject(int index, MapObject obj)
 		player = new Player("Player");
 		player->SetTexture("Sprite/assets100V20057.png");
 		player->SetOrigin(Origins::SELF);
+		player->currentIndex = index;
 		player->SetPosition(IndexToPos(index));
 		player->Init();
 		AddGo(player, Layers::World);
@@ -544,8 +569,15 @@ void Chapter::SetObject(int index, MapObject obj)
 		break;
 	case Chapter::MapObject::lockbox:
 		break;
-	case Chapter::MapObject::throne:
-		//넣는 부분 추가하기
+	case Chapter::MapObject::thorn:
+		thorn = new Thorn("thorn");
+		thorn->SetTexture("Sprite/assets100V20116.png");
+		thorn->currentIndex = thorn->prevIndex = index;
+		thorn->SetPosition(IndexToPos(index));
+		thorn->SetOrigin(Origins::MC);
+		thorn->Init();
+		thornList.push_back(thorn);
+		AddGo(thorn, Layers::World);
 		break;
 	default:
 		break;
@@ -557,6 +589,7 @@ void Chapter::Update(float dt)
 	Scene::Update(dt);
 	dustAnimator.Update(dt);
 	kickAnimator.Update(dt);
+	bloodAnimator.Update(dt);
 
 	uiMoveCount->SetString(std::to_string(moveCount));
 
@@ -627,4 +660,5 @@ void Chapter::Draw(sf::RenderWindow& window)
 	window.draw(grid);
 	window.draw(dustSprite);
 	window.draw(kickSprite);
+	window.draw(bloodSprite);
 }
