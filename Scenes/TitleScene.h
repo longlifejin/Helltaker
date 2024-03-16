@@ -43,7 +43,6 @@ protected:
 
 	std::vector<ChapterButton*> chapterButtons;
 
-
 public:
 	TitleScene(SceneIds id);
 	virtual ~TitleScene();

@@ -11,6 +11,7 @@ class CollectDemon : public GameObject
 	{
 		Correct,
 		Wrong,
+		None,
 	};
 
 protected:
@@ -78,6 +79,10 @@ public:
 	void Select();
 	bool GetAnswerSelect() { return isAnswerSelect; }
 	void SetAnswerSelect(bool answer) { isAnswerSelect = answer; }
+
+	void Stage1();
+	void Stage2();
+	void Develop();
 
 	void Draw(sf::RenderWindow& window) override;
 

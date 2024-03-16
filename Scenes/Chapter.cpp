@@ -709,6 +709,8 @@ void Chapter::Update(float dt)
 
 	if (isDemonGet && !collectDemon->GetActive()) //isDemonGet - demon 획득한 처음 순간 / collectDemon창이 안열려있으면 실행
 	{
+		//collectDemon->Release();
+		collectDemon->Init();
 		collectDemon->SetActive(true);
 		isDemonGet = false;
 	}

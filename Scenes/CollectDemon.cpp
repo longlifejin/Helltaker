@@ -96,9 +96,6 @@ void CollectDemon::Init()
 	correctText.SetActive(false);
 	
 	currentSelect = SelectLine::Wrong;
-	//isAnswerSelect = false;
-
-
 	GameObject::Init();
 }
 
@@ -118,6 +115,8 @@ void CollectDemon::Reset()
 	isSuccess = false;
 	booperAnimator.Play("Tables/booper.csv");
 	isBooperOn = true;
+
+	step = 0;
 }
 
 void CollectDemon::Update(float dt)
@@ -136,6 +135,51 @@ void CollectDemon::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::CHAPTER);
 	}
 
+	switch (chapter->GetCurrentStage())
+	{
+	case 1:
+		Stage1();
+		break;
+	case 2:
+		Stage2();
+		break;
+	default:
+		Develop();
+		break;
+	}
+}
+
+void CollectDemon::Select()
+{
+	switch (currentSelect)
+	{
+	case CollectDemon::SelectLine::Wrong:
+		currentSelect = SelectLine::Correct;
+		correctButton.SetTexture("Texture2D/button0003.png");
+		correctButton.SetColor(219, 72, 77);
+		correctButton.SetScale({ 1.1f,1.1f });
+
+		wrongButton.SetTexture("Texture2D/button0004.png");
+		wrongButton.SetColor(82, 46, 61);
+		wrongButton.SetScale({ 1.f,1.f });
+		break;
+	case CollectDemon::SelectLine::Correct:
+		currentSelect = SelectLine::Wrong;
+		correctButton.SetTexture("Texture2D/button0004.png");
+		correctButton.SetColor(82, 46, 61);
+		correctButton.SetScale({ 1.f,1.f });
+
+		wrongButton.SetTexture("Texture2D/button0003.png");
+		wrongButton.SetColor(219, 72, 77);
+		wrongButton.SetScale({ 1.1f,1.1f });
+		break;
+	default:
+		break;
+	}
+}
+
+void CollectDemon::Stage1()
+{
 	switch (step)
 	{
 	case 0:
@@ -158,7 +202,9 @@ void CollectDemon::Update(float dt)
 		break;
 	case 3:
 		if (InputMgr::GetKeyDown(sf::Keyboard::W) || InputMgr::GetKeyDown(sf::Keyboard::S))
-		{ Select();	}
+		{
+			Select();
+		}
 
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
@@ -205,6 +251,7 @@ void CollectDemon::Update(float dt)
 			this->SetActive(false);
 			this->Release();
 			this->Init();
+			this->Reset();
 			isSuccess = false;
 			break;
 		case CollectDemon::SelectLine::Wrong:
@@ -234,36 +281,177 @@ void CollectDemon::Update(float dt)
 		this->SetActive(false);
 		this->Release();
 		this->Init();
+		this->Reset();
 		break;
 	default:
 		break;
 	}
 }
 
-void CollectDemon::Select()
+void CollectDemon::Stage2()
 {
-	switch (currentSelect)
+	step = 0;
+	isAnswerSelect = false;
+
+	switch (step)
 	{
-	case CollectDemon::SelectLine::Wrong:
-		currentSelect = SelectLine::Correct;
-		correctButton.SetTexture("Texture2D/button0003.png");
-		correctButton.SetColor(219, 72, 77);
-		correctButton.SetScale({ 1.1f,1.1f });
-
-		wrongButton.SetTexture("Texture2D/button0004.png");
-		wrongButton.SetColor(82, 46, 61);
-		wrongButton.SetScale({ 1.f,1.f });
+	case 0:
+		demonLine.SetActive(true);
+		demonLine2.SetActive(true);
+		demon.SetTexture("Texture2D/mod_idle.png");
+		demonName.SetString(L"● 색욕의 악마, 모데우스 ●");
+		demonLine.SetString(L"너랑 나랑, 지금 당장 하자.");
+		demonLine2.SetString(L"");
+		booperAnimator.Play("Tables/booper.csv");
+		++step;
 		break;
-	case CollectDemon::SelectLine::Correct:
-		currentSelect = SelectLine::Wrong;
-		correctButton.SetTexture("Texture2D/button0004.png");
-		correctButton.SetColor(82, 46, 61);
-		correctButton.SetScale({ 1.f,1.f });
-
-		wrongButton.SetTexture("Texture2D/button0003.png");
-		wrongButton.SetColor(219, 72, 77);
-		wrongButton.SetScale({ 1.1f,1.1f });
+	case 1:
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			++step;
+		}
 		break;
+	case 2:
+		wrongText.SetString(L"좋아. 물어볼 필요도 없지.");
+		correctText.SetString(L"그럴 시간 없어. 여자들 모으느라 바빠.");
+		wrongButton.SetActive(true);
+		wrongText.SetActive(true);
+		correctButton.SetActive(true);
+		correctText.SetActive(true);
+		isBooperOn = false;
+		++step;
+		break;
+	case 3:
+		if (InputMgr::GetKeyDown(sf::Keyboard::W) || InputMgr::GetKeyDown(sf::Keyboard::S))
+		{
+			Select();
+		}
+
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			wrongButton.SetActive(false);
+			wrongText.SetActive(false);
+			correctButton.SetActive(false);
+			correctText.SetActive(false);
+			++step;
+		}
+		break;
+	case 4:
+		switch (currentSelect)
+		{
+		case CollectDemon::SelectLine::Correct:
+			isSuccess = true;
+			successAnimator.Play("Tables/success.csv");
+			demon.SetTexture("Texture2D/mod_close.png");
+			demonLine.SetString(L"악마 하렘? 가여워라... 다들 네 영혼을 찢으려 들텐데, 이건");
+			demonLine2.SetString(L"'꼭'봐야겠다.");
+			demonLine2.SetActive(true);
+			demon.SetTexture("Texture2D/pand_flust.png");
+			isBooperOn = false;
+			break;
+		case CollectDemon::SelectLine::Wrong:
+			isBooperOn = true;
+			booperAnimator.Play("Tables/booper.csv");
+			demonLine.SetString(L"다들 처음엔 그러더라... 그리고 결국 도망가려 하던데.");
+			demonLine.SetString(L"혹시 모르니, 다리를 부러뜨려 놔야겠다.");
+			demonLine2.SetActive(true);
+			break;
+		}
+		++step;
+		break;
+	case 5:
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			isSuccess = false;
+			isBooperOn = false;
+			++step;
+		}
+		break;
+	case 6:
+		switch (currentSelect)
+		{
+		case CollectDemon::SelectLine::Correct:
+			isAnswerSelect = true;
+			this->SetActive(false);
+			this->Release();
+			this->Init();
+			isSuccess = false;
+			break;
+		case CollectDemon::SelectLine::Wrong:
+			isBadEnd = true;
+			badEndAnimator.Play("Tables/badEnd.csv");
+			demon.SetActive(false);
+			background.SetActive(false);
+			demonName.SetActive(false);
+			isBooperOn = false;
+			demonLine.Set(fontEB, L"그녀는 쇠망치를 꺼내 들었습니다. 보기 좋게 끝날 것 같지는", 25, sf::Color::Red);
+			demonLine2.Set(fontEB, L"않네요.", 25, sf::Color::Red);
+			demonLine2.SetActive(true);
+			break;
+		}
+		++step;
+		break;
+	case 7:
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			isBadEnd = false;
+			chapter->transition->SetChangeScene(SceneIds::CHAPTER);
+			chapter->transition->PlayTransitionUp();
+			++step;
+		}
+		break;
+	case 8:
+		this->SetActive(false);
+		this->Release();
+		this->Init();
+		break;
+	default:
+		break;
+	}
+}
+
+void CollectDemon::Develop()
+{
+	switch (step)
+	{
+	case 0:
+		demonName.SetString(L"● 지친 개발자 ●");
+		demonLine.SetString(L"이 페이지는 아직 작업중이야.");
+		demonLine2.SetString(L"");
+		booperAnimator.Play("Tables/booper.csv");
+		++step;
+	case 1:
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			++step;
+		}
+		break;
+	case 2:
+		demonLine.SetString(L"더 넘겨봤자 나오는건 없다네.");
+		booperAnimator.Play("Tables/booper.csv");
+		++step;
+	case 3:
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			++step;
+		}
+		break;
+	case 4:
+		demonLine.SetString(L"개발 실력을 키워서 돌아오겠네.");
+		demonLine2.SetString(L"");
+		booperAnimator.Play("Tables/booper.csv");
+		++step;
+	case 5:
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			++step;
+		}
+		break;
+	case 6:
+		this->SetActive(false);
+		chapter->SetAdvice(false);
+		Release();
+		Init();
 	default:
 		break;
 	}

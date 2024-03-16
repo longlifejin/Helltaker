@@ -140,7 +140,6 @@ void Advice::Stage1()
 
 void Advice::Stage2()
 {
-
 	switch (step)
 	{
 	case 0:
