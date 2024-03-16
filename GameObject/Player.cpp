@@ -17,8 +17,6 @@ Player::~Player()
 void Player::Init()
 {
 	SetOrigin(Origins::SELF);
-	moveCount = 23;
-
 	animator.SetTarget(&sprite);
 }
 
@@ -91,7 +89,7 @@ void Player::Update(float dt)
 		}
 	}
 
-	if (moveCount == -1)
+	if (chapter->GetCurrentMoveCount() == -1)
 	{
 		OnDie();
 	}
@@ -104,17 +102,17 @@ void Player::ChangeSceneEvent()
 	chapter->transition->PlayTransitionUp();
 }
 
-void Player::OnDamage()
-{
-	moveCount -= 1;
-}
+//void Player::OnDamage() 챕터 내에서 가시 데미지 입는거 처리해주기
+//{
+//	moveCount -= 1;
+//}
 
 void Player::OnDie()
 {
 	chapter->SetUiActive(false);
 	SetOrigin({360.f, 900.f});
 	animator.Play("Tables/player_Die.csv");
-	moveCount = 0;
+	chapter->SetmoveCount(0);
 	sortOrder = 3;
 	chapter->ResortGo(this);
 	chapter->backColor->sortOrder = 2;

@@ -23,7 +23,6 @@ Chapter::~Chapter()
 
 void Chapter::Init()
 {
-
 	backColor = new SpriteGo("BackColor");
 	backColor->SetTexture("Texture2D/backColor.png");
 	backColor->SetOrigin({ 0.f,0.f });
@@ -63,11 +62,11 @@ void Chapter::Init()
 	uiDemonRight->SetFlipX(true); //피봇점도 같이 뒤집히는건가?
 	AddGo(uiDemonRight, Layers::Ui);
 
-	moveCount = new TextGo("MoveCount");
-	moveCount->Set(fontResMgr.Get("Font/Amiri-Regular.ttf"), "23", 100, sf::Color::White);
-	moveCount->SetOrigin(Origins::MC);
-	moveCount->SetPosition({IndexToPos(134).x + size / 2.f, IndexToPos(134).y - size / 20.f }); //위치 이상한거 왜 이러는지 파악하기
-	AddGo(moveCount, Layers::Ui);
+	uiMoveCount = new TextGo("MoveCount");
+	uiMoveCount->Set(fontResMgr.Get("Font/Amiri-Regular.ttf"), "23", 100, sf::Color::White);
+	uiMoveCount->SetOrigin(Origins::MC);
+	uiMoveCount->SetPosition({IndexToPos(134).x + size / 2.f, IndexToPos(134).y - size / 20.f }); //위치 이상한거 왜 이러는지 파악하기
+	AddGo(uiMoveCount, Layers::Ui);
 
 	currentStage = new SpriteGo("CurrentStage");
 	currentStage->SetTexture("PlusSprite/01.png");
@@ -109,7 +108,6 @@ void Chapter::Init()
 	SetUiActive(true);
 
 	transition = new Transition("Transition");
-	//transition->Reset();
 	AddGo(transition, Layers::Ui);
 
 	dustSprite.setTexture((RES_MGR_TEXTURE.Get("Texture2D/invisible.png")));
@@ -122,6 +120,8 @@ void Chapter::Init()
 	kickSprite.setPosition(0.f, 0.f);
 	kickAnimator.SetTarget(&kickSprite);
 
+	int stage = 1;
+
 	Scene::Init();
 }
 
@@ -132,6 +132,7 @@ void Chapter::Release()
 
 void Chapter::Enter()
 {
+	SetUiActive(true);
 	backColor->sortOrder = -1;
 	ResortGo(backColor);
 	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
@@ -139,9 +140,25 @@ void Chapter::Enter()
 	worldView.setCenter(windowSize * 0.5f);
 	uiView.setSize(windowSize);
 	uiView.setCenter(windowSize * 0.5f);
-
+	
+	switch (stage)
+	{
+	case 1:
+		uiMoveCount->SetString("23");
+		moveCount = 23;
+		currentStage->SetTexture("PlusSprite/01.png");
+		background->SetTexture("PlusSprite/chapterBG0001.png");
+		break;
+	case 2:
+		uiMoveCount->SetString("24");
+		moveCount = 24;
+		currentStage->SetTexture("PlusSprite/02.png");
+		background->SetTexture("PlusSprite/chapterBG0002.png");
+		break;
+	default:
+		break;
+	}
 	SetMap();
-	SetUiActive(true);
 
 	transition->PlayTransitionDown();
 	Scene::Enter();
@@ -157,7 +174,7 @@ void Chapter::Exit()
 
 	if (demon != nullptr)
 	{
-		RemoveGo(player);
+		RemoveGo(demon);
 	}
 
 	for (auto& skull : deadSkeletonList)
@@ -227,6 +244,57 @@ void Chapter::SetGrid()
 
 void Chapter::SetMap()
 {
+	switch (stage)
+	{
+	case 1:
+		mapLayout =
+		{
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWWEPWWWWWWW",
+			"WWWWWWWEESEEWWWWWWW",
+			"WWWWWWWESESWWWWWWWW",
+			"WWWWWWEEWWWWWWWWWWW",
+			"WWWWWWEBEEBEWWWWWWW",
+			"WWWWWWEBEBEEDWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+		};
+		break;
+	case 2:
+		mapLayout =
+		{
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWEEEEWWWWWWWW",
+			"WWWWWWWEWTTEEWWWWWW",
+			"WWWWWWETWWTTBWWWWWW",
+			"WWWWWWEEWWETEWWWWWW",
+			"WWWWWWPEWWESEWWWWWW",
+			"WWWWWWWWWWDESWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+		};
+		break;
+	case 3:
+		mapLayout =
+		{
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWWEPWWWWWWW",
+			"WWWWWWWEESEEWWWWWWW",
+			"WWWWWWWESESWWWWWWWW",
+			"WWWWWWEEWWWWWWWWWWW",
+			"WWWWWWEBEEBEWWWWWWW",
+			"WWWWWWEBEBEEDWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+		};
+		break;
+	default:
+		break;
+	}
+
 	for (int i = 0; i < mapLayout.size(); ++i) //10번 반복
 	{
 		for (int j = 0; j < mapLayout[i].length(); ++j) //20번 반복
@@ -253,6 +321,8 @@ void Chapter::SetMap()
 				break;
 			case'L': mapObj = MapObject::lockbox;
 				break;
+			case'T': mapObj = MapObject::throne;
+				break;
 			default: mapObj = MapObject::empty;
 				break;
 			}
@@ -268,7 +338,7 @@ void Chapter::SetUiActive(bool active)
 	uiRoseRight->SetActive(active);
 	uiDemonLeft->SetActive(active);
 	uiDemonRight->SetActive(active);
-	moveCount->SetActive(active);
+	uiMoveCount->SetActive(active);
 	currentStage->SetActive(active);
 	advice->SetActive(active);
 	restart->SetActive(active);
@@ -288,7 +358,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 		return MapObject::wall;
 	case MapObject::demon:
 		player->currentIndex = prev;
-		player->moveCount = 0;
+		moveCount = 0;
 		isDemonGet = true;
 		return MapObject::demon;
 	case MapObject::skeleton:
@@ -313,7 +383,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 					deadSkeletonList.push_back(skull);
 					mapObj[skull->prevIndex] = MapObject::empty;
 					skeletonList.remove(skull);
-					player->moveCount -= 1;
+					moveCount -= 1;
 					break;
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::skeleton)
@@ -329,7 +399,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 					mapObj[skull->prevIndex] = MapObject::empty;
 					mapObj[skull->currentIndex] = MapObject::skeleton;
 					skeletonList.remove(skull);
-					player->moveCount -= 1;
+					moveCount -= 1;
 					break;
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::demon ||
@@ -337,7 +407,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 					mapObj[skull->currentIndex] == MapObject::lockbox)
 				{
 					skull->currentIndex = skull->prevIndex;
-					player->moveCount -= 1;
+					moveCount -= 1;
 					break;
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::empty)
@@ -347,7 +417,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 					mapObj[skull->currentIndex] = MapObject::skeleton;
 					skull->animator.Play("Tables/Skeleton_Damage.csv");
 					skull->animator.PlayQueue("Tables/Skeleton_Idle.csv");
-					player->moveCount -= 1;
+					moveCount -= 1;
 					break;
 				}
 			}
@@ -367,7 +437,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 				{
 					b->currentIndex = b->prevIndex;
 					mapObj[b->currentIndex] = MapObject::box;
-					player->moveCount -= 1;
+					moveCount -= 1;
 					break;
 				}
 				else if (mapObj[b->currentIndex] == MapObject::demon ||
@@ -377,7 +447,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 					mapObj[b->currentIndex] == MapObject::skeleton)
 				{
 					b->currentIndex = b->prevIndex;
-					player->moveCount -= 1;
+					moveCount -= 1;
 					break;
 				}
 				else if (mapObj[b->currentIndex] == MapObject::empty)
@@ -385,7 +455,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 					b->SetPosition(IndexToPos(b->currentIndex));
 					mapObj[b->prevIndex] = MapObject::player;
 					mapObj[b->currentIndex] = MapObject::box;
-					player->moveCount -= 1;
+					moveCount -= 1;
 					break;
 				}
 			}
@@ -394,10 +464,9 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 		return MapObject::box;
 	default:
 		mapObj[player->prevIndex] = MapObject::empty;
-		player->moveCount -= 1;
+		moveCount -= 1;
 		return MapObject::empty;
 	}
-
 }
 
 sf::Vector2f Chapter::GetPlayerCurrentPos()
@@ -476,6 +545,7 @@ void Chapter::SetObject(int index, MapObject obj)
 	case Chapter::MapObject::lockbox:
 		break;
 	case Chapter::MapObject::throne:
+		//넣는 부분 추가하기
 		break;
 	default:
 		break;
@@ -488,7 +558,7 @@ void Chapter::Update(float dt)
 	dustAnimator.Update(dt);
 	kickAnimator.Update(dt);
 
-	moveCount->SetString(std::to_string(player->moveCount));
+	uiMoveCount->SetString(std::to_string(moveCount));
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{

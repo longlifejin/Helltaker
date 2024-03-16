@@ -32,8 +32,8 @@ public:
 	};
 
 protected:
-
 	int stage = 1;
+	int moveCount = 23;
 
 	int col = 19;
 	int row = 10;
@@ -50,7 +50,7 @@ protected:
 	SpriteGo* uiDemonLeft = nullptr;
 	SpriteGo* uiDemonRight = nullptr;
 
-	TextGo* moveCount = nullptr;
+	TextGo* uiMoveCount = nullptr;
 	SpriteGo* currentStage = nullptr;
 
 	TextGo* advice = nullptr;
@@ -96,6 +96,7 @@ public:
 	Chapter(SceneIds id);
 	virtual ~Chapter();
 
+
 	SpriteGo* backColor;
 	Demon* demon = nullptr;
 	Skeleton* skeleton = nullptr;
@@ -120,6 +121,8 @@ public:
 
 	int GetCurrentStage() const { return stage; }
 	void SetCurrentStage(int stageNumber) { stage = stageNumber; } //챕터 2,3 만들 때 사용할 함수
+	int GetCurrentMoveCount() const { return moveCount; }
+	void SetmoveCount(int count) { moveCount = count; }
 
 	void SetGrid(); 
 	void SetMap();
