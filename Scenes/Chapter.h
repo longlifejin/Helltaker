@@ -28,6 +28,7 @@ public:
 		box,
 		key,
 		lockbox,
+		throne,
 	};
 
 protected:
@@ -102,6 +103,14 @@ public:
 
 	Animator animator;
 	Transition* transition;
+
+
+
+	sf::Sprite dustSprite;
+	Animator dustAnimator;
+
+	sf::Sprite kickSprite;
+	Animator kickAnimator;
 
 	bool isDemonGet = false;
 

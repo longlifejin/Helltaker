@@ -78,6 +78,9 @@ void Player::Update(float dt)
 			SetPosition(chapter->IndexToPos(currentIndex));
 			animator.Play("Tables/player_Move.csv");
 			animator.PlayQueue("Tables/player_Idle.csv");
+
+			chapter->dustSprite.setPosition(chapter->IndexToPos(prevIndex));
+			chapter->dustAnimator.Play("Tables/player_moveDust.csv");
 		}
 		else if (type == Chapter::MapObject::box || type == Chapter::MapObject::skeleton)
 		{

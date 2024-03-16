@@ -41,7 +41,5 @@ public:
 	void GetDemon(); //getdemon 애니메이션 재생용
 	void OnDamage(); //가시장애물에 닿으면 1씩 더 닳게 하기
 	void OnDie(); //moveCount가 0이면 호출, 죽는 애니메이션 재생, 게임 재시작
-
-
 };
 

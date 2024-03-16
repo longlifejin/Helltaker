@@ -112,6 +112,11 @@ void Chapter::Init()
 	//transition->Reset();
 	AddGo(transition, Layers::Ui);
 
+	dustSprite.setTexture((RES_MGR_TEXTURE.Get("Texture2D/small_vfx0007.png")));
+	dustSprite.setOrigin({ dustSprite.getLocalBounds().width * 0.5f, dustSprite.getLocalBounds().height * 0.5f });
+	dustSprite.setPosition(0.f, 0.f);
+	dustAnimator.SetTarget(&dustSprite);
+
 	Scene::Init();
 }
 
@@ -470,6 +475,8 @@ void Chapter::SetObject(int index, MapObject obj)
 void Chapter::Update(float dt)
 {
 	Scene::Update(dt);
+	dustAnimator.Update(dt);
+	kickAnimator.Update(dt);
 
 	moveCount->SetString(std::to_string(player->moveCount));
 
@@ -538,4 +545,5 @@ void Chapter::Draw(sf::RenderWindow& window)
 
 	window.setView(worldView);
 	window.draw(grid);
+	window.draw(dustSprite);
 }
