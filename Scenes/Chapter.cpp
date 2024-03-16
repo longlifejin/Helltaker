@@ -413,6 +413,12 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 					mapObj[skull->prevIndex] = MapObject::empty;
 					skeletonList.remove(skull);
 					moveCount -= 1;
+					if (mapObj[prev] == MapObject::thorn)
+					{
+						moveCount -= 1;
+						bloodSprite.setPosition(IndexToPos(prev));
+						bloodAnimator.Play("Tables/player_blood.csv");
+					}
 					break;
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::skeleton)
@@ -429,6 +435,12 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 					mapObj[skull->currentIndex] = MapObject::skeleton;
 					skeletonList.remove(skull);
 					moveCount -= 1;
+					if (mapObj[prev] == MapObject::thorn)
+					{
+						moveCount -= 1;
+						bloodSprite.setPosition(IndexToPos(prev));
+						bloodAnimator.Play("Tables/player_blood.csv");
+					}
 					break;
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::demon ||
@@ -437,6 +449,34 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 				{
 					skull->currentIndex = skull->prevIndex;
 					moveCount -= 1;
+					if (mapObj[prev] == MapObject::thorn)
+					{
+						moveCount -= 1;
+						bloodSprite.setPosition(IndexToPos(prev));
+						bloodAnimator.Play("Tables/player_blood.csv");
+					}
+					break;
+				}
+				else if (mapObj[skull->currentIndex] == MapObject::thorn)
+				{
+					SkeletonDead* skeletonDestroy = new SkeletonDead("Skeleton Dead Animation");
+					skeletonDestroy->Init();
+					skeletonDestroy->Reset();
+					skeletonDestroy->SetPosition(IndexToPos(curr));
+					AddGo(skeletonDestroy, Layers::World);
+
+					skull->SetActive(false);
+					deadSkeletonList.push_back(skull);
+					mapObj[skull->prevIndex] = MapObject::empty;
+					mapObj[skull->currentIndex] = MapObject::thorn;
+					skeletonList.remove(skull);
+					moveCount -= 1;
+					if (mapObj[prev] == MapObject::thorn)
+					{
+						moveCount -= 1;
+						bloodSprite.setPosition(IndexToPos(prev));
+						bloodAnimator.Play("Tables/player_blood.csv");
+					}
 					break;
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::empty)
@@ -447,6 +487,12 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 					skull->animator.Play("Tables/Skeleton_Damage.csv");
 					skull->animator.PlayQueue("Tables/Skeleton_Idle.csv");
 					moveCount -= 1;
+					if (mapObj[prev] == MapObject::thorn)
+					{
+						moveCount -= 1;
+						bloodSprite.setPosition(IndexToPos(prev));
+						bloodAnimator.Play("Tables/player_blood.csv");
+					}
 					break;
 				}
 			}
@@ -457,6 +503,8 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 		if (mapObj[prev] == MapObject::thorn)
 		{
 			moveCount -= 1;
+			bloodSprite.setPosition(IndexToPos(prev));
+			bloodAnimator.Play("Tables/player_blood.csv");
 		}
 		for (auto& b : boxList)
 		{
