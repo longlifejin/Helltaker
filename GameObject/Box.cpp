@@ -69,6 +69,7 @@ void Box::Release()
 void Box::Reset()
 {
 	SpriteGo::Reset();
+	SetOrigin(Origins::BOX);
 }
 
 void Box::Update(float dt)

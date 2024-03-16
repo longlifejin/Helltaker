@@ -104,8 +104,6 @@ public:
 	Animator animator;
 	Transition* transition;
 
-
-
 	sf::Sprite dustSprite;
 	Animator dustAnimator;
 

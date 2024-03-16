@@ -112,10 +112,15 @@ void Chapter::Init()
 	//transition->Reset();
 	AddGo(transition, Layers::Ui);
 
-	dustSprite.setTexture((RES_MGR_TEXTURE.Get("Texture2D/small_vfx0007.png")));
+	dustSprite.setTexture((RES_MGR_TEXTURE.Get("Texture2D/invisible.png")));
 	dustSprite.setOrigin({ dustSprite.getLocalBounds().width * 0.5f, dustSprite.getLocalBounds().height * 0.5f });
 	dustSprite.setPosition(0.f, 0.f);
 	dustAnimator.SetTarget(&dustSprite);
+
+	kickSprite.setTexture((RES_MGR_TEXTURE.Get("Texture2D/invisible.png")));
+	kickSprite.setOrigin({ kickSprite.getLocalBounds().width, kickSprite.getLocalBounds().height });
+	kickSprite.setPosition(0.f, 0.f);
+	kickAnimator.SetTarget(&kickSprite);
 
 	Scene::Init();
 }
@@ -291,6 +296,8 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 		{
 			if (skull->GetCurrentIndex() == curr)
 			{
+				kickSprite.setPosition(IndexToPos(curr));
+				kickAnimator.Play("Tables/player_kickEffect.csv");
 				skull->prevIndex = skull->currentIndex;
 				skull->currentIndex += moveAmount;
 				if (mapObj[skull->currentIndex] == MapObject::wall ||
@@ -352,6 +359,8 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 		{
 			if (b->GetCurrentIndex() == curr)
 			{
+				kickSprite.setPosition(IndexToPos(curr));
+				kickAnimator.Play("Tables/player_kickEffect.csv");
 				b->prevIndex = b->currentIndex;
 				b->currentIndex += moveAmount;
 				if (mapObj[b->currentIndex] == MapObject::wall)
@@ -454,18 +463,19 @@ void Chapter::SetObject(int index, MapObject obj)
 		break;
 	case Chapter::MapObject::box:
 		box = new Box("Box");
-		box->SetTexture("Sprite/boxExport0001.png");
+		box->SetTexture("Sprite/box_edit.png");
 		box->currentIndex = box->prevIndex = index;
 		box->SetPosition(IndexToPos(index));
-		box->SetOrigin(Origins::SELF);
+		box->SetOrigin(Origins::BOX);
 		box->Init();
 		boxList.push_back(box);
 		AddGo(box, Layers::World);
-		//box->sortOrder = 1;
 		break;
 	case Chapter::MapObject::key:
 		break;
 	case Chapter::MapObject::lockbox:
+		break;
+	case Chapter::MapObject::throne:
 		break;
 	default:
 		break;
@@ -509,7 +519,7 @@ void Chapter::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::R))
 	{
-		transition->SetChangeScene(SceneIds::TITLESCENE);
+		transition->SetChangeScene(SceneIds::CHAPTER);
 		transition->PlayTransitionUp();
 	}
 
@@ -546,4 +556,5 @@ void Chapter::Draw(sf::RenderWindow& window)
 	window.setView(worldView);
 	window.draw(grid);
 	window.draw(dustSprite);
+	window.draw(kickSprite);
 }
