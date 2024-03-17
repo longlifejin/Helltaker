@@ -77,7 +77,10 @@ void Scene::Exit()
 	{
 		gameObjects.remove(obj);
 		uiGameObjects.remove(obj);
-		delete obj;
+		if (obj != nullptr)
+		{
+			delete obj;
+		}
 	}
 	removeGameObjects.clear();
 }

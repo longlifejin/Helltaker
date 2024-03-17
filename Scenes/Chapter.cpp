@@ -62,20 +62,20 @@ void Chapter::Init()
 	uiDemonRight->SetTexture("Texture2D/mainUIexport_fUI0001.png");
 	uiDemonRight->SetOrigin(Origins::BL);
 	uiDemonRight->SetPosition({ (float)FRAMEWORK.GetWindowSize().x, (float)FRAMEWORK.GetWindowSize().y });
-	uiDemonRight->SetFlipX(true); //피봇점도 같이 뒤집히는건가?
+	uiDemonRight->SetFlipX(true);
 	AddGo(uiDemonRight, Layers::Ui);
 
 	uiMoveCount = new TextGo("MoveCount");
 	uiMoveCount->Set(fontResMgr.Get("Font/Amiri-Regular.ttf"), "23", 100, sf::Color::White);
 	uiMoveCount->SetOrigin(Origins::MC);
-	uiMoveCount->SetPosition({IndexToPos(134).x + size / 2.f, IndexToPos(134).y - size / 20.f }); //위치 이상한거 왜 이러는지 파악하기
+	uiMoveCount->SetPosition({IndexToPos(134).x + size / 2.f, IndexToPos(134).y - size / 20.f });
 	AddGo(uiMoveCount, Layers::Ui);
 
 	currentStage = new SpriteGo("CurrentStage");
 	currentStage->SetTexture("PlusSprite/01.png");
 	currentStage->SetOrigin(Origins::MC);
 	currentStage->SetScale({ 2.f, 2.f });
-	currentStage->SetPosition({ IndexToPos(149).x + size/2.f, IndexToPos(149).y + size/2.5f}); //더 효율적인 방법 없을까
+	currentStage->SetPosition({ IndexToPos(149).x + size/2.f, IndexToPos(149).y + size/2.5f});
 	AddGo(currentStage, Layers::Ui);
 
 	advice = new TextGo("Advice");
@@ -90,8 +90,7 @@ void Chapter::Init()
 	restart->SetPosition({ IndexToPos(183).x - size / 2.f, IndexToPos(183).y });
 	AddGo(restart, Layers::Ui);
 
-	mapObj.resize(col * row, MapObject::empty); //모든 내용 비어있는 것으로 처리
-	//Update때 챕터에 따라 맵을 다시 세팅해주기 위해서 Init에서 빈 것으로 해줌
+	mapObj.resize(col * row, MapObject::empty);
 
 	pause = new Pause("Pause");
 	pause->sortLayer = 2;
@@ -156,7 +155,6 @@ void Chapter::Enter()
 	case 1:
 		uiMoveCount->SetString("23");
 		moveCount = 23;
-		//player->currentIndex = 49;
 		currentStage->SetTexture("PlusSprite/01.png");
 		background->SetTexture("PlusSprite/chapterBG0001.png");
 		background->SetPosition({ 0.f, 0.f });
@@ -164,18 +162,43 @@ void Chapter::Enter()
 	case 2:
 		uiMoveCount->SetString("24");
 		moveCount = 24;
-		player->currentIndex = 120;
 		currentStage->SetTexture("PlusSprite/02.png");
 		background->SetTexture("PlusSprite/chapterBG0002.png");
 		background->SetPosition({ 0.f, 0.f });
-		//demon->SetdemonIdle("Tables/mode_Idle.csv");
 		break;
 	case 3:
-		uiMoveCount->SetString("24");
+		uiMoveCount->SetString("32");
 		moveCount = 32;
-		player->currentIndex = 120;
 		currentStage->SetTexture("PlusSprite/03.png");
 		background->SetTexture("Texture2D/chapterBG0003_edit.png");
+		background->SetPosition({ -50.f, 50.f });
+		break;
+	case 4:
+		uiMoveCount->SetString("23");
+		moveCount = 23;
+		currentStage->SetTexture("PlusSprite/04.png");
+		background->SetTexture("Texture2D/chapterBG0004.png");
+		background->SetPosition({ -50.f, 50.f });
+		break;
+	case 5:
+		uiMoveCount->SetString("23");
+		moveCount = 23;
+		currentStage->SetTexture("PlusSprite/05.png");
+		background->SetTexture("Texture2D/chapterBG0005.png");
+		background->SetPosition({ -50.f, 50.f });
+		break;
+	case 6:
+		uiMoveCount->SetString("43");
+		moveCount = 43;
+		currentStage->SetTexture("PlusSprite/06.png");
+		background->SetTexture("Texture2D/chapterBG0006.png");
+		background->SetPosition({0.f,0.f });
+		break;
+	case 7:
+		uiMoveCount->SetString("32");
+		moveCount = 32;
+		currentStage->SetTexture("PlusSprite/07.png");
+		background->SetTexture("Texture2D/chapterBG0007.png");
 		background->SetPosition({ -50.f, 50.f });
 		break;
 	default:
@@ -332,14 +355,64 @@ void Chapter::SetMapLayout()
 		};
 		break;
 	case 4:
+		mapLayout =
+	{
+		"WWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWW",
+		"WWWWWPWKEBWWWWWWWWW",
+		"WWWWWEBTBELEWWWWWWW",
+		"WWWWWBEBEBBEDWWWWWW",
+		"WWWWWEBEBEBBEWWWWWW",
+		"WWWWWWEBEBEWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWW",
+	};
 		break;
 	case 5:
+		mapLayout =
+		{
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWEDWWWWWWWW",
+			"WWWWWWWWELBEWWWWWWW",
+			"WWWWWWPWTEBEWWWWWWW",
+			"WWWWWWEWETETWWWWWWW",
+			"WWWWWWSWBBBBWWWWWWW",
+			"WWWWWWTETEETWWWWWWW",
+			"WWWWWWWWWWWKWWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+		};
 		break;
 	case 6:
+		mapLayout =
+		{
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWEPEWWWWWWWWW",
+			"WWWWWWWBBBWWWWWWWWW",
+			"WWWWWWEEEKWWWWWWWWW",
+			"WWWWWWWTBEEWWWWWWWW",
+			"WWWWWWWSWBBEEWWWWWW",
+			"WWWWWWWEEBESWWWWWWW",
+			"WWWWWWWWWWLBEWWWWWW",
+			"WWWWWWWWWWEDWWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+		};
 		break;
 	case 7:
-		break;
-	case 8:
+		mapLayout =
+		{
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+			"WWWWWWWWWDEWWWWWWWW",
+			"WWWWWWWWWELEWWWWWWW",
+			"WWWWWWEKWBBBWWWWWWW",
+			"WWWWWWSBESBEWWWWWWW",
+			"WWWWWWEWSEEPWWWWWWW",
+			"WWWWWWTWWTWWWWWWWWW",
+			"WWWWWWTTTTWWWWWWWWW",
+			"WWWWWWWWWWWWWWWWWWW",
+		};
 		break;
 	default:
 		break;
@@ -350,9 +423,9 @@ void Chapter::SetMap()
 {
 	SetMapLayout();
 
-	for (int i = 0; i < mapLayout.size(); ++i) //10번 반복
+	for (int i = 0; i < mapLayout.size(); ++i)
 	{
-		for (int j = 0; j < mapLayout[i].length(); ++j) //20번 반복
+		for (int j = 0; j < mapLayout[i].length(); ++j)
 		{
 			char mapObjChar = mapLayout[i][j];
 
@@ -582,7 +655,6 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 			}
 		}
 	default:
-		//mapObj[player->prevIndex] = MapObject::empty;
 		moveCount -= 1;
 		return MapObject::empty;
 	}

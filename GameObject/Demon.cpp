@@ -38,6 +38,18 @@ void Demon::Reset()
 	case 3:
 		demonIdle = "Tables/cerb_Idle.csv";
 		break;
+	case 4:
+		demonIdle = "Tables/mali_Idle.csv";
+		break;
+	case 5:
+		demonIdle = "Tables/zdra_Idle.csv";
+		break;
+	case 6:
+		demonIdle = "Tables/azaz_Idle.csv";
+		break;
+	case 7:
+		demonIdle = "Tables/just_Idle.csv";
+		break;
 	default:
 		demonIdle = "Tables/mode_Idle.csv";
 		break;

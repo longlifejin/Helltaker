@@ -416,7 +416,7 @@ void CollectDemon::Develop()
 	switch (step)
 	{
 	case 0:
-		demon.SetTexture("Sprite/beel_fly.png");
+		//demon.SetTexture("Sprite/beel_fly.png");
 		demonName.SetString(L"● 지친 개발자 ●");
 		demonLine.SetString(L"이 페이지는 아직 작업중이야.");
 		demonLine2.SetString(L"");
@@ -429,7 +429,7 @@ void CollectDemon::Develop()
 		}
 		break;
 	case 2:
-		demonLine.SetString(L"더 넘겨봤자 나오는건 없다네.");
+		demonLine.SetString(L"일단 다음 맵은 보여주도록 하지.");
 		booperAnimator.Play("Tables/booper.csv");
 		++step;
 	case 3:
@@ -439,21 +439,11 @@ void CollectDemon::Develop()
 		}
 		break;
 	case 4:
-		demonLine.SetString(L"개발 실력을 키워서 돌아오겠네.");
-		demonLine2.SetString(L"");
-		booperAnimator.Play("Tables/booper.csv");
-		++step;
-	case 5:
-		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
-		{
-			++step;
-		}
-		break;
-	case 6:
+		isAnswerSelect = true;
 		this->SetActive(false);
-		chapter->SetAdvice(false);
-		Release();
-		Init();
+		this->Release();
+		this->Init();
+		isSuccess = false;
 	default:
 		break;
 	}
