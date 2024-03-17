@@ -8,7 +8,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />
-    <ClCompile Include="Scenes\SceneDev1.cpp" />
     <ClCompile Include="Framework\SceneMgr.cpp" />
     <ClCompile Include="GameObject\SpriteGo.cpp" />
     <ClCompile Include="GameObject\TextGo.cpp" />
@@ -24,7 +23,6 @@
     <ClCompile Include="Framework\Animator.cpp" />
     <ClCompile Include="Scenes\SkeletonDead.cpp" />
     <ClCompile Include="Scenes\Transition.cpp" />
-    <ClCompile Include="Scenes\TransitionDown.cpp" />
     <ClCompile Include="Scenes\Advice.cpp" />
     <ClCompile Include="GameObject\Thorn.cpp" />
     <ClCompile Include="GameObject\Key.cpp" />
@@ -40,7 +38,6 @@
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Scenes\Scene.h" />
-    <ClInclude Include="Scenes\SceneDev1.h" />
     <ClInclude Include="Framework\SceneMgr.h" />
     <ClInclude Include="GameObject\SpriteGo.h" />
     <ClInclude Include="GameObject\TextGo.h" />
@@ -57,7 +54,6 @@
     <ClInclude Include="Framework\rapidcsv.h" />
     <ClInclude Include="Scenes\SkeletonDead.h" />
     <ClInclude Include="Scenes\Transition.h" />
-    <ClInclude Include="Scenes\TransitionDown.h" />
     <ClInclude Include="Scenes\Advice.h" />
     <ClInclude Include="GameObject\Thorn.h" />
     <ClInclude Include="GameObject\Key.h" />

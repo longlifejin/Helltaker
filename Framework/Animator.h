@@ -43,20 +43,19 @@ struct AnimationEvent
 {
 	std::string clipId;
 	int frame;
-	std::function<void()> action;             //반환형 void 매개변수 없음
+	std::function<void()> action;
 };
 
 class Animator
 {
 protected:
-	//std::unordered_map<std::string, AnimationClip> clips;   //클립을 담아서 출력
 	std::queue<std::string> queue;
 	std::list<AnimationEvent> eventList;
 
 	float speed = 1.f;
 
 	bool isPlaying = false;
-	AnimationClip* currentClip = nullptr;   //현재 플레이중인 애니매이션
+	AnimationClip* currentClip = nullptr;
 	int totalFrame = 0;
 	int currentFrame = -1;
 	int addFrame = 1;
@@ -73,7 +72,6 @@ public:
 	~Animator();
 
 	void SetOrigin(Origins set) { origin = set; }
-	//void AddClip(const AnimationClip& clip);
 
 	void AddEvent(const std::string& clipId, int frame, std::function<void()> action);
 	void ClearEvent();
@@ -89,7 +87,7 @@ public:
 	float GetSpeed() const { return speed; }
 	void SetSpeed(float s) { speed = s; }
 
-	void Update(float dt);    //현재 재생되고 있는 시간을 누적하면서 프래임 변경
+	void Update(float dt);
 
 	void Play(const std::string& clipId, bool clearQueue = true);
 	void PlayQueue(const std::string& clipId);

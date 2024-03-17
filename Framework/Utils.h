@@ -2,8 +2,6 @@
 class Utils
 {
 public:
-
-
 	static float Clamp(float v, float min, float max);
 	static sf::Vector2f Clamp(const sf::Vector2f& v, const sf::FloatRect& rect);
 

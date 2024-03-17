@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "SceneMgr.h"
 #include "TitleScene.h"
-#include "SceneDev1.h"
 #include "Chapter.h"
 #include "CollectDemon.h"
 
@@ -16,7 +15,6 @@ void SceneMgr::Init()
 
 	scenes.push_back(new TitleScene(SceneIds::TITLESCENE));
 	scenes.push_back(new Chapter(SceneIds::CHAPTER));
-	scenes.push_back(new SceneDev1(SceneIds::SCENEDVE1));
 
 	for (auto scene : scenes)
 	{
@@ -39,7 +37,6 @@ void SceneMgr::Release()
 
 void SceneMgr::ChangeScene(SceneIds id)
 {
-	//바꿀 씬을 저장해뒀다가 전 씬이 업데이트를 마치고 바꿀 수 있도록 수정
 	prevScene = currentScene;
 	nextScene = id;
 }

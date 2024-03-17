@@ -111,8 +111,6 @@ void Player::Update(float dt)
 		}
 	}
 
-
-
 	if (chapter->GetCurrentMoveCount() <= -1)
 	{
 		OnDie();
@@ -139,7 +137,7 @@ void Player::OnDie()
 	chapter->ResortGo(chapter->backColor);
 }
 
-void Player::ChapterUp() //GetDemon 애니메이션 재생 후 다음 챕터로 이동
+void Player::ChapterUp()
 {
 	chapter->SetCurrentStage(chapter->GetCurrentStage() + 1);
 }

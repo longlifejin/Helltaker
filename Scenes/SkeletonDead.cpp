@@ -33,5 +33,5 @@ void SkeletonDead::Update(float dt)
 
 void SkeletonDead::OnDestroy()
 {
-	SCENE_MGR.GetCurrentScene()->RemoveGo(this); //마지막프레임에 호출
+	SCENE_MGR.GetCurrentScene()->RemoveGo(this);
 }

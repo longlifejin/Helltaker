@@ -15,8 +15,6 @@ class Pause;
 class Advice;
 class SkeletonDead;
 class Transition;
-class TransitionDown;
-
 
 class Chapter : public Scene
 {
@@ -133,7 +131,7 @@ public:
 	void Exit() override;
 
 	int GetCurrentStage() const { return stage; }
-	void SetCurrentStage(int stageNumber) { stage = stageNumber; } //챕터 2,3 만들 때 사용할 함수
+	void SetCurrentStage(int stageNumber) { stage = stageNumber; }
 	int GetCurrentMoveCount() const { return moveCount; }
 	void SetmoveCount(int count) { moveCount = count; }
 
@@ -142,7 +140,7 @@ public:
 	void SetMap();
 	void SetUiActive(bool active);
 
-	MapObject CheckInteraction(int curr, int prev); //인덱스 번호를 받아서 오브젝트 상호작용 작동
+	MapObject CheckInteraction(int curr, int prev);
 	int GetCurrentCol() { return col; }
 	int GetCurrentRow() { return row; }
 	sf::Vector2f GetPlayerCurrentPos();

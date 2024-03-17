@@ -23,7 +23,5 @@ public:
 	void SetdemonIdle(std::string Id);
 
 	void Update(float dt) override;
-
-
 };
 

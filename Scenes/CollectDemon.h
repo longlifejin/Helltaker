@@ -44,7 +44,7 @@ protected:
 
 	std::wstring panName = L"● 지친 악마, 판데모니카 ●";
 	std::wstring pandLine1 = L"지옥 고객 서비스 센터의 판데모니카입니다.";
-	std::wstring pandLine2 = L"무엇을 도와드릴까요?"; //TO-DO : 가운데 정렬하는 방법 찾아보기 ㅠ
+	std::wstring pandLine2 = L"무엇을 도와드릴까요?";
 	
 	std::wstring wrongLine = L"우리 집에 한번 오면 알게 될거야.";
 	std::wstring correctLine = L"오히려 '그 쪽'을 도와줘야 할 판인데?";
@@ -58,7 +58,7 @@ protected:
 	int step = 0;
 
 	bool isAnswerSelect = false;
-	int currentStage = 1; //stage마다 창 내용 다르게 바꿔주려고
+	int currentStage = 1;
 
 	float timer = 0.f;
 	float changeTime = 3.f;

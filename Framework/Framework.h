@@ -8,7 +8,6 @@
 class Framework : public Singleton<Framework>
 {
 	friend Singleton<Framework>;
-	//TO-DO : 다른 Mgr들도 friend선언하고 생성자 만들어주기
 
 protected:
 	Framework() = default;
@@ -20,8 +19,8 @@ protected:
 	sf::Clock clock;
 	float timeScale = 1.f;
 
-	sf::Time realTime; //게임 시작부터 경과 시간
-	sf::Time time; //게임 시작부터 경과 시간 (timeScale 적용되 시간)
+	sf::Time realTime;
+	sf::Time time;
 
 	sf::Time realDeltaTime;
 	sf::Time deltaTime;
@@ -30,7 +29,7 @@ protected:
 	sf::Time fixedDeltaTime;
 
 public:
-	sf::RenderWindow& GetWindow() { return window; } //조심해서 써야 함(왜?)
+	sf::RenderWindow& GetWindow() { return window; }
 	const sf::Vector2i& GetWindowSize() const { return windowSize; }
 
 	float GetDT() const { return deltaTime.asSeconds(); }
@@ -43,7 +42,7 @@ public:
 
 	void GameClose() {	window.close(); }
 
-	virtual void Init(int width, int height, const std::string& name = "Timeber!"); //초기화
+	virtual void Init(int width, int height, const std::string& name = "Helltaker");
 	virtual void Do();
 	virtual void Release();
 };

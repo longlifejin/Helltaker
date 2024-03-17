@@ -430,7 +430,6 @@ void CollectDemon::Develop()
 	switch (step)
 	{
 	case 0:
-		//demon.SetTexture("Sprite/beel_fly.png");
 		demonName.SetString(L"● 지친 개발자 ●");
 		demonLine.SetString(L"이 페이지는 아직 작업중이야.");
 		demonLine2.SetString(L"");

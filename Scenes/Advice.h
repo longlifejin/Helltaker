@@ -46,7 +46,5 @@ public:
 	void Develop();
 
 	void Draw(sf::RenderWindow& window) override;
-
-
 };
 

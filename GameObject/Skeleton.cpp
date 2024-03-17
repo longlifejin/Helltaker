@@ -34,10 +34,4 @@ void Skeleton::Update(float dt)
 {
 	SpriteGo::Update(dt);
 	animator.Update(dt);
-
-}
-
-void Skeleton::OnDie()
-{
-	
 }

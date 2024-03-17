@@ -9,13 +9,12 @@ private:
     ~SoundMgr() override;
 
     sf::Sound bgm[2];
-    //위에 배열을 기준으로 현재 재생중인 bgm의 인덱스
     int frontBgmIndex = 0;
     float fadespeed = 0.5f;
     float fadeLimit = 1.f;
-    bool isFading = false;//크로스페이드 중인지 여부
-    float crossFadeDuration = 1.f;//크로스페이드 시간
-    float crossFadeTimer = 0.f;//크로스페이드 타이머
+    bool isFading = false;
+    float crossFadeDuration = 1.f;
+    float crossFadeTimer = 0.f;
 
     std::list <sf::Sound*> playing;
     std::list <sf::Sound*> waiting;

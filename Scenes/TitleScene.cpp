@@ -22,7 +22,7 @@ void TitleScene::Init()
 	background1 = new SpriteGo("Background1");
 	background1->SetTexture("Texture2D/titleBG.png");
 	background1->SetOrigin(Origins::TL);
-	background1->SetPosition({ 0.f, 200.f }); //위치 잡는 부분 이렇게 안하는 방법이 있을까?
+	background1->SetPosition({ 0.f, 200.f });
 	AddGo(background1, Layers::Ui);
 
 	background2 = new SpriteGo("Background2");
@@ -91,9 +91,9 @@ void TitleScene::Init()
 	transition = new Transition("Transition");
 	AddGo(transition, Layers::Ui);
 
-	buttons.push_back(newGameButton); //0
-	buttons.push_back(chapterSelectButton); //1
-	buttons.push_back(exitButton); //2
+	buttons.push_back(newGameButton);
+	buttons.push_back(chapterSelectButton);
+	buttons.push_back(exitButton);
 
 	buttonTexts.push_back(newGameText);
 	buttonTexts.push_back(chapterSelectText);

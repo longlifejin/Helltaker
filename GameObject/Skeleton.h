@@ -25,7 +25,5 @@ public:
 	void Reset() override;
 
 	void Update(float dt) override;
-
-	void OnDie();
 };
 

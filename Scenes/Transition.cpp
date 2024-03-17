@@ -16,7 +16,7 @@ void Transition::Init()
 	SetOrigin(Origins::BC);
 	animator.SetTarget(&sprite);
 
-	//처음 재생할 때 느린 현상 해결하려고 미리 load 해줌//
+	//버벅임 완화를 위해 미리 load//
 	RES_MGR_TEXTURE.Load("Sprite/transition0002.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0003.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0004.png");
@@ -48,11 +48,6 @@ void Transition::Init()
 	RES_MGR_TEXTURE.Load("Sprite/transition0029.png");
 	RES_MGR_TEXTURE.Load("Sprite/transition0030.png");
 	///////////////////////////////////////////////////
-}
-
-void Transition::RemoveChangeSceneImage()
-{
-	SCENE_MGR.GetCurrentScene()->RemoveGo(this); //생성할때마다 지워주는 구조니까 불필요한 것 같다. 이거 없애기
 }
 
 void Transition::SceneChange()

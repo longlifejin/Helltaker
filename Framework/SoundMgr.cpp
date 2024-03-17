@@ -3,7 +3,6 @@
 
 SoundMgr::SoundMgr()
 {
-
 }
 
 SoundMgr::~SoundMgr()
@@ -42,7 +41,6 @@ void SoundMgr::Release()
 
 void SoundMgr::Update(float dt)
 {
-
     if (!playing.empty())
     {
         for (auto it = playing.begin(); it != playing.end();)
@@ -56,9 +54,8 @@ void SoundMgr::Update(float dt)
             {
                 ++it;
             }
-
         }
-        //크로스페이드 중이라면 볼륨을 조절
+
         if (isFading)
         {
             bool isEndBack = false;
@@ -86,15 +83,8 @@ void SoundMgr::Update(float dt)
             }
             if (isEndBack && isEndFront)
             {
-
                 isFading = false;
             }
-
-            // if(crossFadeTimer>=crossFadeDuration)
-            // {
-            //     crossFadeTimer=0.f;
-            //     isFading=false;
-            // }
         }
     }
 }
@@ -136,10 +126,6 @@ void SoundMgr::PlaySfx(sf::SoundBuffer& buffer, bool loop)
 
 void SoundMgr::PlayBgm(std::string id, bool crossFade)
 {
-    //fadeDuration, fadeTimer울 사용해서 bgm을 교체하고 싶다면 crossFade를 사용
-    //crossFade를 사용하면 현재 재생중인 bgm을 서서히 줄이고 새로운 bgm을 서서히 키운다.
-    //crossFade를 사용하지 않으면 현재 재생중인 bgm을 바로 멈추고 새로운 bgm을 바로 키운다.
-
     frontBgmIndex = (frontBgmIndex + 1) % 2;
     int backBgmIndex = (frontBgmIndex == 1) ? 0 : 1;
 

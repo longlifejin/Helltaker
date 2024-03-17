@@ -51,7 +51,7 @@ void Demon::Reset()
 		demonIdle = "Tables/just_Idle.csv";
 		break;
 	default:
-		demonIdle = "Tables/mode_Idle.csv";
+		demonIdle = "Tables/just_Idle.csv";
 		break;
 	}
 	animator.Play(demonIdle);

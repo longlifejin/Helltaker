@@ -13,7 +13,6 @@
 #include "Advice.h"
 #include "SkeletonDead.h"
 #include "Transition.h"
-#include "TransitionDown.h"
 
 Chapter::Chapter(SceneIds id)
 	:Scene(id)
@@ -822,18 +821,6 @@ void Chapter::Update(float dt)
 		transition->SetChangeScene(SceneIds::CHAPTER);
 		transition->PlayTransitionUp();
 	}
-
-	/////////////////테스트용//////////////////
-	if (InputMgr::GetKeyDown(sf::Keyboard::F3))
-	{
-		collectDemon->SetActive(true);
-		collectDemon->Init();
-	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::F4))
-	{
-		player->OnDie();
-	}
-	//////////////////////////////////////////
 
 	if (isDemonGet && !collectDemon->GetActive())
 	{

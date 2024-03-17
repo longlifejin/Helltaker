@@ -14,8 +14,6 @@ public:
 
 	void Init() override;
 
-	void RemoveChangeSceneImage();
-
 	void SetChangeScene(SceneIds scn) { scene = scn; }
 	void SceneChange();
 	void TransitionUpSound();
