@@ -41,6 +41,8 @@ public:
 	float GetTimeScale() const { return timeScale; }
 	void SetTimeScale(float scale) { timeScale = scale; }
 
+	void GameClose() {	window.close(); }
+
 	virtual void Init(int width, int height, const std::string& name = "Timeber!"); //√ ±‚»≠
 	virtual void Do();
 	virtual void Release();

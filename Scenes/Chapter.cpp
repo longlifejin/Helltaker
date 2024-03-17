@@ -71,11 +71,10 @@ void Chapter::Init()
 	uiMoveCount->SetPosition({IndexToPos(134).x + size / 2.f, IndexToPos(134).y - size / 20.f });
 	AddGo(uiMoveCount, Layers::Ui);
 
-	currentStage = new SpriteGo("CurrentStage");
-	currentStage->SetTexture("PlusSprite/01.png");
+	currentStage = new TextGo("Test");
+	currentStage->Set(fontResMgr.Get("Font/alphabetR.ttf"), "I", 90, sf::Color::White);
 	currentStage->SetOrigin(Origins::MC);
-	currentStage->SetScale({ 2.f, 2.f });
-	currentStage->SetPosition({ IndexToPos(149).x + size/2.f, IndexToPos(149).y + size/2.5f});
+	currentStage->SetPosition({ IndexToPos(149).x + size / 2.f, IndexToPos(149).y + size / 7.f });
 	AddGo(currentStage, Layers::Ui);
 
 	advice = new TextGo("Advice");
@@ -127,6 +126,11 @@ void Chapter::Init()
 	bloodSprite.setPosition(0.f, 0.f);
 	bloodAnimator.SetTarget(&bloodSprite);
 
+	lovePlosionSprite.setTexture((RES_MGR_TEXTURE.Get("Texture2D/invisible.png")));
+	lovePlosionSprite.setOrigin({ lovePlosionSprite.getLocalBounds().width + 50.f, lovePlosionSprite.getLocalBounds().height + 80.f});
+	lovePlosionSprite.setPosition(0.f, 0.f);
+	lovePlosionAnimator.SetTarget(&lovePlosionSprite);
+
 	int stage = 1;
 
 	Scene::Init();
@@ -139,6 +143,11 @@ void Chapter::Release()
 
 void Chapter::Enter()
 {
+	if (SCENE_MGR.CheckPrevScene() != SceneIds::CHAPTER)
+	{
+		SOUND_MGR.PlayBgm("AudioClip/Vitality.wav", false);
+	}
+
 	mapObj.resize(col * row, MapObject::empty);
 
 	SetUiActive(true);
@@ -155,49 +164,49 @@ void Chapter::Enter()
 	case 1:
 		uiMoveCount->SetString("23");
 		moveCount = 23;
-		currentStage->SetTexture("PlusSprite/01.png");
+		currentStage->SetString("I");
 		background->SetTexture("PlusSprite/chapterBG0001.png");
 		background->SetPosition({ 0.f, 0.f });
 		break;
 	case 2:
 		uiMoveCount->SetString("24");
 		moveCount = 24;
-		currentStage->SetTexture("PlusSprite/02.png");
+		currentStage->SetString("II");
 		background->SetTexture("PlusSprite/chapterBG0002.png");
 		background->SetPosition({ 0.f, 0.f });
 		break;
 	case 3:
 		uiMoveCount->SetString("32");
 		moveCount = 32;
-		currentStage->SetTexture("PlusSprite/03.png");
+		currentStage->SetString("III");
 		background->SetTexture("Texture2D/chapterBG0003_edit.png");
 		background->SetPosition({ -50.f, 50.f });
 		break;
 	case 4:
 		uiMoveCount->SetString("23");
 		moveCount = 23;
-		currentStage->SetTexture("PlusSprite/04.png");
+		currentStage->SetString("IV");
 		background->SetTexture("Texture2D/chapterBG0004.png");
 		background->SetPosition({ -50.f, 50.f });
 		break;
 	case 5:
 		uiMoveCount->SetString("23");
 		moveCount = 23;
-		currentStage->SetTexture("PlusSprite/05.png");
+		currentStage->SetString("V");
 		background->SetTexture("Texture2D/chapterBG0005.png");
 		background->SetPosition({ -50.f, 50.f });
 		break;
 	case 6:
 		uiMoveCount->SetString("43");
 		moveCount = 43;
-		currentStage->SetTexture("PlusSprite/06.png");
+		currentStage->SetString("VI");
 		background->SetTexture("Texture2D/chapterBG0006.png");
 		background->SetPosition({0.f,0.f });
 		break;
 	case 7:
 		uiMoveCount->SetString("32");
 		moveCount = 32;
-		currentStage->SetTexture("PlusSprite/07.png");
+		currentStage->SetString("VII");
 		background->SetTexture("Texture2D/chapterBG0007.png");
 		background->SetPosition({ -50.f, 50.f });
 		break;
@@ -275,7 +284,7 @@ void Chapter::SetGrid()
 
 	int gridIndex = 0;
 
-	for (int i = 0; i < row + 1; ++i) //가로격자
+	for (int i = 0; i < row + 1; ++i)
 	{
 		startLine = { offsetX ,offsetY + (i * size) };
 		endLine = { (float)FRAMEWORK.GetWindowSize().x - offsetX, startLine.y };
@@ -291,7 +300,7 @@ void Chapter::SetGrid()
 	startLine = { 0.f, 0.f };
 	endLine = startLine;
 
-	for (int i = 0; i < col + 1; ++i) //세로격자
+	for (int i = 0; i < col + 1; ++i)
 	{
 		startLine = { offsetX + (i * size), offsetY };
 		endLine = { startLine.x, (float)FRAMEWORK.GetWindowSize().y - offsetY };
@@ -331,7 +340,7 @@ void Chapter::SetMapLayout()
 			"WWWWWWWWWWWWWWWWWWW",
 			"WWWWWWWEEEEWWWWWWWW",
 			"WWWWWWWEWTTEEWWWWWW",
-			"WWWWWWETWWTTBWWWWWW",
+			"WWWWWWETWWBBBWWWWWW",
 			"WWWWWWEEWWETEWWWWWW",
 			"WWWWWWPEWWESEWWWWWW",
 			"WWWWWWWWWWDESWWWWWW",
@@ -501,6 +510,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 				if (mapObj[skull->currentIndex] == MapObject::wall ||
 					mapObj[skull->currentIndex] == MapObject::box)
 				{
+					SOUND_MGR.PlaySfx("AudioClip/enemy_die_01.wav");
 					SkeletonDead* skeletonDestroy = new SkeletonDead("Skeleton Dead Animation");
 					skeletonDestroy->Init();
 					skeletonDestroy->Reset();
@@ -522,6 +532,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::skeleton)
 				{
+					SOUND_MGR.PlaySfx("AudioClip/enemy_die_01.wav");
 					SkeletonDead* skeletonDestroy = new SkeletonDead("Skeleton Dead Animation");
 					skeletonDestroy->Init();
 					skeletonDestroy->Reset();
@@ -558,6 +569,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::thorn)
 				{
+					SOUND_MGR.PlaySfx("AudioClip/enemy_die_01.wav");
 					SkeletonDead* skeletonDestroy = new SkeletonDead("Skeleton Dead Animation");
 					skeletonDestroy->Init();
 					skeletonDestroy->Reset();
@@ -580,6 +592,7 @@ Chapter::MapObject Chapter::CheckInteraction(int curr, int prev)
 				}
 				else if (mapObj[skull->currentIndex] == MapObject::empty)
 				{
+					SOUND_MGR.PlaySfx("AudioClip/enemy_kick_01.wav");
 					skull->SetPosition(IndexToPos(skull->currentIndex));
 					mapObj[skull->prevIndex] = MapObject::player;
 					mapObj[skull->currentIndex] = MapObject::skeleton;
@@ -772,6 +785,7 @@ void Chapter::Update(float dt)
 	dustAnimator.Update(dt);
 	kickAnimator.Update(dt);
 	bloodAnimator.Update(dt);
+	lovePlosionAnimator.Update(dt);
 
 	uiMoveCount->SetString(std::to_string(moveCount));
 
@@ -784,6 +798,7 @@ void Chapter::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::L))
 	{
+		SOUND_MGR.PlaySfx("AudioClip/dialogue_start_01.wav");
 		isAdvice = true;
 		adviceTab->SetActive(true);
 	}
@@ -820,18 +835,21 @@ void Chapter::Update(float dt)
 	}
 	//////////////////////////////////////////
 
-	if (isDemonGet && !collectDemon->GetActive()) //isDemonGet - demon 획득한 처음 순간 / collectDemon창이 안열려있으면 실행
+	if (isDemonGet && !collectDemon->GetActive())
 	{
+		SOUND_MGR.PlaySfx("AudioClip/button_menu_confirm_01.wav");
 		collectDemon->Init();
 		collectDemon->Reset();
 		collectDemon->SetActive(true);
 		isDemonGet = false;
 	}
 
-	if (!isDemonGet && collectDemon->GetAnswerSelect() && !collectDemon->GetActive()) //demon을 획득하고 나서, 선택지를 correct로 고르고 collectDemon창이 꺼져있으면 실행
+	if (!isDemonGet && collectDemon->GetAnswerSelect() && !collectDemon->GetActive())
 	{
 		player->SetOrigin(Origins::SELF);
 		player->GetDemon();
+		lovePlosionSprite.setPosition(demon->GetPosition());
+		lovePlosionAnimator.Play("Tables/demon_LovePlosion.csv");
 		collectDemon->SetAnswerSelect(false);
 	}
 }
@@ -845,4 +863,5 @@ void Chapter::Draw(sf::RenderWindow& window)
 	window.draw(dustSprite);
 	window.draw(kickSprite);
 	window.draw(bloodSprite);
+	window.draw(lovePlosionSprite);
 }

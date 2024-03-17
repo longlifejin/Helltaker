@@ -92,6 +92,7 @@ void Advice::Stage1()
 	case 1:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -102,6 +103,7 @@ void Advice::Stage1()
 	case 3:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -113,6 +115,7 @@ void Advice::Stage1()
 	case 5:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -125,6 +128,7 @@ void Advice::Stage1()
 	case 7:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -154,6 +158,7 @@ void Advice::Stage2()
 	case 1:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -166,6 +171,7 @@ void Advice::Stage2()
 	case 3:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -177,6 +183,7 @@ void Advice::Stage2()
 	case 5:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -195,6 +202,7 @@ void Advice::Stage2()
 	case 8:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -221,6 +229,7 @@ void Advice::Develop()
 	case 1:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -231,6 +240,7 @@ void Advice::Develop()
 	case 3:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -242,6 +252,7 @@ void Advice::Develop()
 	case 5:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_highlight_01.wav");
 			++step;
 		}
 		break; 

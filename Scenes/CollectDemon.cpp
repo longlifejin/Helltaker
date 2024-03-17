@@ -191,6 +191,7 @@ void CollectDemon::Stage1()
 	case 1:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -205,11 +206,13 @@ void CollectDemon::Stage1()
 	case 3:
 		if (InputMgr::GetKeyDown(sf::Keyboard::W) || InputMgr::GetKeyDown(sf::Keyboard::S))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_dialogue_highlight_01.wav");
 			Select();
 		}
 
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			wrongButton.SetActive(false);
 			wrongText.SetActive(false);
 			correctButton.SetActive(false);
@@ -221,6 +224,7 @@ void CollectDemon::Stage1()
 		switch (currentSelect)
 		{
 		case CollectDemon::SelectLine::Correct:
+			SOUND_MGR.PlaySfx("AudioClip/dialogue_success_01.wav");
 			isSuccess = true;
 			successAnimator.Play("Tables/success.csv");
 			demonLine.SetString(L"참 달콤한 제안이에요. 커피를 마시고 싶네요.");
@@ -240,6 +244,7 @@ void CollectDemon::Stage1()
 	case 5:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			isSuccess = false;
 			isBooperOn = false;
 			++step;
@@ -257,6 +262,7 @@ void CollectDemon::Stage1()
 			isSuccess = false;
 			break;
 		case CollectDemon::SelectLine::Wrong:
+			SOUND_MGR.PlaySfx("AudioClip/bad_end_screen_01.wav");
 			isBadEnd = true;
 			badEndAnimator.Play("Tables/badEnd.csv");
 			demon.SetActive(false);
@@ -273,6 +279,7 @@ void CollectDemon::Stage1()
 	case 7:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			isBadEnd = false;
 			chapter->transition->SetChangeScene(SceneIds::CHAPTER);
 			chapter->transition->PlayTransitionUp();
@@ -309,6 +316,7 @@ void CollectDemon::Stage2()
 	case 1:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -325,11 +333,13 @@ void CollectDemon::Stage2()
 	case 3:
 		if (InputMgr::GetKeyDown(sf::Keyboard::W) || InputMgr::GetKeyDown(sf::Keyboard::S))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_dialogue_highlight_01.wav");
 			Select();
 		}
 
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			wrongButton.SetActive(false);
 			wrongText.SetActive(false);
 			correctButton.SetActive(false);
@@ -341,6 +351,7 @@ void CollectDemon::Stage2()
 		switch (currentSelect)
 		{
 		case CollectDemon::SelectLine::Correct:
+			SOUND_MGR.PlaySfx("AudioClip/dialogue_success_01.wav");
 			isSuccess = true;
 			successAnimator.Play("Tables/success.csv");
 			demon.SetTexture("Texture2D/mod_close.png");
@@ -362,6 +373,7 @@ void CollectDemon::Stage2()
 	case 5:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			isSuccess = false;
 			isBooperOn = false;
 			++step;
@@ -378,6 +390,7 @@ void CollectDemon::Stage2()
 			isSuccess = false;
 			break;
 		case CollectDemon::SelectLine::Wrong:
+			SOUND_MGR.PlaySfx("AudioClip/bad_end_screen_01.wav");
 			isBadEnd = true;
 			badEndAnimator.Play("Tables/badEnd.csv");
 			demon.SetActive(false);
@@ -395,6 +408,7 @@ void CollectDemon::Stage2()
 	case 7:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			isBadEnd = false;
 			chapter->transition->SetChangeScene(SceneIds::CHAPTER);
 			chapter->transition->PlayTransitionUp();
@@ -425,6 +439,7 @@ void CollectDemon::Develop()
 	case 1:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			++step;
 		}
 		break;
@@ -435,6 +450,7 @@ void CollectDemon::Develop()
 	case 3:
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			++step;
 		}
 		break;

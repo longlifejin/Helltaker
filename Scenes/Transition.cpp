@@ -60,6 +60,11 @@ void Transition::SceneChange()
 	SCENE_MGR.ChangeScene(scene);
 }
 
+void Transition::TransitionUpSound()
+{
+	SOUND_MGR.PlaySfx("AudioClip/screen_changer_part1_01.wav");
+}
+
 void Transition::PlayTransitionUp()
 {
 	SetActive(true);
@@ -70,6 +75,7 @@ void Transition::PlayTransitionDown()
 {
 	SetActive(true);
 	animator.Play("Tables/transition_Down.csv");
+	SOUND_MGR.PlaySfx("AudioClip/screen_changer_part2_01.wav");
 }
 
 void Transition::Reset()
@@ -79,6 +85,7 @@ void Transition::Reset()
 	SetPosition({1920.f * 0.5f, 1080.f});
 	animator.SetOrigin(Origins::BC);
 	animator.AddEvent("Tables/transition_Up.csv", 13, std::bind(&Transition::SceneChange, this));
+	animator.AddEvent("Tables/transition_Up.csv", 1, std::bind(&Transition::TransitionUpSound, this));
 	animator.AddEvent("Tables/transition_Down.csv", 14, std::bind([this]() {SetActive(false); }));
 }
 

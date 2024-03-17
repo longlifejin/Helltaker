@@ -54,7 +54,7 @@ protected:
 	SpriteGo* uiDemonRight = nullptr;
 
 	TextGo* uiMoveCount = nullptr;
-	SpriteGo* currentStage = nullptr;
+	TextGo* currentStage = nullptr;
 
 	TextGo* advice = nullptr;
 	TextGo* restart = nullptr;
@@ -120,6 +120,9 @@ public:
 
 	sf::Sprite bloodSprite;
 	Animator bloodAnimator;
+	
+	sf::Sprite lovePlosionSprite;
+	Animator lovePlosionAnimator;
 
 	bool isDemonGet = false;
 

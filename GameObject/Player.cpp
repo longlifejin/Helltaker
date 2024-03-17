@@ -31,8 +31,10 @@ void Player::Reset()
 	SetOrigin(Origins::SELF);
 	SetFlipX(false);
 	animator.AddEvent("Tables/player_Die.csv", 17, std::bind(&Player::ChangeSceneEvent, this));
-	animator.AddEvent("Tables/player_GetDemon.csv", 18, std::bind(&Player::ChangeSceneEvent, this));
-	animator.AddEvent("Tables/player_GetDemon.csv", 18, std::bind(&Player::ChapterUp, this));
+	animator.AddEvent("Tables/player_GetDemon.csv", 12, std::bind(&Player::ControlTimeScaleSlowly, this));
+	animator.AddEvent("Tables/player_GetDemon.csv", 13, std::bind(&Player::TimeScaleRestore, this));
+	animator.AddEvent("Tables/player_GetDemon.csv", 23, std::bind(&Player::ChangeSceneEvent, this));
+	animator.AddEvent("Tables/player_GetDemon.csv", 23, std::bind(&Player::ChapterUp, this));
 	
 }
 
@@ -72,16 +74,35 @@ void Player::Update(float dt)
 	{
 		Chapter::MapObject type = chapter->CheckInteraction(currentIndex, prevIndex);
 
-		if (type == Chapter::MapObject::empty || type == Chapter::MapObject::thorn)
+		if (type == Chapter::MapObject::empty )
 		{
 			SetPosition(chapter->IndexToPos(currentIndex));
+			SOUND_MGR.PlaySfx("AudioClip/character_move_01.wav");
 			animator.Play("Tables/player_Move.csv");
 			animator.PlayQueue("Tables/player_Idle.csv");
 
 			chapter->dustSprite.setPosition(chapter->IndexToPos(prevIndex));
 			chapter->dustAnimator.Play("Tables/player_moveDust.csv");
 		}
-		else if (type == Chapter::MapObject::box || type == Chapter::MapObject::skeleton)
+		else if (type == Chapter::MapObject::thorn)
+		{
+			SetPosition(chapter->IndexToPos(currentIndex));
+			SOUND_MGR.PlaySfx("AudioClip/spikes_damage_01.wav");
+			animator.Play("Tables/player_Move.csv");
+			animator.PlayQueue("Tables/player_Idle.csv");
+
+			chapter->dustSprite.setPosition(chapter->IndexToPos(prevIndex));
+			chapter->dustAnimator.Play("Tables/player_moveDust.csv");
+		}
+		else if (type == Chapter::MapObject::box )
+		{
+			currentIndex = prevIndex;
+			SetPosition(chapter->IndexToPos(currentIndex));
+			SOUND_MGR.PlaySfx("AudioClip/stone_kick_01.wav");
+			animator.Play("Tables/player_Kick.csv");
+			animator.PlayQueue("Tables/player_Idle.csv");
+		}
+		else if (type == Chapter::MapObject::skeleton)
 		{
 			currentIndex = prevIndex;
 			SetPosition(chapter->IndexToPos(currentIndex));
@@ -89,6 +110,8 @@ void Player::Update(float dt)
 			animator.PlayQueue("Tables/player_Idle.csv");
 		}
 	}
+
+
 
 	if (chapter->GetCurrentMoveCount() <= -1)
 	{
@@ -105,6 +128,7 @@ void Player::ChangeSceneEvent()
 
 void Player::OnDie()
 {
+	SOUND_MGR.PlaySfx("AudioClip/player_death_01.wav");
 	chapter->SetUiActive(false);
 	SetOrigin({360.f, 900.f});
 	animator.Play("Tables/player_Die.csv");
@@ -120,9 +144,20 @@ void Player::ChapterUp() //GetDemon 애니메이션 재생 후 다음 챕터로 이동
 	chapter->SetCurrentStage(chapter->GetCurrentStage() + 1);
 }
 
+void Player::ControlTimeScaleSlowly()
+{
+	FRAMEWORK.SetTimeScale(0.2f);
+}
+
+void Player::TimeScaleRestore()
+{
+	FRAMEWORK.SetTimeScale(1.f);
+}
+
 void Player::GetDemon()
 {
 	SetOrigin(Origins::SELF);
+	SOUND_MGR.PlaySfx("AudioClip/succub_capture_01.wav");
 	animator.Play("Tables/player_GetDemon.csv");
 }
 

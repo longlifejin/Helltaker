@@ -109,6 +109,8 @@ void TitleScene::Release()
 
 void TitleScene::Enter()
 {
+	SOUND_MGR.PlayBgm("AudioClip/Apropos.wav", false);
+
 	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
 	worldView.setSize(windowSize);
 	worldView.setCenter(windowSize * 0.5f);
@@ -191,12 +193,14 @@ void TitleScene::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::S)) 
 	{
+		SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 		currentButtonIndex = (currentButtonIndex + 1) % buttons.size();
 		UpdateButtonStates();
 	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::W))
 	{
+		SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 		currentButtonIndex = (currentButtonIndex - 1 + buttons.size()) % buttons.size();
 		UpdateButtonStates();
 	}
@@ -210,10 +214,10 @@ void TitleScene::Update(float dt)
 			transition->PlayTransitionUp();
 			break;
 		case Button::CHAPTERSELECT:
-			//
+			SOUND_MGR.PlaySfx("AudioClip/button_menu_confirm_01.wav");
 			break;
 		case Button::EXIT:
-			//게임 종료 화면
+			FRAMEWORK.GameClose();
 			break;
 		default:
 			break;

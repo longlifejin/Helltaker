@@ -18,6 +18,7 @@ public:
 
 	void SetChangeScene(SceneIds scn) { scene = scn; }
 	void SceneChange();
+	void TransitionUpSound();
 	
 	void PlayTransitionUp();
 	void PlayTransitionDown();

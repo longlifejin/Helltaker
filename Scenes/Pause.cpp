@@ -121,6 +121,7 @@ void Pause::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::W))
 	{
+		SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 		switch (currentSelect)
 		{
 		case Select::BACK:
@@ -284,6 +285,7 @@ void Pause::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::S))
 	{
+		SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 		switch (currentSelect)
 		{
 		case Select::BACK:
@@ -449,44 +451,54 @@ void Pause::Update(float dt)
 	{
 		if (InputMgr::GetKeyDown(sf::Keyboard::A))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			switch (currentBGMVolume)
 			{
 			case Volume::LOUD:
 				currentBGMVolume = Volume::MIDDLE;
+				SOUND_MGR.SetBgmVolume(50.f);
 				currentBgmVolumeText.SetString(L"중간");
 				break;
 			case Volume::MIDDLE:
 				currentBGMVolume = Volume::SMALL;
+				SOUND_MGR.SetBgmVolume(25.f);
 				currentBgmVolumeText.SetString(L"작음");
 				break;
 			case Volume::SMALL:
 				currentBGMVolume = Volume::MUTE;
+				SOUND_MGR.SetBgmVolume(0.f);
 				currentBgmVolumeText.SetString(L"음소거");
 				break;
 			case Volume::MUTE:
 				currentBGMVolume = Volume::LOUD;
+				SOUND_MGR.SetBgmVolume(100.f);
 				currentBgmVolumeText.SetString(L"큼");
 				break;
 			}
 		}
 		if (InputMgr::GetKeyDown(sf::Keyboard::D))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			switch (currentBGMVolume)
 			{
 			case Volume::LOUD:
 				currentBGMVolume = Volume::MUTE;
+				SOUND_MGR.SetBgmVolume(0.f);
 				currentBgmVolumeText.SetString(L"음소거");
 				break;
 			case Volume::MIDDLE:
 				currentBGMVolume = Volume::LOUD;
+				SOUND_MGR.SetBgmVolume(100.f);
 				currentBgmVolumeText.SetString(L"큼");
 				break;
 			case Volume::SMALL:
 				currentBGMVolume = Volume::MIDDLE;
+				SOUND_MGR.SetBgmVolume(50.f);
 				currentBgmVolumeText.SetString(L"중간");
 				break;
 			case Volume::MUTE:
 				currentBGMVolume = Volume::SMALL;
+				SOUND_MGR.SetBgmVolume(25.f);
 				currentBgmVolumeText.SetString(L"작음");
 				break;
 			}
@@ -497,6 +509,7 @@ void Pause::Update(float dt)
 	{
 		if (InputMgr::GetKeyDown(sf::Keyboard::A))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			switch (currentSFXVolume)
 			{
 			case Volume::LOUD:
@@ -519,6 +532,7 @@ void Pause::Update(float dt)
 		}
 		if (InputMgr::GetKeyDown(sf::Keyboard::D))
 		{
+			SOUND_MGR.PlaySfx("AudioClip/button_chapter_highlight_01.wav");
 			switch (currentSFXVolume)
 			{
 			case Volume::LOUD:
@@ -543,6 +557,7 @@ void Pause::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
+		SOUND_MGR.PlaySfx("AudioClip/button_menu_confirm_01.wav");
 		switch (currentSelect)
 		{
 		case Pause::Select::BACK:

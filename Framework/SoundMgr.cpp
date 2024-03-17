@@ -109,10 +109,16 @@ void SoundMgr::PlaySfx(sf::SoundBuffer& buffer, bool loop)
     sf::Sound* sound = nullptr;
     if (waiting.empty())
     {
-        sound = playing.front();
-        playing.pop_front();
-        sound->stop();
-
+        if (!playing.empty())
+        {
+            sound = playing.front();
+            playing.pop_front();
+            sound->stop();
+        }
+        else
+        {
+            sound = new sf::Sound();
+        }
     }
     else
     {
@@ -156,7 +162,6 @@ void SoundMgr::PlayBgm(std::string id, bool crossFade)
 
 void SoundMgr::StopBgm()
 {
-
     bgm[frontBgmIndex].stop();
     bgm[(frontBgmIndex + 1) % 2].stop();
     isFading = false;
