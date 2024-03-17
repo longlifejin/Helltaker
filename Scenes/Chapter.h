@@ -8,6 +8,8 @@ class Box;
 class Demon;
 class Skeleton;
 class Thorn;
+class Key;
+class LockBox;
 class CollectDemon;
 class Pause;
 class Advice;
@@ -103,6 +105,8 @@ public:
 	Skeleton* skeleton = nullptr;
 	Box* box = nullptr;
 	Thorn* thorn = nullptr;
+	Key* key = nullptr;
+	LockBox* lockBox = nullptr;
 	CollectDemon* collectDemon = nullptr;
 
 	Animator animator;

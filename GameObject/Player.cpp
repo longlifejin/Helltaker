@@ -103,11 +103,6 @@ void Player::ChangeSceneEvent()
 	chapter->transition->PlayTransitionUp();
 }
 
-//void Player::OnDamage() 챕터 내에서 가시 데미지 입는거 처리해주기
-//{
-//	moveCount -= 1;
-//}
-
 void Player::OnDie()
 {
 	chapter->SetUiActive(false);
@@ -120,7 +115,7 @@ void Player::OnDie()
 	chapter->ResortGo(chapter->backColor);
 }
 
-void Player::ChapterUp() //GetDemon 애니메이션 재생 후 그 다음 챕터로 이동하기 위해서 만든 함수
+void Player::ChapterUp() //GetDemon 애니메이션 재생 후 다음 챕터로 이동
 {
 	chapter->SetCurrentStage(chapter->GetCurrentStage() + 1);
 }
@@ -129,6 +124,5 @@ void Player::GetDemon()
 {
 	SetOrigin(Origins::SELF);
 	animator.Play("Tables/player_GetDemon.csv");
-	//애니메이션 재생 후 다음 챕터 이동
 }
 

@@ -137,6 +137,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\Key.cpp" />
+    <ClCompile Include="GameObject\LockBox.cpp" />
     <ClCompile Include="Scenes\Advice.cpp" />
     <ClCompile Include="Scenes\Transition.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
@@ -173,6 +175,8 @@
     <ClCompile Include="GameObject\Thorn.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Key.h" />
+    <ClInclude Include="GameObject\LockBox.h" />
     <ClInclude Include="Scenes\Advice.h" />
     <ClInclude Include="Scenes\Transition.h" />
     <ClInclude Include="Framework\Animator.h" />

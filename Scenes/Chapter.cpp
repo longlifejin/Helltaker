@@ -5,6 +5,8 @@
 #include "Skeleton.h"
 #include "Box.h"
 #include "Thorn.h"
+#include "Key.h"
+#include "LockBox.h"
 #include "TextGo.h"
 #include "CollectDemon.h"
 #include "Pause.h"
@@ -191,6 +193,16 @@ void Chapter::Exit()
 		RemoveGo(player);
 	}
 
+	if (key != nullptr)
+	{
+		RemoveGo(key);
+	}
+
+	if (lockBox != nullptr)
+	{
+		RemoveGo(lockBox);
+	}
+
 	for (auto& dem : demonList)
 	{
 		if(dem != nullptr)
@@ -310,14 +322,24 @@ void Chapter::SetMapLayout()
 			"WWWWWWWWWWWWWWWWWWW",
 			"WWWWWWWWWWWWWWWWWWW",
 			"WWWWWWWWDDDEWWWWWWW",
-			"WWWWWWWWWWWEWWWWWWW",
+			"WWWWWWWWWWWLWWWWWWW",
 			"WWWWWWWETTEEPWWWWWW",
 			"WWWWWWWTWTWEEWWWWWW",
 			"WWWWWWWEESTTWWWWWWW",
-			"WWWWWEWTWTWEWWWWWWW",
+			"WWWWWKWTWTWEWWWWWWW",
 			"WWWWWEEEEESEWWWWWWW",
 			"WWWWWWWWWWWWWWWWWWW",
 		};
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	case 7:
+		break;
+	case 8:
 		break;
 	default:
 		break;
@@ -640,8 +662,22 @@ void Chapter::SetObject(int index, MapObject obj)
 		AddGo(box, Layers::World);
 		break;
 	case Chapter::MapObject::key:
+		key = new Key("KEY");
+		key->SetTexture("Sprite/assets100V20104.png");
+		key->SetOrigin(Origins::KEY);
+		key->currentIndex = index;
+		key->SetPosition(IndexToPos(index));
+		key->Init();
+		AddGo(key, Layers::World);
 		break;
 	case Chapter::MapObject::lockbox:
+		lockBox = new LockBox("LockBox");
+		lockBox->SetTexture("Sprite/backup_lockbox.png");
+		lockBox->SetOrigin(Origins::SELF);
+		lockBox->currentIndex = index;
+		lockBox->SetPosition(IndexToPos(index));
+		lockBox->Init();
+		AddGo(lockBox, Layers::World);
 		break;
 	case Chapter::MapObject::thorn:
 		thorn = new Thorn("thorn");

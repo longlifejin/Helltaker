@@ -29,7 +29,6 @@ void SpriteGo::SetColor(int r, int g, int b)
 
 void SpriteGo::SetPosition(const sf::Vector2f& pos)
 {
-	//GameObject::SetPosition(pos);
 	position = pos;
 	sprite.setPosition(position);
 }
@@ -64,6 +63,12 @@ void SpriteGo::SetOrigin(Origins preset)
 	{
 		sprite.setOrigin({ 50.f,70.f });
 	}
+
+	if (preset == Origins::KEY)
+	{
+		sprite.setOrigin({ 40.f, 80.f });
+	}
+
 }
 
 void SpriteGo::SetOrigin(const sf::Vector2f& newOrigin)
