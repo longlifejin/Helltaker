@@ -166,6 +166,7 @@ void Chapter::Enter()
 		currentStage->SetTexture("PlusSprite/02.png");
 		background->SetTexture("PlusSprite/chapterBG0002.png");
 		background->SetPosition({ 0.f, 0.f });
+		//demon->SetdemonIdle("Tables/mode_Idle.csv");
 		break;
 	case 3:
 		uiMoveCount->SetString("24");

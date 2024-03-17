@@ -386,6 +386,7 @@ void CollectDemon::Stage2()
 			isBooperOn = false;
 			demonLine.Set(fontEB, L"그녀는 쇠망치를 꺼내 들었습니다. 보기 좋게 끝날 것 같지는", 35, sf::Color::Red);
 			demonLine2.Set(fontEB, L"않네요.", 35, sf::Color::Red);
+			demonLine2.SetPosition({ (float)FRAMEWORK.GetWindowSize().x-700.f, demonLine.GetPosition().y + 40.f });
 			demonLine2.SetActive(true);
 			break;
 		}
