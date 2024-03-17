@@ -586,7 +586,8 @@ void Pause::Update(float dt)
 			break;
 		case Pause::Select::MAIN:
 			FRAMEWORK.SetTimeScale(1.f);
-			//SCENE_MGR.ChangeScene(SceneIds::TITLESCENE);
+			chapter->SetCurrentStage(1);
+			//chapter->Init();
 			chapter->transition->SetChangeScene(SceneIds::TITLESCENE);
 			chapter->transition->PlayTransitionUp();
 			this->SetActive(false);

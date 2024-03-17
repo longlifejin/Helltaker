@@ -27,26 +27,28 @@ void CollectDemon::Init()
 	backColor.setPosition({ 0.f,0.f });
 
 	float Offset = 50.f;
+	float PosX = (float)FRAMEWORK.GetWindowSize().x * 0.5f;
+	float PosY = (float)FRAMEWORK.GetWindowSize().y;
 
 	background.SetTexture("Texture2D/collectDemonBG.png");
 	background.SetOrigin(Origins::BC);
-	background.SetPosition({ (float)FRAMEWORK.GetWindowSize().x * 0.5f, (float)FRAMEWORK.GetWindowSize().y * 0.7f - Offset });
+	background.SetPosition({ PosX, PosY * 0.7f - Offset });
 
 	demon.SetTexture("Texture2D/pand_idle.png");
 	demon.SetOrigin(Origins::BC);
-	demon.SetPosition({ background.GetPosition().x,background.GetPosition().y + Offset });
+	demon.SetPosition({ PosX,background.GetPosition().y + Offset });
 
 	demonName.Set(fontEB, panName, 40, sf::Color(219, 72, 77));
 	demonName.SetOrigin(Origins::TC);
-	demonName.SetPosition({ demon.GetPosition().x, demon.GetPosition().y - 40.f});
+	demonName.SetPosition({ PosX, demon.GetPosition().y - 40.f});
 
 	demonLine.Set(fontR, pandLine1, 35, sf::Color::White);
 	demonLine.SetOrigin(Origins::TC);
-	demonLine.SetPosition({ demonName.GetPosition().x, demonName.GetPosition().y + Offset });
+	demonLine.SetPosition({ PosX, demonName.GetPosition().y + Offset });
 
 	demonLine2.Set(fontR, pandLine2, 35, sf::Color::White);
 	demonLine2.SetOrigin(Origins::TC);
-	demonLine2.SetPosition({ demonLine.GetPosition().x, demonLine.GetPosition().y + 40.f });
+	demonLine2.SetPosition({ PosX, demonLine.GetPosition().y + 40.f });
 
 	float buttonOffset = 90.f;
 
@@ -261,8 +263,8 @@ void CollectDemon::Stage1()
 			background.SetActive(false);
 			demonName.SetActive(false);
 			isBooperOn = false;
-			demonLine.Set(fontEB, L"그녀의 전문적인 친절함이 담긴 손길로 당신의 얼굴을 잡고", 25, sf::Color::Red);
-			demonLine2.Set(fontEB, L"목을 비틀어 버렸습니다.", 25, sf::Color::Red);
+			demonLine.Set(fontEB, L"그녀의 전문적인 친절함이 담긴 손길로 당신의 얼굴을 잡고", 35, sf::Color::Red);
+			demonLine2.Set(fontEB, L"목을 비틀어 버렸습니다.", 35, sf::Color::Red);
 			demonLine2.SetActive(true);
 			break;
 		}
@@ -290,7 +292,6 @@ void CollectDemon::Stage1()
 
 void CollectDemon::Stage2()
 {
-	step = 0;
 	isAnswerSelect = false;
 
 	switch (step)
@@ -346,14 +347,13 @@ void CollectDemon::Stage2()
 			demonLine.SetString(L"악마 하렘? 가여워라... 다들 네 영혼을 찢으려 들텐데, 이건");
 			demonLine2.SetString(L"'꼭'봐야겠다.");
 			demonLine2.SetActive(true);
-			demon.SetTexture("Texture2D/pand_flust.png");
 			isBooperOn = false;
 			break;
 		case CollectDemon::SelectLine::Wrong:
 			isBooperOn = true;
 			booperAnimator.Play("Tables/booper.csv");
 			demonLine.SetString(L"다들 처음엔 그러더라... 그리고 결국 도망가려 하던데.");
-			demonLine.SetString(L"혹시 모르니, 다리를 부러뜨려 놔야겠다.");
+			demonLine2.SetString(L"혹시 모르니, 다리를 부러뜨려 놔야겠다.");
 			demonLine2.SetActive(true);
 			break;
 		}
@@ -384,8 +384,8 @@ void CollectDemon::Stage2()
 			background.SetActive(false);
 			demonName.SetActive(false);
 			isBooperOn = false;
-			demonLine.Set(fontEB, L"그녀는 쇠망치를 꺼내 들었습니다. 보기 좋게 끝날 것 같지는", 25, sf::Color::Red);
-			demonLine2.Set(fontEB, L"않네요.", 25, sf::Color::Red);
+			demonLine.Set(fontEB, L"그녀는 쇠망치를 꺼내 들었습니다. 보기 좋게 끝날 것 같지는", 35, sf::Color::Red);
+			demonLine2.Set(fontEB, L"않네요.", 35, sf::Color::Red);
 			demonLine2.SetActive(true);
 			break;
 		}
@@ -415,6 +415,7 @@ void CollectDemon::Develop()
 	switch (step)
 	{
 	case 0:
+		demon.SetTexture("Sprite/beel_fly.png");
 		demonName.SetString(L"● 지친 개발자 ●");
 		demonLine.SetString(L"이 페이지는 아직 작업중이야.");
 		demonLine2.SetString(L"");

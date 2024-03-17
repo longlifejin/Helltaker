@@ -75,6 +75,7 @@ protected:
 	std::list<Box*> boxList;
 	std::list<Skeleton*> deadSkeletonList;
 	std::list<Thorn*> thornList;
+	std::list<Demon*> demonList;
 
 	sf::VertexArray grid;
 

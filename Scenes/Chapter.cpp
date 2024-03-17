@@ -157,6 +157,7 @@ void Chapter::Enter()
 		//player->currentIndex = 49;
 		currentStage->SetTexture("PlusSprite/01.png");
 		background->SetTexture("PlusSprite/chapterBG0001.png");
+		background->SetPosition({ 0.f, 0.f });
 		break;
 	case 2:
 		uiMoveCount->SetString("24");
@@ -164,6 +165,7 @@ void Chapter::Enter()
 		player->currentIndex = 120;
 		currentStage->SetTexture("PlusSprite/02.png");
 		background->SetTexture("PlusSprite/chapterBG0002.png");
+		background->SetPosition({ 0.f, 0.f });
 		break;
 	case 3:
 		uiMoveCount->SetString("24");
@@ -183,30 +185,31 @@ void Chapter::Enter()
 
 void Chapter::Exit()
 {
-
 	if (player != nullptr)
 	{
 		RemoveGo(player);
 	}
 
-	if (demon != nullptr)
+	for (auto& dem : demonList)
 	{
-		RemoveGo(demon);
+		if(dem != nullptr)
+			RemoveGo(dem);
 	}
+	demonList.clear();
 
 	for (auto& skull : deadSkeletonList)
 	{
 		if(skull != nullptr)
 			RemoveGo(skull);
 	}
-		deadSkeletonList.clear();
+	deadSkeletonList.clear();
 
 	for (auto& skull : skeletonList)
 	{
 		if(skull != nullptr)
 			RemoveGo(skull);
 	}
-		skeletonList.clear();
+	skeletonList.clear();
 
 	for (auto& b : boxList)
 	{
@@ -612,6 +615,7 @@ void Chapter::SetObject(int index, MapObject obj)
 		demon->SetOrigin(Origins::SELF);
 		demon->SetPosition(IndexToPos(index));
 		demon->Init();
+		demonList.push_back(demon);
 		AddGo(demon, Layers::World);
 		break;
 	case Chapter::MapObject::skeleton:
@@ -709,8 +713,8 @@ void Chapter::Update(float dt)
 
 	if (isDemonGet && !collectDemon->GetActive()) //isDemonGet - demon 획득한 처음 순간 / collectDemon창이 안열려있으면 실행
 	{
-		//collectDemon->Release();
 		collectDemon->Init();
+		collectDemon->Reset();
 		collectDemon->SetActive(true);
 		isDemonGet = false;
 	}

@@ -57,7 +57,7 @@ void Transition::RemoveChangeSceneImage()
 
 void Transition::SceneChange()
 {
-	SCENE_MGR.ChangeScene(scene); //TO-DO : 원하는 창으로 이동할 수 있도록 멤버 변수 두기
+	SCENE_MGR.ChangeScene(scene);
 }
 
 void Transition::PlayTransitionUp()
